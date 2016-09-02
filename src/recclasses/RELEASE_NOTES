@@ -1,0 +1,72 @@
+.. $Id$
+.. $Author$
+.. $Date$
+
+Release Notes
+=============
+
+trunk
+-----
+
+* A shiny new project enters the stage
+* added storage classes
+
+  CramerRaoParams
+  I3CLastFitParams
+  I3CompactKeyList
+  I3CscdLlhFitParams
+  I3DipoleFitParams
+  I3DST (and related classes)
+  I3DST13 (and related classes)
+  I3DST16 (and related classes)
+  I3FillRatioInfo
+  I3FiniteCuts
+  I3HitMultiplicityValues
+  I3HitStatisticsValues
+  I3LaputopParams
+  I3LineFitParams
+  I3OpheliaParticle
+  I3ParticleIntersections
+  I3PortiaEvent
+  I3PortiaPulse
+  I3ShieldHitRecord
+  I3StartStopParams
+  I3STConfiguration
+  I3TensorOfInertiaFitParams
+  I3TimeCharacteristicsValues
+  I3TopLateralFitParams
+  I3TrackCharacteristicsValues
+  I3Veto
+  I3VetoShort
+  OMKeyLink
+  OMKeyLinkSet
+  OMKeyPair
+  OMKeySet
+
+* added converters
+
+  CramerRaoParamsConverter
+  I3CLastFitParamsConverter
+  I3CscdLlhFitParamsConverter
+  I3DipoleFitParamsConverter
+  I3DirectHitsValuesConverter
+  I3FillRatioInfoConverter
+  I3HitMultiplicityValuesConverter
+  I3HitStatisticsValuesConverter
+  I3LaputopParamsConverter
+  I3LineFitParamsConverter
+  I3OpheliaFirstGuessTrackConverter
+  I3PortiaEventConverter
+  I3ShieldHitRecordConverter
+  I3TensorOfInteriaFitParamsConverter
+  I3TimeCharacteristicsValuesConverter
+  I3TopLateralFitParamsConverter
+  I3TopRecoPlaneFitParamsConverter
+  I3TrackCharacteristicsValuesConverter
+  I3VetoConverter
+
+* added and unified documentation for storage classes,
+  added general documentation about recclasses,
+  its purpose and scope
+
+* added new tests for many storage classes

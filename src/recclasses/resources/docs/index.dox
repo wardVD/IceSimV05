@@ -1,0 +1,8 @@
+/**
+   @mainpage Recclasses Documentation
+
+   @section Description
+   This is the automatic documentation of the @c recclasses project.  This 
+   project provides C++ classes which are used to store data produced by
+   the various reconstruction and analysis algorithms in IceCube.
+*/

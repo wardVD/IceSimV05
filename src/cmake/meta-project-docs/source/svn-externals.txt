@@ -1,0 +1,46 @@
+### projects from icetray repository
+icetray           -r2579    http://code.icecube.wisc.edu/icetray/projects/icetray/releases/V16-05-00
+interfaces        -r2476    http://code.icecube.wisc.edu/icetray/projects/interfaces/releases/V16-03-00
+cmake             -r2552    http://code.icecube.wisc.edu/icetray/projects/cmake/releases/V16-04-00
+dataio            -r2550    http://code.icecube.wisc.edu/icetray/projects/dataio/releases/V16-04-00
+### projects from icecube repository
+dataclasses      -r145917   http://code.icecube.wisc.edu/svn/projects/dataclasses/releases/V16-05-00
+phys-services    -r145186   http://code.icecube.wisc.edu/svn/projects/phys-services/releases/V16-04-00
+steamshovel      -r145187   http://code.icecube.wisc.edu/svn/projects/steamshovel/releases/V16-04-00
+icepick          -r145898   http://code.icecube.wisc.edu/svn/projects/icepick/releases/V16-05-00
+WaveCalibrator   -r143470   http://code.icecube.wisc.edu/svn/projects/WaveCalibrator/releases/V16-03-00
+astro            -r143471   http://code.icecube.wisc.edu/svn/projects/astro/releases/V16-03-00
+daq-decode       -r143472   http://code.icecube.wisc.edu/svn/projects/daq-decode/releases/V16-03-00
+payload-parsing  -r145188   http://code.icecube.wisc.edu/svn/projects/payload-parsing/releases/V16-04-00
+filter-tools     -r143473   http://code.icecube.wisc.edu/svn/projects/filter-tools/releases/V16-03-00
+tableio          -r145189   http://code.icecube.wisc.edu/svn/projects/tableio/releases/V16-04-00
+hdfwriter        -r145190   http://code.icecube.wisc.edu/svn/projects/hdfwriter/releases/V16-04-00
+rootwriter       -r143478   http://code.icecube.wisc.edu/svn/projects/rootwriter/releases/V16-03-00
+
+sim-services           -r144449 http://code.icecube.wisc.edu/svn/projects/sim-services/releases/V01-06-00
+neutrino-generator     -r144447 http://code.icecube.wisc.edu/svn/projects/neutrino-generator/releases/V01-03-07
+trigger-sim            -r144475 http://code.icecube.wisc.edu/svn/projects/trigger-sim/releases/V07-07-01
+simclasses             -r144450 http://code.icecube.wisc.edu/svn/projects/simclasses/releases/V02-00-00
+cmc                    -r144453 http://code.icecube.wisc.edu/svn/projects/cmc/releases/V03-01-00
+wimpsim-reader         -r144454 http://code.icecube.wisc.edu/svn/projects/wimpsim-reader/releases/V03-01-04
+diplopia               -r144455 http://code.icecube.wisc.edu/svn/projects/diplopia/releases/V01-03-00
+photonics-service      -r144456 http://code.icecube.wisc.edu/svn/projects/photonics-service/releases/V01-02-02
+ppc                    -r144457 http://code.icecube.wisc.edu/svn/projects/ppc/releases/V02-02-00
+photospline            -r144458 http://code.icecube.wisc.edu/svn/projects/photospline/releases/V00-10-02
+clsim                  -r145983 http://code.icecube.wisc.edu/svn/projects/clsim/releases/V04-01-01
+vuvuzela               -r144460 http://code.icecube.wisc.edu/svn/projects/vuvuzela/releases/V01-00-06
+genie-icetray          -r144461 http://code.icecube.wisc.edu/svn/projects/genie-icetray/releases/V00-00-04
+DOMLauncher            -r144462 http://code.icecube.wisc.edu/svn/projects/DOMLauncher/releases/V00-00-07
+MuonGun                -r144463 http://code.icecube.wisc.edu/svn/projects/MuonGun/releases/V00-01-00
+PROPOSAL               -r144464 http://code.icecube.wisc.edu/svn/projects/PROPOSAL/releases/V00-00-03
+wavedeform             -r144465 http://code.icecube.wisc.edu/svn/projects/wavedeform/releases/V02-00-01  
+earthmodel-service     -r144466 http://code.icecube.wisc.edu/svn/projects/earthmodel-service/releases/V00-01-00 
+g4-tankresponse        -r144467 http://code.icecube.wisc.edu/svn/projects/g4-tankresponse/releases/V01-02-01 
+topsimulator           -r144468 http://code.icecube.wisc.edu/svn/projects/topsimulator/releases/V01-02-01 
+corsika-reader         -r144469 http://code.icecube.wisc.edu/svn/projects/corsika-reader/releases/V00-01-00 
+DomTools               -r144470 http://code.icecube.wisc.edu/svn/projects/DomTools/releases/V04-00-00 
+weighting              -r144471 http://code.icecube.wisc.edu/svn/projects/weighting/releases/V00-01-00 
+simprod-scripts        -r146219 http://code.icecube.wisc.edu/svn/projects/simprod-scripts/releases/V01-08-03
+production-histograms  -r144474 http://code.icecube.wisc.edu/svn/projects/production-histograms/releases/V00-00-00
+
+

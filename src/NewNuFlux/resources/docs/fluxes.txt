@@ -1,0 +1,11 @@
+Ideally all fluxes supplied by this library should be documented here.
+
+BERSS_H3a_central
+-----------------
+The prompt atmospheric calculation from http://arxiv.org/abs/1502.01076 assuming the Gaisser H3a cosmic ray spectrum as input. The version included in this library was obtained by fitting a spline to data supplied by the authors of that paper to Joanna Kiryluk on or about 2015-02-09 with the following assumptions: 1) The flux is independent of zenith angle 2) The flux is the same for all flavors of neutrinos (and antineutrinos) except nu_tau, for which it is zero. 
+
+BERSS_H3p_lower
+BERSS_H3p_central
+BERSS_H3p_upper
+-----------------
+The family of prompt atmospheric calculation from http://arxiv.org/abs/1502.01076 assuming the 'Gaisser H3p' (all proton) cosmic ray spectrum as input. These fluxes represent the lower, central and upper points on the error band due to QCD uncertainties (cosmic ray flux uncertainties are not included) obtained in that paper. The version given here is constructed in the same manner as for BERSS_H3a_central. 

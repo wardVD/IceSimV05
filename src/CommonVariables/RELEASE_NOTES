@@ -1,0 +1,117 @@
+.. $Id: RELEASE_NOTES 139850 2015-11-25 16:38:11Z david.schultz $
+.. $Author: david.schultz $
+.. $Date: 2015-11-25 10:38:11 -0600 (Wed, 25 Nov 2015) $
+..
+.. CommonVariables
+.. Project maintainer: Martin Wolf (martin.wolf@fysik.su.se)
+
+Release Notes
+=============
+
+April 3, 2015 Meike de With (meike.de.with@desy.de)
+------------------------------------------------------------------
+Release V00-03-02
+
+- Recognize I3_TESTDATA
+
+  -- Alex Olivas
+
+
+December 9, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+Release V00-03-01
+
+- Use right number of backslashes in latex math environments for
+  documentation, to avoid problems with older matplotlib versions
+
+  -- Martin Wolf
+
+- Import DomTools instead of MuonVariables (for I3FirstPulsifier)
+
+  -- Meike de With
+
+
+September 11, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+Release V00-03-00
+
+- Added steamshovel artists
+- Replace relative Python imports, which are not support by old
+  Python versions
+
+  -- Martin Wolf
+
+- Include standard integers
+
+  -- Don la Dieu
+
+
+January 15, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+Release V00-02-02
+
+- Use log4cplus tool when available (for backward compatibility)
+- Small fix in documentation
+
+  -- Martin Wolf
+
+- Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+
+August 20, 2013 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+Release V00-02-01
+
+- Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+- Added math documentation about the actual implementation of the 
+  AvgDomDistQTotDom and EmptyHitsTrackLength cut variables of the 
+  track_characteristics sub project
+
+  -- Martin Wolf
+
+
+February 21, 2013 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+Release V00-02-00
+
+- Changed ZTravel calculation to take only the time of the first
+  pulse per DOM
+- Changed track_hits_separation_length calculation to take the time
+  of the first pulse and the integrated charge of a DOM to determine
+  the COG quartiles to not introduce data/MC discrepancies due to
+  the NPulses issue.
+- Call the Configure method of the I3ConditionalModule class,
+  so the If module parameter does not get ignored.
+- Make sure that CV does not cut on the given I3RecoPulseSeriesMaps
+  based on the given Geometry.
+- Improved documentation
+
+  -- Martin Wolf
+
+- Simplify the nPulses computation
+
+  -- David Boersma
+
+- Removed dependency on log4cplus
+
+  -- Nathan Whitehorn
+
+- Add svn keywords
+
+  -- Emanuel Jacobi
+
+
+September 26, 2012, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+Release V00-01-00
+
+Initial release. Copied from 
+http://code.icecube.wisc.edu/svn/sandbox/mwolf/i3projects/CommonVariables
+
+
+
