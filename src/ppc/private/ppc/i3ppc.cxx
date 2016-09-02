@@ -90,7 +90,7 @@ void i3ppc::DetectorStatus(I3FramePtr frame){
   PushFrame(frame,"OutBox");
 }
 
-void i3ppc::DAQ(I3FramePtr frame){
+void i3ppc::Physics(I3FramePtr frame){
   log_trace("Entering i3ppc::DAQ()");
   frames.push_back(frame);
 

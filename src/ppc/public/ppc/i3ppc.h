@@ -20,7 +20,7 @@ class i3ppc : public I3ConditionalModule{
   ~i3ppc();
   void Configure();
   void DetectorStatus(I3FramePtr frame);
-  void DAQ(I3FramePtr frame);
+  void Physics(I3FramePtr frame);
   void Finish();
 
  private:
