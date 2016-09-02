@@ -1,0 +1,47 @@
+Release Notes
+=============
+
+trunk
+-----
+* Added I3OMGeo types Scintillator and IceAct to I3NLaunchFilter::SelectFrame()
+    - jan.oertlin@icecube.wisc.edu
+
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* no significant udpates
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* no udpates
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+* Removed crufty scripts used to build the docs back in the day.
+* Also improved the example script with a helpful error message if no input file is provided.
+* (r137016) - Added a test that ensures the example script runs 
+* Added include guard to I3UnFilter
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V15-03-00 
+
+* I3FrameObjectFilter not only selects frames that include an object 
+  with a given name but also frames that include an object with a 
+  name that starts with a given string
+
+November 20, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V14-11-00 - Bugfix release
+
+* Added support for I3_TESTDATA
+
+
+
+

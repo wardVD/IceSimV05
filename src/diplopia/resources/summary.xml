@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="5">
+<I3XMLSummaryService class_id="0" tracking_level="1" version="0" object_id="_0">
+	<I3FrameObject class_id="1" tracking_level="1" version="0" object_id="_1"></I3FrameObject>
+	<map class_id="2" tracking_level="0" version="0">
+		<count>10</count>
+		<item class_id="3" tracking_level="0" version="0">
+			<first>TimeScale</first>
+			<second>4.014</second>
+		</item>
+		<item>
+			<first>WeightPartSum</first>
+			<second>22045.560</second>
+		</item>
+		<item>
+			<first>WeightSum</first>
+			<second>22045.560</second>
+		</item>
+		<item>
+			<first>context switches</first>
+			<second>33743</second>
+		</item>
+		<item>
+			<first>memory swaps</first>
+			<second>0</second>
+		</item>
+		<item>
+			<first>real_time</first>
+			<second>10</second>
+		</item>
+		<item>
+			<first>shared memory</first>
+			<second>0</second>
+		</item>
+		<item>
+			<first>sys_time</first>
+			<second>1.008</second>
+		</item>
+		<item>
+			<first>unshared memory</first>
+			<second>0</second>
+		</item>
+		<item>
+			<first>user_time</first>
+			<second>8.9879999999999995</second>
+		</item>
+	</map>
+</I3XMLSummaryService>
+</boost_serialization>
+

@@ -1,0 +1,25 @@
+#
+# $Id: CMakeLists.txt 137643 2015-09-16 20:21:26Z nega $
+#
+i3_project(WaveCalibrator
+  DOCS_DIR resources/docs
+  PYTHON_DIR python
+)
+
+
+i3_add_library(WaveCalibrator
+  private/WaveCalibrator/I3WaveCalibrator.cxx
+  private/WaveCalibrator/I3WaveCalibratorInternals.cxx
+  private/WaveCalibrator/I3WaveCalibratorDroopCorrection.cxx
+  private/modules/I3WaveformSplitter.cxx
+  private/modules/I3WaveformTimeRangeCalculator.cxx
+  private/modules/I3PMTSaturationFlagger.cxx
+  USE_PROJECTS icetray dataclasses interfaces 
+  USE_TOOLS boost
+)
+
+i3_test_executable(test private/test/*.cxx
+  USE_PROJECTS WaveCalibrator)
+
+i3_test_scripts(resources/test/*.py)
+set_tests_properties(WaveCalibrator::test_example_scripts.py PROPERTIES LABELS RUN_LONG)

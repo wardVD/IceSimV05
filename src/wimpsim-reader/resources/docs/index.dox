@@ -1,0 +1,69 @@
+/**
+
+\mainpage I3WimpSimReader
+
+\author mzoll <mzoll@fysik.su.se>
+
+\section wimpsim_reader_procedure General Procedure
+The way how wimpsim-reader works is the following way and order:<BR>
+- Configure()<BR>
+|- Configure itself from the parameters passed to the Module.<BR>
+|- Check these parameters for compatibility<BR>
+- Process() (in a continues loop until a frame is delivered)<BR>
+|- Check if a WimpSim-file is open, if not open a new one<BR>
+|- Check if a newly opened file has the correct EventHeader information, and store that information<BR>
+|- Push one Info-frame in front with that information<BR>
+|- Determine and call routine: ReadSunEvent() or ReadEarthEvent() and etore read event data to WimpEventContainer<BR>
+|- Apply preliminary Cuts and sum up weights (bookkeeping) in CutNWeights()<BR>
+|- Evaluate Exit-Conditions
+|- If everyting went fine, call the internal Algorithms to create I3Objects and compute Volumes: WriteEventFrame()<BR>
+<BR>
+- ReadSunEvent() ReadEarthEvent()<BR>
+|- The file can contain events in the format 'EV I O O EE' and 'EV I EE' where latter is the case for low energetic events which do not have daughters<BR>
+|- Read the event information linewise and store information to the WimpEventContainer<BR>
+|- Hand back to Process()<BR>
+<BR>
+-CutsNWeights()<BR>
+|- Convert variable units to IC units/conventions if necessary (zenith, azimuth, particletypes)<BR>
+|- Store all weights in 'Total weight map'<BR>
+|- Apply pre-cuts (zenith, timing) and hand back to Process()<BR>
+|- Store all weights in 'Delivered weight map'<BR>
+|- Hand back to Process()<BR>
+<BR>
+- WriteEventFrame()<BR>
+|- Prepare and store information to I3Objects<BR>
+|- Put according information into I3Objects<BR>
+|- Randomize vertex position according to Box-position, Injection Radius<BR>
+|- If this interaction (CC: leptype, NC) is selected:<BR>
+|- Use GenerateBox() to inject particle anew into sensitive Volume and compute Vgen<BR>
+|- Put all I3Objects to the frame<BR>
+|- Hand back to Process()<BR>
+<BR>
+- Finish()<BR>
+|- Create a new Info-frame<BR>
+|- Put "Collected weight map" and "Total weight map" to frame<BR>
+|- Push Info-frame<BR>
+
+\section wimpsim_objects Objects in WimpSim files
+Events are read by the following format from file
+
+\subsection sun_events Event format for Sun events:
+# EV  number  MJD  Sun-El (deg)  Sun-Az (deg)  Sun-Ra (deg) sun-dec (deg)<BR>
+# Tag  particle-name  energy (GeV)  Sun-angle (deg)  weight  Az (deg)  El (deg)<BR>
+# EE (end of event)
+
+\subsection earth_events Event format for Earth Events:
+# EV  number<BR>
+# Tag  particle-name  energy (GeV)  nadir-angle (deg)  azi-angle (deg)  weight<BR>
+# EE (end of event)
+
+\subsection event_formats There are two different formats of events:
+Complete Events:<BR>
+EV, I, O, O, EE<BR>
+(EventHeader, Primary, Daughter, Daughter, EndEvent)
+
+Incomplete Events due to too low energy:<BR>
+EV, I, EE<BR>
+(EventHeader, Primary, EndEvent)
+
+*/

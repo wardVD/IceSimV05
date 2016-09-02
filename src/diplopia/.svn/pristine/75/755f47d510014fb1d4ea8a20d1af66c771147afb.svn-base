@@ -1,0 +1,74 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+March 28, 2016 Juan Carlos Diaz Velez (juancarlos@icecube.umd.edu)
+--------------------------------------------------------------------
+* Ported PoissonMerger to C++ Module.
+* Removed obsolete modules including I3Polyplopia.
+* Removed obsolete example scripts.
+* Modified MPHitFilter to prune I3MCTree branches that don't produce hits.
+* Updated tests.
+* Updated docs.
+
+
+November 24, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+* CoincidenceAfterProcessing moved to trigger-sim.
+
+October 21, 2014 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+---------------------------------------------------------------------
+
+* Copied PolyplopiaPrimary object to new frame.
+* Added method to copy additional DAQ frame objects that are not explicitly handled by CoincidenceAfterProcessing
+  into resulting split Q-frame.
+
+August 11, 2014 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* Now supports mctypes that include the generator (i.e. 'nuge_numu' instead of just 'numu')
+
+June 30, 2014 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* Includes support for MCPEs. Events are merged by combining MCPE's instead of I3MCHits. 
+* I3Particle->MCPE map is rebuilt after coincidenceAfterProcessing is run so we know 
+  where PE's came from.
+
+September 10, 2012 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+-----------------------------------------------------------------------
+
+Corrected the multiplicity counter to include the primary or signal track in the count. For NuGen events this means
+that neutrinos with no CR background events will have a multiplicity value equal to 1.
+
+August 23, 2012 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+Added support for merging coincidents events when the primary is a weighted CORSIKA shower.
+This implies changes to both python/eventmerger.py and CoincidentAfterProcessing.cxx. eventmerger.poissonmerger 
+now adds a copy of the primary particle labeled PolyplopiaPrimary to the frame in order to identify it in the 
+post-processing. I have also added some log_fatal checks for missing frame objects in order to prevent obscure 
+segmentation faults.
+
+June 27, 2012 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+This release contains a bugfix to the expanding coincidence window and the 
+addtion of a new module CoincidenceAfterProcessing. The coincidence window should
+check if ther is a hit from a new event within 10us after the last hit in the existing series.
+The CoincidenceAfterProcessing module will split events if the individual triggers they 
+produce are separated in time and will remove, in the case of NuGen, any event that do not 
+contain a neutrino. It should be run after the individual triggers have been run. 
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.
+
+
+
+
+

@@ -1,0 +1,192 @@
+.. $Id$
+.. $Author$
+.. $Date$
+
+Release Notes
+=============
+
+Since last release:
+--------------------------------------------------------------------
+
+* Bugfix (r134186): Don't read past the end of col_counts when filling
+  the end pointer for the final column of basis matrix
+
+April 4, 2015 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V02-00-00
+
+* Solve NNLS problem using Cholesky factorization of the normal 
+  equations for nP < 15
+* Cache waveform template and improve template resolution
+* Remove unneeded basis functions and unused data bins
+* Separate threshold for including basis times from noise threshold,
+  the latter is still 2 ADC counts, the former is now 3 ADC counts
+* Start basis function series one bin earlier, allowing a 
+  significantly better fit on FADC 3-bin chargestamps
+* Increase density of basis functions, allowing a better fit for 
+  most waveforms
+* Increase number of deweighted FADC bins for waveforms with 
+  ATWD support
+* (more information on these points here:
+  https://docushare.icecube.wisc.edu/dsweb/Get/Document-72360/Wavedeform_Improvement_JB.pdf )
+
+  -- Jim Braun
+
+* Recognize I3_TESTDATA
+
+  -- Alex Olivas
+
+* Give wavedeform the ability to apply per-digitizer s.p.e. corrections
+* Add necessary calibration constants to I3DOMCalibration and remove
+  unused old constants
+
+  -- Christopher Weaver
+
+
+December 9, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-02-02
+
+* Use I3_TESTDATA when it is defined
+
+  -- Alex Olivas
+
+
+April 17, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-02-01
+
+* Move all big arrays from the stack to the heap, so you can wavedeform
+  until you run out of RAM
+
+  -- Samuel Flis
+
+
+January 13, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-02-00
+
+* Remove hacks for DOMsimulator now that DOMsimulator has itself been removed
+* Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+
+August 20, 2013 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-01-00
+
+* Fix SuiteSparse header paths following a cmake update
+
+  -- Jakob van Santen
+
+* Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+* Allow deweighting of the FADC to be turned off, which is only useful
+  when fitting FADC waveforms by themselves
+
+  -- Chris Weaver
+
+
+February 21, 2013 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-05
+
+* Change AddMissingTimeWindow to an I3Module so that icetray-inspect can see it
+* Remove dependency on log4cplus
+
+  -- Nathan Whitehorn
+
+
+October 22, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-04
+
+* Remove NFE mode
+* Add time ranges to output
+
+  -- Nathan Whitehorn
+
+
+June 25, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-03
+
+* Bugfixes for clang support
+
+  -- Claudio Kopper
+
+
+January 11, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-02
+
+* Determines pulse width in a better way
+* Reweight SLC hits
+* Added unit tests
+* Bugfixes
+
+  -- Nathan Whitehorn
+
+
+August 25, 2011 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-01
+
+* Let CMake throw an error if SuiteSparse is not found
+
+  -- Fabain Kislat
+* Tweak DOMsimulator pulse templates
+
+  -- Jakob van Santen
+
+
+August 9, 2011 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-00
+
+* First release after Q-ification
+* Add DOMsimulator pulses (from pulsefitter, not cweaver).
+
+  -- Jakob van Santen
+
+June 16, 2011, Nathan Whitehorn (nwhitehorn@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+New features:
+
+* Support for extracting in-ice SLC pulses
+* Uses correct pulse templates for each ATWD channel, when used with
+  WaveCalibrator
+* Can be used as an NFE series algorithm (NFEWavedeform)
+* NoiseFloor argument removed (now calculated dynamically)
+
+March 24, 2011, Fabian Kislat  (fabian.kislat@desy.de)
+--------------------------------------------------------------------
+
+Release V00-01-01
+
+Bugfixes:
+
+* Added various sanity checks.
+
+  -- Nathan Whitehorn and Jakob van Santen
+
+
+March 12, 2011, Fabian Kislat  (fabian.kislat@desy.de)
+--------------------------------------------------------------------
+
+Release V00-01-00. Initial release.

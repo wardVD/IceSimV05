@@ -1,0 +1,81 @@
+/**
+\mainpage DOMLauncher
+\author Samuael Flis
+\author Chris Weaver
+
+\section overview Overview
+This project implements low-level simulation of the IceCube detector, including the behavior of the photomutliplier tube and the DOM mainboard. 
+
+Basic usage is easy: assuming you have imported the DOMLauncher bindings, to add dector simulation to your I3Tray just do: 
+
+\code
+	tray.AddSegment(DOMLauncher.DetectorResponse,"Detector_Simulation")
+\endcode
+
+\section pmt PMTResponseSimulator
+This module simulates the behaviour of a PMT. It both reads and writes MCHits, translating integer 'NPE' values representing the number of photoelectrons ejected from the photocathode into real valued charges, still in units of photoelectrons but representing the data after passage through the PMT. 
+
+For a detailed description of the physics processes simulated, see <a href="PMTRS_physics.html">PMTResponseSimulator Physics</a>. 
+
+\section dom DOMLauncher
+This module simulates the behavior of the DOM mainbaord, including launching and digitization. <a href="DOML_physics">DOMLauncher Physics</a>
+
+*/
+
+/**
+\page PMTRS_physics PMTResponseSimulator Physics
+PMTResponseSimulator simulates the following effects:
+<ul>
+<li><a href='#jitter'>PMT time jitter</a>
+<li><a href='#spe_charge'>the s.p.e. charge distribution</a>
+<li><a href='#prepulses'>prepulses</a>
+<li><a href='#late_pulses'>late pulses</a>
+<li><a href='#afterpulses'>afterpulses</a>
+<li><a href='#saturation'>PMT saturation</a>
+<li>(<a href='#merging'>Hit Merging</a>)
+</ul>
+
+\section jitter Time Jitter
+
+\section spe_charge SPE Charge Distribution
+
+\section prepulses Prepulses
+
+\section late_pulses Late Pulses
+
+\section afterpulses Afterpulses
+
+\section saturation Saturation
+
+\section merging Hit Merging
+
+Hit merging is not an actual physics effect, it is actually an approximation which is supposed to reduce data size and computation time without affecting physics results. The optimization is to replace sequences of I3MCHits in very short time ranges with single I3MCHits, weighted to account for all of the original hits. When this merging is turned on (which it is by default when using the DOMLauncher.DetectorResponse segment) hits are merged within .2 ns, unless doing so would lose information about parent particles. 
+
+With or without hit merging, the output of PMTResponseSimulator is always time-ordered. 
+
+*/
+
+
+/**
+\page DOML_physics DOMLauncher 
+PMTResponseSimulator simulates the following effects:
+<ul>
+<li><a href='#discriminator'>PMT time jitter</a>
+<li><a href='#lc_logic'>the s.p.e. charge distribution</a>
+<li><a href='#digitization'>prepulses</a>
+<li>(<a href='#merging'>Hit Merging</a>)
+</ul>
+
+\section discriminator Discriminator 
+
+\section lc_logic LC-logic 
+
+\section digitization Digitization
+
+\section merging Hit Merging
+
+Hit merging is not an actual physics effect, it is actually an approximation which is supposed to reduce data size and computation time without affecting physics results. The optimization is to replace sequences of I3MCHits in very short time ranges with single I3MCHits, weighted to account for all of the original hits. When this merging is turned on (which it is by default when using the DOMLauncher.DetectorResponse segment) hits are merged within .2 ns, unless doing so would lose information about parent particles.
+
+With or without hit merging, the output of PMTResponseSimulator is always time-ordered.
+
+*/

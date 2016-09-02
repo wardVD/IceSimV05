@@ -1,0 +1,104 @@
+### Run with WimpEvent version = wimpevent (wimpsim-3.01)                
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)              
+###   Using DarkSUSY version = darksusy-5.0.5                          
+###   Using SLALIB version = 2.5-5    
+###   WimpEvent run started at date 2012-06-25; time 17:18:59
+### WimpEvent run parameters
+### Simulated interactions = cc and nc
+### Target material = ice/water
+#  
+### WimpAnn input event file = /data2/mzoll/WimpSim/tmp1/wa-m1000-ch5-earth.000000.000000.dat                                                                  
+### Below is header from WimpAnn input event file
+### Run with WimpAnn version = wimpann (wimpsim-3.01)                          
+###   Using Pythia version   = Pythia 6.426                                    
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)                      
+###   Using DarkSUSY version = darksusy-5.0.5                                  
+###   WimpAnn run started at date 2012-06-25; time 16:47:54                    
+### Neutrino oscillation parameters                                            
+#      theta_12 =  0.33890000E+02                                              
+#      theta_13 =  0.91200000E+01                                              
+#      theta_23 =  0.38540000E+02                                              
+#         delta =  0.00000000E+00                                              
+#  delta_m^2_21 =  0.75000000E-04                                              
+#  delta_m^2_31 =  0.23200000E-02                                              
+### WimpAnn run parameters                                                     
+#  Annihilation channel =         5                                            
+#  Generated particles =  b                bbar                                
+#  WIMP mass =  0.10000000E+04                                                 
+#  Number of annihilations =   1000000  (in this file)                         
+#  Source = Earth                                                              
+#  Total number of annihilations in this run =   1000000                       
+#  Note: For split files, the event weights in WimpEvent will be calculated for
+#  the number of annihilations in THIS file only, not the total number.        
+#  File number     1 out of     1 file(s).                                     
+#  Seed for random number generator (for beginning of run) =                -1 
+### This is the last line of the wimpann header 
+### Event format is as follows:
+# EV  number
+# Tag  particle-name  energy (GeV)  nadir-angle (deg)  azi-angle (deg)  weight
+# EE (end of event)
+### This is the last line of the wimpevent header
+EV        1
+I nu_e~    0.621829E+02 0.488369E+00 0.211019E+03 0.196290E-24
+O e+       0.579307E+02 0.222611E+01 0.255308E+03 0.335222E-37
+O hshow    0.519047E+01 0.239488E+02 0.864980E+02 0.335222E-37
+EE
+EV        2
+I nu_e     0.625526E+02 0.131141E+01 0.322785E+03 0.187788E-24
+O e-       0.340922E+02 0.584540E+01 0.285887E+03 0.624400E-37
+O hshow    0.294000E+02 0.495402E+01 0.856160E+02 0.624400E-37
+EE
+EV        3
+I nu_mu~   0.357266E+02 0.109164E+01 0.992230E+02 0.189557E-24
+O mu+      0.355080E+02 0.127324E+01 0.127095E+03 0.185604E-37
+O hshow    0.115815E+01 0.591139E+02 0.661161E+01 0.185604E-37
+EE
+EV        4
+I nu_mu    0.947535E+02 0.499469E+00 0.141403E+03 0.192347E-24
+O mu-      0.188266E+01 0.630278E+01 0.230074E+03 0.956910E-37
+O hshow    0.938091E+02 0.522363E+00 0.127280E+03 0.956910E-37
+EE
+EV        5
+I nu_tau~  0.320353E+02 0.226285E+00 0.248577E+03 0.206213E-24
+O tau+     0.241809E+02 0.128497E+01 0.700803E+02 0.118029E-37
+O hshow    0.879266E+01 0.481254E+01 0.249795E+03 0.118029E-37
+EE
+EV        6
+I nu_tau   0.883548E+02 0.557543E+00 0.229787E+03 0.199220E-24
+O tau-     0.148483E+02 0.436349E+01 0.288606E+03 0.741236E-37
+O hshow    0.744448E+02 0.777345E+00 0.156003E+03 0.741236E-37
+EE
+EV        7
+I nu_e~    0.586784E+02 0.115999E+01 0.259880E+03 0.189912E-24
+O nu_e~    0.540845E+02 0.278526E+01 0.212929E+03 0.305979E-37
+O hshow    0.553220E+01 0.234364E+02 0.739540E+01 0.305979E-37
+EE
+EV        8
+I nu_e     0.228748E+03 0.126847E+01 0.115812E+03 0.197107E-24
+O nu_e     0.617331E+02 0.217775E+01 0.354583E+03 0.230735E-36
+O hshow    0.167953E+03 0.226063E+01 0.133526E+03 0.230735E-36
+EE
+EV        9
+I nu_mu~   0.132185E+03 0.116170E+01 0.354387E+02 0.197553E-24
+O nu_mu~   0.128774E+03 0.140412E+01 0.639994E+02 0.720278E-37
+O hshow    0.435025E+01 0.238284E+02 0.301965E+03 0.720278E-37
+EE
+EV       10
+I nu_mu    0.226106E+02 0.133346E+01 0.142367E+03 0.197417E-24
+O nu_mu    0.104185E+02 0.430932E+01 0.589196E+02 0.245436E-37
+O hshow    0.131304E+02 0.417659E+01 0.203045E+03 0.245436E-37
+EE
+EV       11
+I nu_tau~  0.300458E+02 0.485573E+00 0.212611E+03 0.200621E-24
+O nu_tau~  0.285683E+02 0.265655E+01 0.240684E+03 0.105979E-37
+O hshow    0.241699E+01 0.362731E+02 0.669038E+02 0.105979E-37
+EE
+EV       12
+I nu_tau   0.160257E+02 0.163483E+01 0.151058E+03 0.194687E-24
+O nu_tau   0.929080E+00 0.371900E+02 0.217031E+02 0.862307E-38
+O hshow    0.160362E+02 0.345322E+01 0.179156E+03 0.862307E-38
+EE
+EV       13
+I nu_mu    0.178794E+00 0.238786E+00 0.345246E+03 0.197933E-24
+EE
+#END

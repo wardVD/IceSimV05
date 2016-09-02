@@ -1,0 +1,46 @@
+### Run with WimpEvent version = wimpevent (wimpsim-3.01)                
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)              
+###   Using DarkSUSY version = darksusy-5.0.5                          
+###   Using SLALIB version = 2.5-5    
+###   WimpEvent run started at date 2012-06-25; time 17:18:59
+### WimpEvent run parameters
+### Simulated interactions = cc and nc
+### Target material = ice/water
+#  
+### WimpAnn input event file = /data2/mzoll/WimpSim/tmp1/wa-m1000-ch5-earth.000000.000000.dat                                                                  
+### Below is header from WimpAnn input event file
+### Run with WimpAnn version = wimpann (wimpsim-3.01)                          
+###   Using Pythia version   = Pythia 6.426                                    
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)                      
+###   Using DarkSUSY version = darksusy-5.0.5                                  
+###   WimpAnn run started at date 2012-06-25; time 16:47:54                    
+### Neutrino oscillation parameters                                            
+#      theta_12 =  0.33890000E+02                                              
+#      theta_13 =  0.91200000E+01                                              
+#      theta_23 =  0.38540000E+02                                              
+#         delta =  0.00000000E+00                                              
+#  delta_m^2_21 =  0.75000000E-04                                              
+#  delta_m^2_31 =  0.23200000E-02                                              
+### WimpAnn run parameters                                                     
+#  Annihilation channel =         5                                            
+#  Generated particles =  b                bbar                                
+#  WIMP mass =  0.10000000E+04                                                 
+#  Number of annihilations =   1  (in this file)                         
+#  Source = Earth                                                              
+#  Total number of annihilations in this run =   1000000                       
+#  Note: For split files, the event weights in WimpEvent will be calculated for
+#  the number of annihilations in THIS file only, not the total number.        
+#  File number     1 out of     1 file(s).                                     
+#  Seed for random number generator (for beginning of run) =                -1 
+### This is the last line of the wimpann header 
+### Event format is as follows:
+# EV  number
+# Tag  particle-name  energy (GeV)  nadir-angle (deg)  azi-angle (deg)  weight
+# EE (end of event)
+### This is the last line of the wimpevent header
+EV        1
+I nu_e~    0.100000E+04 0.000000E+00 0.000000E+00 0.100000E-24
+O e+       0.750000E+03 0.000000E+00 0.450000E+02 0.100000E-37
+O hshow    0.250000E+03 0.000000E+00 0.315000E+03 0.100000E-37
+EE
+#END

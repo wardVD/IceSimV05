@@ -1,0 +1,87 @@
+Release Notes
+=============
+
+trunk
+-----
+
+V16-04-00 - April 29, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------------------
+
+* add a new warning suppression flag
+* fix an unusal bug in boost 1.38.0 triggered by pybdt
+* add tool for NLopt minimization library
+
+V16-03-01 - March 25, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------------------
+
+* fix CMAKE_INSTALL_PREFIX wrt tarballs
+* tweak ROOT detection
+* add a tool (review) to aid in project reviews
+* documentation cleanups
+
+V16-03-00 - March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------------------
+
+* Lots and lots of documentation updates
+* remove rdmc
+* add support for include what you use, see `r2450/IceTray`_ 
+* resurect ``I3Test::tempfile()``
+* use std::is(nan|inf)
+* mark all thrid-pary libraries as "system" libraries for the compiler
+* Minuit2 detection fixes
+* compiler flag checks and fixes
+* parasitic build fixes
+
+.. _r2450/IceTray: http://code.icecube.wisc.edu/projects/icecube/changeset/2450/IceTray/projects/cmake/trunk
+
+V15-12-01 - December 14, 2015 - don la dieu  (nega@icecube.umd.edu)
+-------------------------------------------------------------------
+
+* boost/cvmfs detection fix
+
+V15-12-00 - December 14, 2015 - don la dieu  (nega@icecube.umd.edu)
+-------------------------------------------------------------------
+
+* make SYSTEM_PACKAGES=ON the default
+* update OS X documentation
+* use python in the path, fixing virtual envs
+* document PAL
+* look for PAL before SLALIB
+* update standalone Minuit2 support
+* update cmake user guide
+* documentation fixes (content and presentation)
+* added some code standards to the docs
+* allow quoted arguments to env-shell.sh
+* clean up the environment when building w/o root
+* add the homebrew prefix to search paths
+* sprng search fixes
+* add USE_PYBINDINGS to i3_test_executable()
+* make icetray-pybindings a dependency of all EXE tests
+* correct typos in status messages
+* prune dead code
+* update tutorial docs
+* add and support cmake variable GEANT4_VERSION
+* disable cint on OS X
+* force disabling cint if root is not found
+* setup dependencies for pybindings
+* general documentation fixes
+* Qt detection fixes
+
+V15-08-00 - Setember 1, 2015 - Alex Olivas (olivas@icecube.umd.edu)
+-------------------------------------------------------------------
+
+V15-04-00 - April 2, 2015 - don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------------------
+
+V15-03-00 - March 15, 2015 - Alex Olivas (olivas@icecube.umd.edu)
+-----------------------------------------------------------------
+
+V14-11-00 - November 20, 2014 - Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V14-10-00 - Ocbober 1, 2014 - don la dieu  (nega@icecube.umd.edu)
+-----------------------------------------------------------------
+
+* initial pal/erfa detection
+* boost and boost-python detection tweaks
+* boost/boost-python doc updates for OS X

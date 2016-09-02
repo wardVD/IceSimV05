@@ -1,0 +1,68 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2014-07-11 $
+
+Release Notes
+=============
+
+On the trunk
+------------
+
+* Removed dependence on I3MCEventHeaderGenerator
+
+July 22, 2015 Michael Larson (mjlarson@nbi.ku.dk)
+--------------------------------------------------------------------
+
+* Apparently forgot to change the default values for each of the 
+  noise parameters. These only affect PINGU/HEX DOMs and DOMs that are
+  missing a good calibration record. The default values are now set to
+  the median values as measured by IC86 good-fit DOMs.
+
+July 3, 2015 Michael Larson (mjlarson@nbi.ku.dk)
+--------------------------------------------------------------------
+
+* Added support for the short-timescale noise that wasn't supported 
+  previously in Vuvuzela. To this end, a new option was added to 
+  enable/disable the low-dt distribution. New noise parameters were
+  added in the resources/data/ directory and those will be used by 
+  default for the tray segment. 
+* Removed the "ForceRelativeToZero" option, which was unused.
+* Small change from log_warn to log_info in the Finish() method
+
+November 24, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V01-00-05
+
+* Updated gcd_test to exclude IceTop DOMs.
+
+
+July 11, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.
+
+June 12, 2014 Michael Larson (mjlarson@nbi.ku.dk)
+--------------------------------------------------------------------
+
+Fixed a feature in Vuvuzela where DOMs lacking a good calibration 
+record were not being simulated by the tray segment. While this was
+intentional at the time to avoid spending time simulating bad DOMs, 
+it caused problems for PINGU simulation using the tray segment. The 
+fix was to switch the segment to run all DOMs by default, producing 
+good DOMs, bad DOMs, and "new" DOMs for all events. This has been
+tested with both PINGU and IceCube simulation and both work as expected.
+
+Also noted was that the default values for each of the five parameters
+were set using an old version of the Vuvuzela fits. These default 
+values have been updated to use the median fit value for each parameter. 
+These parameters are only used for DOMs lacking a good calibration
+record and should not affect any IceCube or DeepCore simulation.
+
+April 14, 2014 Michael Larson (mjlarson@nbi.ku.dk)
+--------------------------------------------------------------------
+
+Added an option for the Supernova guys so that they can produce using
+absolute times for hits measured from the I3EventHeader instead of times 
+relative to t=0 (which is how normal IceCube simulation is done). This 
+shouldn't affect anyone else. 

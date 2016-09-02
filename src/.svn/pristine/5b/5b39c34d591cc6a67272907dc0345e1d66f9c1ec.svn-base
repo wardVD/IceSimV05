@@ -1,0 +1,302 @@
+trunk 
+* I3Db is taking a break along with BadDomList
+
+Release Notes V4
+================
+
+Release 4.1 Notes ("Autobahn")
+------------------------------
+V04-01-12
+"""""""""
+* corsika-reader : Only the patch r133998 is applied to the last release of corsika-reader. This is the last fixed needed to be able to read from a pipe, which should make life a little easier for production.
+
+V04-01-11
+"""""""""
+* clsim : Fixed for downloaded safeprimes w/o the .txt extension.
+
+V04-01-10 
+"""""""""
+Based on the latest offline release V14-11-00.                                                                                                                                       
+
+* DOMLauncher : Uses the baseline that's half a count higher to correct for effectively double flooring.          
+  See https://docushare.icecube.wisc.edu/dsweb/Get/Document-72143/v4_charge_peak.pdf
+
+V04-01-09-RC
+""""""""""""
+Based on the latest offline release candidate                                                                                                                              
+
+* weighting  :                                                                                                                                                             
+** Deal with newer sets that use real CORSIKA.
+** Detect when dataset.jobs_completed is a lie, and fall back to counting jobs.
+** Uses PDG codes by default.
+* corsika-reader :
+** CorsikaInteractionHeight is now added to the frame (temporarily).
+* DOMLauncher :
+** Enabling an optimization in the discriminator that was left out by mistake in the last release. Speeds up the discriminator part and lowers the memory footprint since no duplicated discriminator crossings are generated anymore.
+** Reintroduce and active DOM maps to speed up simulation that only simulates a fraction of the detector.
+** Added BufferedWaveformEvaluator class that buffers up to 500us (can be adjusted) of pulses from previous frames.
+** Replaced all instances of manual waveform evaluation in the code and replaced it with the newBufferedWaveformEvaluator.
+** MultiFrameEvents simulation works now as expected. This required some small changes/fixes in how the DOM updates it state and the introduction of the above mentioned BufferedWaveformEvaluator.
+* neutrino-generator :
+** Fixed a bug where 2 muons were created from one interacion
+* PROPOSAL :
+** Set particles location type to InActiveVolume if they are in the active volume.
+* clsim :
+** Builds without OpenGL and with Intel i7.
+** Newer, tighter safeprimes.
+** Switch to default value of numberOfPhotonsAtMaxBrightness.
+** Incorporate hybrid mode between GEANT4 and parametrization.
+** Get all devices, even those that are neither CPUs nor GPUs, like the Xeon Phi.
+* vuvuzela :
+** Updated gcd_test to exclude IceTop DOMs.
+* ppc :
+** Several compilation (warnings) and run time (seg. faults) fixes.
+** New env. variables OGPU/OCPU/OACC allow running on only GPU/CPU/Accelerator cards.
+** Includes the final version of SPICE3.
+* photonics-service :
+** Make PhotoSpline Radial Extents an input variable
+* cmc :
+** Split particles now get their LocationType.
+* trigger-sim :
+** Now includes CoincidenceAfterProcessing
+* sim-services :
+** More tests for sanity checkers
+*  diplopia :
+** CoincidenceAfterProcessing moved to trigger-sim.
+* simprod-scripts :
+** Moved efficiency down-sampling after polyplopia
+** Added SkipKeys option to IC86 module
+
+=== V04-01-08 ===
+Not recording revision numbers anymore.  They're different for different projects.
+
+* diplopia :
+** Copied PolyplopiaPrimary object to new frame.
+** Added method to copy additional DAQ frame objects that are not explicitly handled by CoincidenceAfterProcessing into resulting split Q-frame.
+                                                                                                                                                                           
+* simprod-scripts :
+** IceTop detector integration
+** no-hole-ice option for hybrid mode
+** Allow detector segments to be more easily run by humans                                                                                                                 
+** Remove DOMSimulator options, since we can't run it anymore                                                                                                              
+** Remove old references to /net/user                                                                                                                                      
+** Detector option for time shift skip keys (to not time shift specified keys)                                                                                             
+** Default to I3LinearizedMCTree                                                                                                                                           
+** Default DOM efficiency to 0.99
+** Better handling of renamed I3MCPESeriesMap                                                                                                                              
+** Add MultiDomEffSample segment to sample a lower efficiency from MCPESeries                                                                                              
+** Do efficiency sampling at beginning of detector step, if requested                                                                                                      
+                                                                                                                                                                           
+* sim-services :                                                                                                                                                           
+** New I3DownsampleMCPE class                                                                                                                                              
+** Re-worked hobo test suite.   Not all modules and histograms have tests yet.                                                                                             
+** One-stop-shop for GCD generation (sim-services/resources/gcd_validation/generate_gcd.py).                                                                   
+** Replaced all instances of manual waveform evaluation in the code and replaced it with the newBufferedWaveformEvaluator.
+** MultiFrameEvents simulation works now as expected. This required some small changes/fixes in how the DOM updates it state and the introduction of the above mentioned BufferedWaveformEvaluator.
+* neutrino-generator :                                                                                                                                                     
+** Fixed a bug where 2 muons were created from one interacion                                                                                                              
+* PROPOSAL :                                                                                                                                                               
+** Set particles location type to InActiveVolume if they are in the active volume.                                                                                         
+* clsim :                                                                                                                                                                  
+** Builds without OpenGL and with Intel i7.                                                                                                                                
+** Newer, tighter safeprimes.                                                                                                                                              
+** Switch to default value of numberOfPhotonsAtMaxBrightness.                                                                                                              
+** Incorporate hybrid mode between GEANT4 and parametrization.
+
+V04-01-07
+"""""""""
+
+Revision Numbers
+
+* IceTray Repo - `1903`
+* IceCube Repo (offline software) - `123099`
+* IceCube Repo (simulation) - `123305`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* neutrino-generator :
+
+  * InjectionRadius, ActiveLengthBefore(After), CylinderRadius, CylinderHeight are removed.  Use CylinderParams parameter instead.
+  * Bug fix in EnumTypeDef. Unused tests are removed.
+  * InjectionMode::Cylinder is renamed to InjectionMode::Surface, because NuGen don't know what the shape of sampling surface would be!
+
+V04-01-06-RC
+""""""""""""
+
+Revision Numbers
+
+* IceTray Repo - `1903`
+* IceCube Repo (offline software) - `123099`
+* IceCube Repo (simulation) - `123305`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+  Using the latest release of offline, which includes updates to icetray, cmake, and dataclasses.   
+
+V04-01-05-RC
+""""""""""""
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `122386`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* corsika-reader - Fixed arguments passed to MuonGun::GetTotalArea(cos(thetaMax), cos(thetaMin)).  Order was swapped resulting in negative area.
+* diplopia - Now supports mctypes that include the generator (i.e. 'nuge_numu' instead of just 'numu').
+* simprod-scripts - Added IceTop modules and fixed handling of mctype for sanity_checker and diplopia.
+
+V04-01-04-RC
+""""""""""""
+
+The main feature of this release is a small bug fix to how weighting is handled in the sim-services sanity checker histogramming.
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `122226`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* sim-services - Changed order of weight map look-up in sanity checker event_weight function to correctly handle NuGen/CORSIKA events.
+
+V04-01-03-RC
+""""""""""""
+
+The main feature of this release is the roll-back of the neutrino-generator interface.
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `122139`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* neutrino-generator - Reverted interface change.
+* earthmodel-service - Fix to LeptonRange.py - removed old parameter.
+* simprod-scripts 
+
+  * Allow json input since iceprod can't read a dict from xml.
+  * Fixes to NuGen tests to account for the drifting interface.
+  * IceTop options added, such as array rotation, longitudinal profile, output compression, weight calculations, and monthly average atmospheric parameters.
+
+V04-01-02-RC
+""""""""""""
+
+The main feature of this release is the NuGen test fixes and the corrections to the sanity checker histograms.
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `122073`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* sim-services - Copy and paste errors were corrected in the newest sim-services sanity checker histograms.
+* neutrino-generator
+
+  * Removed parameters not frequently used.
+  * Tests were fixed.
+  * InjectionType::Cylinder -> InjectionType::Surface renaming.
+
+V04-01-01-RC
+""""""""""""
+
+The main feature of this release is that neutrino generation works.  This also included updates to the IceTop projects.
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `121910`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* neutrino-generator
+
+  * Output format has been changed to I3Map<I3ParticleID, double> for SimMode # "InEarth" option.
+  * Modified resources/util/DrawInEarthPropWeight.py to support both old format and new format.
+  * WorldRadius parameter is added to Steering class, which used to be in earthmodel-service.  Users need to adjust the value if they want to inject neutrinos in large radius (>2km).
+
+* earthmodel-service
+
+  * clipAtEarthSurfice option is removed from several public functions.
+  * fEarthRadius parameter is removed and earthmodel-service no longer takes into account simulation volume (world volume).
+
+* topsimulator - Add the option to adjust the observation level in I3CorsikaInjector.  This is to avoid injecting particles under the top of the snow.
+* g4-tankresponse - Added neutrinos to G4Interface (they can be kept in CORSIKA files now).
+
+V04-01-00-RC
+""""""""""""
+
+The main purpose of this release was to get a release out that was close to the trunk.  This uses the latest offline candidate and the first release to start using revision numbers in the externals.  This provides the added safety against projects changing after the release and reminds us release managers that's it's problematic bookkeeping-wise to simply back port small changes to releases.
+
+Revision Numbers
+
+* IceTray Repo - `1873`
+* IceCube Repo - `121657`
+* Boost Numpy Repo - `7`
+
+Highlights from Individual Projects
+
+* Improved histogramming support in sim-services.  This is the first release where I3BasicHistos is effectively restored.
+* NuGen propagates CORSIKA neutrinos.
+* The simclasses project now has a tableio converter for I3MCPulseSeriesMaps.
+* The I3Particle->I3MCPE map is rebuilt in diplopia's CoincidentAfterProcessing module.
+* Added bad string 72 for run 124613 in BadDomList.
+* ppc
+
+  * Updated particle tree parsing to work with corsika when pi/K's are saved.
+  * Changed the build preference: prefer OpenCL over CUDA.
+  * Included new ice model: SPICE 3.
+
+* Fixed a feature in vuvuzela where DOMs lacking a good calibration record were not being simulated by the tray segment.
+* The default noise values in vuvuzela have been updated to use the median fit value for each parameter.
+* Feature to convert the elements of the I3GENIEResultDict to something that can be put into output files, nominally ROOT files.
+* Added RapCal time calibration uncertainty to the DOMLauncher simulation. 
+* MultiFrameEvents option has been added to DOMLauncher which should simulate events spanning several frames. (`EXPERIMENTAL`)
+* Add an axial cylinder sampling surface in MuonGun for use in NeutrinoGenerator.
+* Lots of good stuff in simprod-scripts (`RELEASE_NOTES <http://code.icecube.wisc.edu/projects/icecube/browser/IceCube/projects/simprod-scripts/releases/V01-07-06/RELEASE_NOTES>`_).
+* The simple iceceap implementation was fixed in earth model-service; while the upper surface of the glacier had the correct shape, layers within the ice were Earth-centered spheres rather than being concentric with the ice surface.
+* The public interface in earthmodel-service now supports querying which material is found at a given point, and also checking the distance from a given point along a given direction to the next boundary between materials.
+* corsika-reader
+
+  * Take the curvature of the Earth into account when shifting the shower core, fixing a bug that caused showers to miss the target volume by several kilometers at zenith angles larger than 89 degrees.
+  * Use MuonGun's cylinder class for sampling.
+  * Added staging support.
+
+* weighting project was added to this release.  Welcome to IceSim!
+
+Release 4.0 Notes ("Army of the Twelve Monkeys")
+------------------------------------------------
+
+`The IceSim 4.0 Manifesto <https://wiki.icecube.wisc.edu/index.php/The_IceSim_4.0_Manifesto>`_
+
+Release Notes for 4.0.12
+
+Release Notes for 4.0.11
+
+Release Notes for 4.0.10
+
+Release Notes for 4.0.9
+
+Release Notes for 4.0.8
+
+This is the first IceSim 4 release.
+
+Projects added :
+
+* clsim (complements ppc)
+* vuvuzela (replaces noise-generator)
+* PROPOSAL (replaces mmc/mmc-icetray)
+* corsika-reader (replaces ucr-icetray)
+* MuonGun
+* genie-icetray
+* DOMLauncher (replaces DOMsimulator)

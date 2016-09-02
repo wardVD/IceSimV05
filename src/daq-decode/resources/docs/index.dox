@@ -1,0 +1,49 @@
+/**
+   @mainpage Documentation for the daq-decode library
+
+   @author Torsten Schmidt
+
+   @section daq-decode-overview Overview
+
+   Decoding the DAQ event format and filling the dataclasses structures
+   is the job of a DAQ decoder service.  Several older decoders have been
+   retired, and only the I3PayloadParsingEventDecoderFactory is supported.
+   
+   The I3PayloadParsingEventDecoderFactory is supplied by the payload-parsing project,
+   which is new approach to directly decode the DAQ
+   event format directly from C++.
+   
+   Both services support eleven parameters
+   <ul>
+   <li><VAR>Year</VAR> defines the year the data to decode is from (default: 2006),
+   <li><VAR>HeaderID</VAR> defines the name of the I3EventHeader added to a
+   frame (default: I3DefaultName<I3EventHeader>::value()),
+   <li><VAR>TriggerID</VAR> defines the name of the I3TriggerHierarchy added
+   to a frame (default: I3DefaultName<I3TriggerHierarchy>::value()),
+   <li><VAR>SpecialDataOMs</VAR> defines optical modules whose DOM launches
+   are not assigned to any IceCube or IceTop I3DOMLaunchSeriesMap, but
+   to the special data I3DOMLaunchSeriesMap instead,
+   <li><VAR>SpecialDataID</VAR> defines the name of the special data
+   I3DOMLaunchSeriesMap added to a frame,
+   <li><VAR>InIceID</VAR> defines the name affix that is pre-appended to the
+   name of any IceCube I3DOMLaunchSeriesMap added to a frame (default: InIce),
+   <li><VAR>IceTopID</VAR> defines the name affix that is pre-appended to the
+   name of any IceTop I3DOMLaunchSeriesMap added to a frame (default: IceTop),
+   <li><VAR>SPEDataID</VAR> defines the name of an I3DOMLaunchSeriesMap that
+   holds DOM launches with trigger mode SPE_DISCRIMINATOR_TRIGGER
+   (default: RawData),
+   <li><VAR>FlasherDataID</VAR> defines the name of an I3DOMLaunchSeriesMap
+   that holds DOM launches with trigger mode FLASHER_BOARD_TRIGGER,
+   <li><VAR>CPUDataID</VAR> defines the name of an I3DOMLaunchSeriesMap that
+   holds DOM launches with trigger mode CPU_REQUESTED and
+   <li><VAR>TestDataID</VAR> defines the name of an I3DOMLaunchSeriesMap that
+   holds DOM launches with trigger mode TEST_PATTERN
+   </ul>
+   and might create, fill and insert
+   <ul>
+   <li>an I3EventHeader,
+   <li>an I3TriggerHierarchy and
+   <li>upto nine I3DOMLaunchSeriesMaps.
+   </ul>
+   into a given frame.
+*/

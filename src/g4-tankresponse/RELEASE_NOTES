@@ -1,0 +1,18 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+July 23, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+
+V01-01-01
+
+* Added neutrinos to G4Interface (they can be kept in CORSIKA files now)
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.

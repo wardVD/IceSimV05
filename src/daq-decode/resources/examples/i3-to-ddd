@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+#
+#  use the standard messy monolith reader to get some data going.
+#
+
+
+import sys
+
+import getopt
+
+def usage():
+    print """usage: i3-to-ddd [--verbose] [-n EVENTS] -d DATABLOB -i INFILE -o OUTFILE
+Both options -i and -o are expected.  INFILE is expected to be either a
+.i3 or .i3.gz file from 2007 datataking.  It is expected to have a
+I3Vector<char> frame element DATABLOB default:\"I3DAQData\".
+The contents of those buffers will be dumped to a binary file
+OUTFILE, which should be identical to the raw DAQ data that was put in.
+
+The 'verbose' option is optional and just causes us to dump out all
+sorts of spewage as the events go by.
+
+If you optionally specify -n EVENTS, then we won't spin through the
+whole file, just EVENTS events in the file.
+"""
+    sys.exit(1)
+
+options, args = getopt.getopt(sys.argv[1:],
+                              'o:i:n:d:',
+                              ["verbose"])
+
+outfile = None
+infile = None
+verbose = False
+nEvents = None
+blobname = "I3DAQData"
+for opt, value in options:
+    if opt == '-o':
+        outfile = value
+    if opt == "-i":
+        infile = value
+    if opt == "--verbose":
+        verbose = True
+    if opt == "-n":
+        nEvents = int(value)
+    if opt == "-d":
+        blobname = value
+
+if not outfile:
+    print "Didn't specify an outfile"
+    usage()
+
+if not infile:
+    print "Didn't specify an infile"
+    usage()
+
+
+from I3Tray import *
+from icecube import icetray, dataclasses, dataio, daq_decode
+
+
+tray = I3Tray()
+
+
+tray.AddModule("I3Reader", "reader")(
+    ("Filename", infile),
+    )
+
+tray.AddModule("QConverter", "qify", WritePFrame=False)
+
+tray.AddModule("I3FrameBufferDump", "decode")(
+    ("Outfile", outfile),
+    ("BufferID", blobname),
+    )
+
+if verbose:
+    tray.AddModule("Dump", "dump")
+
+tray.AddModule("TrashCan", "the can")
+
+if nEvents is None:
+    tray.Execute()
+else:
+    tray.Execute(nEvents)
+
+tray.Finish()

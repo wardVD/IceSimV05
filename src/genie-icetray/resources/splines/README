@@ -1,0 +1,12 @@
+You can generate the necessary splines using the following command:
+genie-icetray-mkspl -p 12,-12,14,-14,16,-16 -e 200 -n 500 -t 1000010010,1000000010,1000010020,1000080160 -o splines_water_2.6.4.xml
+
+Alternatively, you can download a spline file with this command:
+wget 'http://icecube.wisc.edu/~ckopper/splines_water_2.6.4.xml'
+or if you don't have wget:
+curl -O 'http://icecube.wisc.edu/~ckopper/splines_water_2.6.4.xml'
+
+This file should go into $I3_SRC/genie-icetray/resources/splines/
+(i.e., this directory).
+
+-ck

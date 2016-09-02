@@ -1,0 +1,51 @@
+.. $Id: RELEASE_NOTES 121473 2014-07-11 12:37:08Z olivas $
+.. $Author: olivas $
+.. $Date: 2014-07-11 06:37:08 -0600 (Fri, 11 Jul 2014) $
+
+Release Notes
+=============
+
+On the trunk
+------------
+
+* Ehistory parameter added. This will carry out rotation to I3 coordinate 
+  system for Ehistory shower particles.
+* fix example scripts
+* pdg code for rho0 changed to 113
+* No longer adds an I3EventHeader to the frame.  This is solely the job 
+  of the global trigger sim module.
+* Use surfaces from phys-services instead of MuonGun
+* Fill secondaries into I3MCTree all at once if possible. Major speedup
+  for muon bundles.
+* Set default thinning flag.
+* Never rewind input files. Treat these as streams. Allows usage of
+  pipes from CORSIKA.
+* Added oversampling parameter. Each file is read multiple times and 
+  number of showers in weight map is given value nevents*oversampling
+* Update to new I3MCTree
+
+November 24, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V00-00-05
+
+* CorsikaInteractionHeight is now added to the frame (temporarily).
+
+August 11, 2014 Juan Carlos Diaz Velez (juancarlos@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+V00-00-04
+
+* Fixed arguments passed to MuonGun::GetTotalArea(cos(thetaMax), cos(thetaMin)). 
+  Order was swapped resulting in negative area.
+ 
+July 14, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V00-00-03
+
+* Take the curvature of the Earth into account when shifting the shower
+  core, fixing a bug that caused showers to miss the target volume by
+  several kilometers at zenith angles larger than 89 degrees.
+* Use MuonGun's cylinder class for sampling.
+* Added staging support.

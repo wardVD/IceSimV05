@@ -1,0 +1,59 @@
+
+# InEarth propagation example command list
+
+#
+# generate standard NuMu dataset (100000 evts) with E^-1, 
+# energy log10 2 to 7, zenith 90deg to 180deg
+#
+# params:
+# outfname(prem_csms.i3), flavor(NuMu), nevts(100000), gammaindex(1.0), 
+# energy_range(2:7), zenith_range(90:180), zenith_weight(1.0)
+# cross_section_model(csms), cross_section_scale(1.0:1.0:1.0)
+# earth_model(PREM_mmc), seed(1234), nfiles(1), fileid(0)
+#
+# the last three parameters(seed=1234 nfiles=1 fileid=0) are 
+# for random engine. 
+# If you generate multiple files you have to set them properly. 
+# seed   : define one value per dataset
+# nfiles : number of files in your dataset
+# fileid : id (or process) number, 0<= id < nfiles
+# you may skip these parameters if you generate only one file.
+
+python NuGenInEarthProp.py prem_csms.i3 NuMu 100000 1.0 2:7 90:180 1.0 csms 1.0:1.0:1.0 PREM_mmc 1234 1 0
+
+
+# generate NuMu dataset with 3.0 x csms with E^-1
+python NuGenInEarthProp.py prem_3xcsms.i3 NuMu 100000 1.0 2:7 90:180 1.0 csms 3.0:3.0:3.0 PREM_mmc
+
+# for mass production with zenith weight 1.9 with E^-2
+python NuGenInEarthProp.py prem.i3 NuMu 1000000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc
+python NuGenInEarthProp.py flat.i3 NuMu 1000000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc:FLATCORE_5.568
+
+#--------------------
+# for test production 
+python NuGenInEarthProp.py flat_small.i3 NuMu 10000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc:FLATCORE_5.568
+python NuGenInEarthProp.py prem_small.i3 NuMu 10000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc 1234 3 0
+python NuGenInEarthProp.py prem_small2.i3 NuMu 10000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc 1234 3 1
+python NuGenInEarthProp.py prem_small3.i3 NuMu 10000 2.0 2:7 90:180 1.9 csms 1.0:1.0:1.0 PREM_mmc 1234 3 2
+
+#--------------------
+# Make 2D tables and save it to .pickles file (and text files). 
+# param: histid, nzenbins, ncoszenbins, nebins, 
+# energy range, zenith range, generation gamma index, weight gamma index,
+# outfilebase, infilenames
+# you may use * to select multiple input files too.
+python MakeInEarthPropWeightTable.py 0 9 5 15 2:7 90:180 1 1.5 flat_small flat_small.i3 
+python MakeInEarthPropWeightTable.py 1 9 5 15 2:7 90:180 1 1.5 prem_small prem_small.i3 
+python MakeInEarthPropWeightTable.py 2 9 5 15 2:7 90:180 1 1.5 prem_small_23 prem_small2.i3 prem_small3.i3
+
+# combine multiple pickles into one
+python CombineInEarthPropWeightTable.py prem_small_all prem_small.pickles prem_small_23.pickles
+
+# Draw NInIce / NPrimary plot from pickle files
+# you may skip second parameter
+python DrawPickles.py prem_small.pickles flat_small.pickles
+
+# for comparison (may not work if zero-divide happens due to low statistics...)
+python DrawWeightRatio.py prem.pickles flat.pickles
+
+

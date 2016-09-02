@@ -1,0 +1,91 @@
+Release Notes
+=============
+
+trunk
+-----
+
+May 2, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+Release V16-04-01
+* Update logging test scripts to account for different
+  logging defaults in release and debug builds.
+
+April 29, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+Release V16-04-00
+
+* OMKey knows about scintillators.
+* Removed Backtrace, which I'm pretty sure isn't used.
+* Removed Fatal and Reconfigure methods from I3ServiceFactory base class.
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* implement ``__nonzero__`` in ``I3Bool`` and ``I3Int``
+* documentation fixes
+* prune dead code
+* ``icetray-inspect`` fixes for better documentation
+* udpates for C++11
+* remove hand-rolled ``isnan()``
+
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* (r2347) - Remove deprecated CINT dictionary generation
+* (r2341-2346) - Create a single I3FrameMixer implementation
+* (r2338) - Remove duplicate code in I3Tray::Execute
+* (r2325) - Add test for expected failure in production
+* (r2296,2298) - Remove examples project dependencies
+* (r2292) - Teach CountFrames about DAQ frames
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V15-08-00
+
+* (r2282) - I3ModuleFactory no longer has bindings to create_module.  It wasn't clear when it stopped working, but it was sometime in the last 6 years.  It's not used though.
+* (r2283) - Increased test coverage a bit.
+* (r2273) - Included a helper class that inherits from unittest.TestCase that makes testing that example scripts run a little easier.
+* (r2272) - Tests no longer depend on the examples project.
+* (r2266) - All python 2.6 tests are part of the normal test suite now.  Python support for 2.5 and earlier has been dropped.
+* Added an examples dir with a simple example. also included a test that runs this example, which is the new standard.
+* use ROOT_FOUND instead of USE_ROOT
+* Missing include guards fixed.
+* I3.h uber header is cleaned up and going away soon.
+* Docs cleaned up significantly.
+* Remove unused variables, clean up comments, fix indentation in I3ConditionalModule.
+* Eliminate unnecessary Wpotentially-evaluated-expression warnings
+* Reduce coupling between I3Module and I3Tray
+* CINT dicts will be deprecated this November.
+* Logging calls for higher log levels are usually disabled even in debug builds. This change inlines the logging level check into the caller, so that if the current logging level is not high enough, evaluating the log message and allocating memory to store it can be skipped. 
+* No more DSOLOCAL
+* clean up stray test output
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V15-03-00
+
+ - Delete module "KeyStarts" can delete all keys that start with the parameter value.
+ - dataio::open (which is in icetray) know about http.
+ - operator_suite : support for old boost version.
+
+November 20, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V14-11-00
+
+Major Release:
+  - OMKey is no longer a frame object.  C++ code attempting to add
+    these to the frame will break.
+
+September 30, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V14-09-02
+
+Bugfix:
+  - Frame-level POD comparisons work now.  This comes with the new 
+    I3PODHolder and reworking of the operator suite.
+  - Expose I3Tray::RequestSuspension in pybindings.
+  - Fix for boost 1.56 and shared_ptr changes.
+

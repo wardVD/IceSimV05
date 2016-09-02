@@ -1,0 +1,32 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+trunk
+-----
+
+* Added I3TopAddComponentWaveforms, a module to add "waveforms" corresponding to the classification of air shower particles in components.
+* Added an ExtendedI3Particle class that includes a data member for air shower component it belongs to.
+
+V01-01-02
+---------
+
+* renamed sim-icetop.py -> sim_icetop.py and sim-single-particles.py -> sim_single_particles.py
+* Add the option to adjust the observation level in I3CorsikaInjector.
+  This is to avoid injecting particles under the top of the snow.
+
+V01-01-00
+---------
+
+* Added importance sampling algorithm to be used for low-energy showers.
+  To use the algorithm, set the ImportanceSampling parameter in I3CorsikaInjector.
+* Added sim-icetop.py and sim-single-particles.py to resources/scripts.
+  These can be used for general simulations.
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.

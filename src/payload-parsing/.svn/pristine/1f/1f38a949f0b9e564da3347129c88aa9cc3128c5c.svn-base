@@ -1,0 +1,11 @@
+/**
+   @mainpage Doxygen docs for payload-parsing
+
+   @author J. Pretz 
+   @author P. Redl
+   @author R. Maunu
+
+   @section Overview
+
+   A project to decode I3 DAQ binary data into dataclasses objects.
+*/

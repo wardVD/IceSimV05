@@ -1,0 +1,37 @@
+
+#
+# Sets some default verbose
+#
+
+#/control/verbose 2
+#/control/saveHistory
+#/run/verbose 2
+#/tracking/verbose 1
+#
+# create empty scene
+#
+#/vis/scene/create
+
+
+# Create a scene handler for a specific graphics system
+#/vis/open DAWNFILE
+#/vis/open OGLSXm
+/vis/open HepRepFile
+#/vis/open HepRepXML
+
+#/vis/drawVolume tank_39A
+/vis/drawVolume world
+
+# Output an empty detector
+#/vis/viewer/flush
+
+
+/vis/viewer/reset
+/vis/viewer/set/style  wireframe
+#/vis/viewer/set/viewpointThetaPhi 105 150
+/vis/viewer/set/viewpointThetaPhi 90 0
+#/vis/viewer/zoom 80
+
+
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate

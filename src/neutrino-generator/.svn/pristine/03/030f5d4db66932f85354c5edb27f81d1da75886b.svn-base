@@ -1,0 +1,79 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+JUN 24, 2015 Kotoyo Hoshina(hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* more tests added to avoid future error of PropagationWeight (see MAY 8 2015 note)
+* Some parameters in I3MCWeightDict are renamed. To restore old parameter names, see resources/examples/NuGen.py. 
+  See https://wiki.icecube.wisc.edu/index.php/Neutrino_Generator/I3MCWeightDict for new parameters.
+
+JUN 14, 2015 Kotoyo Hoshina(hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* code cleaning, test implementation of MuonRange extention for NuEBar at Grashow Resonance.
+  When W decays into mu or tau (in total ~21 %), we need to extend detection volume, which wasn't done in old code.
+  However, as long as we apply contained cascade cut at analysis level, this effect may be negligible. 
+  old commit on 5/25(r133059) had a bug.
+
+MAY 8, 2015 Kotoyo Hoshina(hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* VERY IMPORTANT BUGFIX for NuEBar CHANNEL (PropagationWeight was wrong) 
+  all NuEBar simulations generated with the revision after 121996 (submitted on 7/25/2014) will be affected
+
+December 10, 2014 Kotoyo Hoshina(hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* ListToTree function is modified to not fill duplicated particle(ID) in a MCTree
+* Removed duplicated codes in I3NeutrinoGeneratorBase.cxx
+* Added parentID (data member) to Particle class
+* Particle::GetDaughters() function is changed to const, added AddDaughter() function
+* Update I3NuGGenie to support genie 2.8.6 (does NOT compatible with old genie)
+
+November 24, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+* Fixed a bug where 2 muons were created from one interacion
+* Recognizes I3_TESTDATA
+
+July 31, 2014 Kotoyo Hoshina (hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* InjectionRadius, ActiveLengthBefore(After), CylinderRadius, CylinderHeight are removed. 
+  Use CylinderParams parameter instead.
+* Bug fix in EnumTypeDef. Unused tests are removed.
+* InjectionMode::Cylindere is renamed to InjectionMode::Surface, because
+  NuGen don't know what the shape of sampling surface would be!
+* Make "AUTODETECT" default for PropagationWeight 
+ 
+July 22, 2014 Kotoyo Hoshina (hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* Output format has been changed to I3Map<I3ParticleID, double> for SimMode = "InEarth" option 
+* modified resources/util/DrawInEarthPropWeight.py to support both old format and new format
+* fWorldRadius parameter is added to Steering class, which used to be in earthmodel-service.
+  Users need to adjust the value if they want to inject neutrinos in large radius (>2km). 
+ 
+July 10, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V01-03-00
+
+* Muon range extension is settable.
+* Only consider neutrinos for selection that actually pass through the sampling surface.
+* Refactored NeutrinoGenerator into a worker base class, an I3Module, and an I3PropagatorService.
+* Replaced explicit Cylinder with general SamplingSurface.
+* Supports Corsika-NuGen generation.
+* Injection particle direction bug is fixed.
+* Download cross section files automatically.
+  
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.
+

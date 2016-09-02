@@ -1,0 +1,29 @@
+Release Notes
+=============
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* prune dead code
+* test updates
+* new tests
+* general cleanup
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* add RELEASE_NOTES to the docs
+* use $I3_TESTDATA in examples
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+* r137025, r137026, r137027 - Added a test that ensures the example scripts run.g
+
+November 20, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+V14-11-00 - Bugfix release
+
+* Added support for I3_TESTDATA

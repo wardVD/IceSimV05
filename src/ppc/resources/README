@@ -1,0 +1,32 @@
+Compilation:
+
+ppc is built by cmake within recent versions of the simulation metaproject.
+The compilation for GPU can be enabled/disabled with GPU_XPPC:BOOL in CMakeCache.txt.
+
+If for some reason compilation with cmake fails, do the following:
+
+single script: simply run "./make.sh cpu" or "./make.sh gpu" in this directory within the I3 build environment.
+
+step-by-step: alternatively, ppc can be compiled in 3 steps:
+1. icetray cmake system compiles file libppc.so
+2. in private/ppc/gpu subdirectory run "make glib" for GPU or "make clib" for CPU version of libxppc.so
+   you may also compile a stand-alone executable by running "make" for GPU or "make cpu" for CPU version
+3. in build/lib make links to the libxppc.so created in step 2 and to libcudart.so in the cuda tools directory
+
+
+To compile for OpenCL follow these steps, similar to above:
+0. You may need to edit/source src file in the ocl subdirectory
+1. Run "make olib" in the ocl subdirectory
+2. Copy libxppc.so into the build/lib directory (replace existing file, if any)
+3. add a link to the libOpenCL.so within the build/lib directory
+4. Make sure to include "load(libOpenCL)" in your script before ppc is loaded.
+
+
+Data tables:
+
+All of ppc tables are in ice/ directory. Set PPCTABLESDIR variable (as in run.py) to use either aha or spice.
+
+
+Example:
+
+exa.sh

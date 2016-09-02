@@ -1,0 +1,112 @@
+### Run with WimpEvent version = wimpevent (wimpsim-3.01)                
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)              
+###   Using DarkSUSY version = darksusy-5.0.5                          
+###   Using SLALIB version = 2.5-5    
+###   WimpEvent run started at date 2012-06-25; time 17:21:58
+### WimpEvent run parameters
+#  Detector latitude =  -.90000000E+02
+#  Detector longitude =  0.00000000E+00
+#  Start MJD date, mjd1 =    55694.00000000000      (13 May 2011 00:00:00.00 UTC)
+#  entered as 'MJD 55694.0               '
+#  End MJD date, mjd2 =      56063.00000000000      (16 May 2012 00:00:00.00 UTC)
+#  entered as 'MJD 56063.0               '
+#  Options:  wesunacc =         1
+#            weradec  =         0
+### Simulated interactions = cc and nc
+### Target material = ice/water
+#  
+### WimpAnn input event file = /data2/mzoll/WimpSim/tmp1/wa-m1000-ch5-sun.000000.000000.dat                                                                    
+### Below is header from WimpAnn input event file
+### Run with WimpAnn version = wimpann (wimpsim-3.01)                          
+###   Using Pythia version   = Pythia 6.426                                    
+###   Using nusigma version  = nusigma (nusigma-1.16-pyr)                      
+###   Using DarkSUSY version = darksusy-5.0.5                                  
+###   WimpAnn run started at date 2012-06-25; time 16:47:54                    
+### Neutrino oscillation parameters                                            
+#      theta_12 =  0.33890000E+02                                              
+#      theta_13 =  0.91200000E+01                                              
+#      theta_23 =  0.38540000E+02                                              
+#         delta =  0.00000000E+00                                              
+#  delta_m^2_21 =  0.75000000E-04                                              
+#  delta_m^2_31 =  0.23200000E-02                                              
+### WimpAnn run parameters                                                     
+#  Annihilation channel =         5                                            
+#  Generated particles =  b                bbar                                
+#  WIMP mass =  0.10000000E+04                                                 
+#  Number of annihilations =   1000000  (in this file)                         
+#  Source = Sun                                                                
+#  Total number of annihilations in this run =   1000000                       
+#  Note: For split files, the event weights in WimpEvent will be calculated for
+#  the number of annihilations in THIS file only, not the total number.        
+#  File number     1 out of     1 file(s).                                     
+#  Seed for random number generator (for beginning of run) =                -1 
+### This is the last line of the wimpann header                                
+### Event format is as follows:
+# EV  number  MJD  Sun-El (deg)  Sun-Az (deg)  Sun-Ra (deg) sun-dec (deg)
+# Tag  particle-name  energy (GeV)  Sun-angle (deg)  weight  Az (deg)  El (deg)
+# EE (end of event)
+### This is the last line of the wimpevent header
+EV        1   56058.07228447597     0.153068E+03 -.179478E+02 0.483456E+02 0.179478E+02
+I nu_e~    0.300458E+02 0.000000E+00 0.348574E-33 0.153068E+03 -.179478E+02
+O e+       0.276747E+02 0.370295E+01 0.286890E-46 0.156904E+03 -.173577E+02
+O hshow    0.330933E+01 -.363486E+02 0.286890E-46 0.114651E+03 -.194116E+02
+EE
+EV        2   55901.93664771729     0.200576E+03 0.225316E+02 0.253130E+03 -.225316E+02
+I nu_e     0.663275E+02 0.000000E+00 0.366298E-33 0.200576E+03 0.225316E+02
+O e-       0.614597E+02 0.148322E+01 0.128919E-45 0.199022E+03 0.229120E+02
+O hshow    0.580732E+01 -.180266E+02 0.128919E-45 0.218760E+03 0.168363E+02
+EE
+EV        3   56011.56796274999     0.336990E+03 -.210967E+01 0.487460E+01 0.210967E+01
+I nu_mu~   0.361676E+01 0.000000E+00 0.357387E-33 0.336990E+03 -.210967E+01
+O mu+      0.298507E+01 0.112426E+02 0.348471E-47 0.346416E+03 0.402619E+01
+O hshow    0.156996E+01 -.401881E+02 0.348471E-47 0.301214E+03 -.223348E+02
+EE
+EV        4   55955.52642985649     0.353742E+03 0.180039E+02 0.311438E+03 -.180039E+02
+I nu_mu    0.382354E+01 0.000000E+00 0.366546E-33 0.353742E+03 0.180039E+02
+O mu-      0.302675E+01 0.104852E+02 0.827480E-47 0.345807E+03 0.254698E+02
+O hshow    0.173635E+01 -.330265E+02 0.827480E-47 0.158228E+02 -.680935E+01
+EE
+EV        5   55812.57351735895     0.332974E+03 -.568673E+01 0.166721E+03 0.568673E+01
+I nu_tau~  0.357266E+02 0.000000E+00 0.350301E-33 0.332974E+03 -.568673E+01
+O tau+     0.328025E+02 0.215414E+01 0.229894E-46 0.335137E+03 -.578317E+01
+O hshow    0.386366E+01 -.223436E+02 0.229894E-46 0.310592E+03 -.424395E+01
+EE
+EV        6   55778.83965899627     0.239226E+03 -.168922E+02 0.135534E+03 0.168922E+02
+I nu_tau   0.980949E+01 0.000000E+00 0.345532E-33 0.239226E+03 -.168922E+02
+O tau-     0.825813E+01 0.740592E+01 0.748918E-47 0.232323E+03 -.136480E+02
+O hshow    0.248964E+01 -.298414E+02 0.748918E-47 0.269615E+03 -.269698E+02
+EE
+EV        7   55935.82402076029     0.245109E+03 0.220982E+02 0.290518E+03 -.220982E+02
+I nu_e~    0.337873E+02 0.000000E+00 0.367723E-33 0.245109E+03 0.220982E+02
+O nu_e~    0.225074E+02 0.308648E+01 0.340454E-46 0.248198E+03 0.232827E+02
+O hshow    0.122182E+02 -.611457E+01 0.340454E-46 0.239142E+03 0.195874E+02
+EE
+EV        8   55900.49566794890     0.359178E+03 0.223552E+02 0.251559E+03 -.223552E+02
+I nu_e     0.311153E+02 0.000000E+00 0.366142E-33 0.359178E+03 0.223552E+02
+O nu_e     0.220878E+02 0.252577E+01 0.619470E-46 0.137237E+01 0.238744E+02
+O hshow    0.996579E+01 -.613959E+01 0.619470E-46 0.354037E+03 0.185471E+02
+EE
+EV        9   55906.21061867957     0.102416E+03 0.229648E+02 0.257812E+03 -.229648E+02
+I nu_mu~   0.201267E+02 0.000000E+00 0.366711E-33 0.102416E+03 0.229648E+02
+O nu_mu~   0.165996E+02 0.493170E+01 0.201946E-46 0.103477E+03 0.181341E+02
+O hshow    0.446536E+01 -.216860E+02 0.201946E-46 0.963731E+02 0.440735E+02
+EE
+EV       10   55831.63603486425     0.308789E+03 0.165906E+01 0.183831E+03 -.165906E+01
+I nu_tau   0.688972E+01 0.000000E+00 0.353897E-33 0.308789E+03 0.165906E+01
+O nu_tau   0.565288E+01 0.916705E+01 0.438086E-47 0.303468E+03 -.581066E+01
+O hshow    0.217511E+01 -.345269E+02 0.438086E-47 0.330846E+03 0.290602E+02
+EE
+EV       11   55968.73781219529     0.277940E+03 0.140457E+02 0.324756E+03 -.140457E+02
+I nu_tau~  0.320353E+02 0.000000E+00 0.365056E-33 0.277940E+03 0.140457E+02
+O nu_tau~  0.247699E+02 0.357895E+01 0.208944E-46 0.274891E+03 0.120481E+02
+O hshow    0.820362E+01 -.119376E+02 0.208944E-46 0.288534E+03 0.203903E+02
+EE
+EV       12   55835.78674511886     0.254191E+03 0.327255E+01 0.187579E+03 -.327255E+01
+I nu_tau   0.198368E+02 0.000000E+00 0.354746E-33 0.254191E+03 0.327255E+01
+O nu_tau   0.163033E+02 0.471765E+01 0.209234E-46 0.249805E+03 0.152328E+01
+O hshow    0.447302E+01 -.204877E+02 0.209234E-46 0.273511E+03 0.105130E+02
+EE
+EV       13   55750.57148439880     0.335533E+03 -.224701E+02 0.107436E+03 0.224701E+02
+I nu_e     0.281640E+00 0.000000E+00 0.343997E-33 0.335533E+03 -.224701E+02
+EE
+#END

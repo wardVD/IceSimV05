@@ -1,0 +1,126 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+trunk
+--------------
+
+* The following deprecated classes were hidden, but kept around in case we run across any old simulation samples. (r138942)
+
+  - I3GaussianPMTPulse
+  - I3MCPMTResponse
+  - I3MCTWRParams
+  - MMCWeight
+
+* Moved I3ParticleIDMap to its own file.  Wasn't obvious that it could be found in I3MCPulse.h. (r138942)
+
+  -- Alex Olivas
+
+* moved I3WimpParams out of wimpsim-reader here
+  -- Matrcel Zoll
+
+
+December 12, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-05-00
+
+* Clean up unused code
+
+  -- Alex Olivas
+
+* Add Python dependency
+* Add Python module to load interfaces in a safe way
+* Add `operator<<` and `operator==` for a bunch of classes and expose
+  these to Python via dataclass_suite
+* Add Python tests (test_str.py and test_equality.py)
+* Make str output more consistent
+* Refactor common code into macro I3_SEQUENCE_OP_OSTREAM
+
+  -- Hans Dembinski
+
+* Fix linking error on Mavericks
+
+  -- David Schultz
+
+
+October 9, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V01-04-03
+
+* Added version checks to the serialization method (so that when you
+  try to read new data with old software, you get a nice error message
+  instead of cryptic ones)
+
+  -- Alex Olivas
+
+
+July 10, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V01-04-02
+
+* Added `I3Map<OMKey, vector<I3MCPulse> >` converter.
+* Cleaned up cmake pybindings.
+
+April 8, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-04-01
+
+* Make things const
+
+  -- Jakob van Santen
+
+
+January 13, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-04-00
+
+* Use doubles to store pulse times (necessary for long events)
+
+  -- Alex Olivas
+
+* Fix bug in obsLevelHeight units
+* Add hack to try and tell whether depths were stored as g/cm2 or in I3Units
+
+  -- Kath Rawlins
+
+
+January 11, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-01-00
+
+* I3SumGenerator moved to sim-services
+
+  -- Alex Olivas
+
+* Remove reference to I3ConverterFactory
+
+  -- Jakob van Santen
+
+* Allow full access to I3MMCTrack from python
+
+  -- Claudio Kopper
+
+
+January 11, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+Release V01-00-02
+
+* Cleaned up dependencies
+
+  -- Nathan Whitehorn
+
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.

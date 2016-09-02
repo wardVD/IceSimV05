@@ -1,0 +1,83 @@
+.. $Id: RELEASE_NOTES 121473 2014-07-11 12:37:08Z olivas $
+.. $Author: olivas $
+.. $Date: 2014-07-11 06:37:08 -0600 (Fri, 11 Jul 2014) $
+
+trunk 
+=====
+r142071 - Copy the OMKey when making LC connected neighbors.  This preserves the PMT number
+          so no change for IceCube proper, but for future mDOM simulations this is slighty saner.
+
+Release Notes
+=============
+
+Changes since V00-00-06
+
+* Added a small python function module for and effective dom simluation by converting
+  MCPulses to RecoPules and add additional jitter to the charge and time of the pulse.
+* Updated the examples so that they work now.
+* Added more checks to prevent a crash when someone gives us a pointless empty DOM entry.
+* Fixed PMTResponseSimulator gcd test to fail properly for 0 voltage DOMs instead of throwing.
+* Added warning if one tries to simulate a frame that is more than 60 seconds long.
+* Disabled PMTResponseSimulator module pybindings (to prevent icetray inspect of crashing)
+* Fixed a bug with circular references which meant that all memory was not freed when
+  the DOMLauncher module was destroyed. This would cause a memory leak if the DOMLauncher
+  module was reinstantiated in a lopp for example.
+* No empty launch series are written out.
+* The beacon launch phase changes between events
+
+December 11, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+-------------------------------------------------------
+
+V00-00-06
+
+* Fixed the double flooring of the baseline which caused a lower than
+  expected extracted charge compared to the input charge.
+
+November 24, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+-------------------------------------------------------
+
+V00-00-05
+
+* Updated DOMLauncher module docs. (work in progress)
+* Enableing an optimization in the discriminator that was left out by
+  mistake in the last release. Speeds up the discriminator part and lowers
+  the memory footprint since no duplicataed discriminator crossings are
+  generated anymore.
+* Reintroduce and active DOM maps to speed up simulation that only
+  simulates a fraction of the detector.
+* Recognizes I3_TESTDATA.
+* Fixed pulse merging in the WaveformEvaluator class and introduced a
+  cutoff at 500us for evaluating pulses in the past which significantly
+  improves computational time.
+* Added BufferedWaveformEvaluator class that buffers up to 500us
+  (can be adjusted) of pulses from previous frames.
+* Replaced all instances of manual waveform evaluation in the code and
+  replaced it with the newBufferedWaveformEvaluator.
+* MultiFrameEvents simulation works now as expected. This required some
+  small changes/fixes in how the DOM updates its state and the introduction
+  of the above mentioned BufferedWaveformEvaluator.
+* Added tests to test MultiFrameEvents simulation.
+* Simulation of so-called beacon launches added. Also a new configuration
+  options were added to set the beacon launch rate and whether they should be
+  simulated at all.
+
+July 11, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+
+V00-00-04
+
+Added release notes for this project.
+
+* Added RapCal time calibration uncertainty to the simulation. A script which shows
+  the effect of shifting the DOMLaunch time stamp was added as well.
+* Removed dom_type enum since it was redundant.
+* Fixed the clock cycle phase setting so the DOM only gets a new phase when it is reset and
+  not every time the Discriminator method is called.
+* Adjusted and added comments.
+* Reintroduced configurable global state for I3DOM. Now the proper way of constructing an
+  I3DOM is to provide both a reference to a globalTime variable and a pulse template map.
+* A class for evaluating the folded waveform which merges the pulses in the tails was added.
+* SuperNovaMode has changed. Now the only effect is that enables Discriminator over threshold output.
+* MultiFrameEvents option has been added DOMLauncher should simulate events spanning several frames.
+
+  .. note:: This option is in an experimental stage and is not working properly yet!

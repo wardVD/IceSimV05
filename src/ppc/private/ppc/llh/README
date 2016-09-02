@@ -1,0 +1,33 @@
+This directory will contain the code for DirectFit. Also used for ice fits.
+
+No support as yet, but if you'd like to try here are some directions.
+1. compile the ppc.o in either ../gpu or ../ocl with make go or make oo
+2. link to ppc.h: ln -s ../ppc.h
+3. compile in this directory with make or make ocl
+
+you will need to source src files in ../gpu or ../ocl and this directories.
+the src files may need to be edited!
+
+You will need to prepare the data file of your event. This is a text file
+named "dat" with lines:
+[str] [dom] [time] [charge]
+e.g.: 73 20 12.5 1.3
+This can be binned (in, e.g., 25 ns bins) or unbinned data. For multiple
+repeated events the charge is average over all events.
+
+Use as following:
+export PPCTABLESDIR=../../../resources/ice/llh
+[FLSH=dom,str] [MLPD=0/1] [SREP=sim. events] [DREP=dat. events] ./llh [method]
+
+FLSH: set for flasher data, same conventions as for ppc
+MLPT: use nnls-extraction for track (FLSH=0) or azmuth pattern (FLSH=1)
+      reconstruction
+SREP: usually 1. Simulate more events for more precise results
+DREP: usually 1. Set for flasher data with repeated events (e.g., DREP=250)
+
+You can fine-tune (or disable) GPUs with ppc env. variables NPHO and NPHO_[#].
+Default is 1024 (photons per thread). For a faster GPU set to higher number,
+e.g., NPHO_0=1792. To disable a GPU or device, set to 0: NPHO_4=0.
+
+Also, for CUDA version, BADMP and BADMP_[#], and for OpenCL version, XMLT and
+XMLT_[#]. Set to the highest integer that works without errors (default is 4).

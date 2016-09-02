@@ -1,0 +1,44 @@
+.. $Id$
+.. $Author$
+.. $Date$
+
+=============
+Release Notes
+=============
+
+On The Trunk
+============
+
+(Documented here are changes of particular importance since the last release)
+
+Sept 1, 2015 by Alex Olivas
+---------------------------
+Removed dependence on I3MCEventHeaderGenerator
+
+July 15, 2015 by Melanie Day
+----------------------------
+The hanldling of the systematics reweighting by GENIE is rewritten to make it much easier to implement.  The involved files in particular are I3GENIESystWeights and I3GENIEGenerator, and involves revisions 135194-135206.
+
+March 9, 2015 by Melanie Day
+----------------------------
+The hard-coded energy ranges are changed from the previous (5-200 GeV) to the expanded range (1-1000 GeV).  This involves changing two numbers in I3GENIEGenerator.cxx
+
+
+
+Actual Releases
+===============
+
+July 11, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+
+V00-00-03 - Incremental release.
+
+* Feature to convert the elements of the I3GENIEResultDict to something that can be put into output files, nominally ROOT files.
+* Python bindings for I3GENIEResultDict
+
+
+May 3, 2013 Claudio Kopper  (ckopper@icecube.wisc.edu)
+------------------------------------------------------
+
+* consistently store kinetic energy in the output I3MCTree (this)
+  may change physics results!

@@ -1,0 +1,28 @@
+#------------------------------------------------------------
+# Scripts to modify earthmodel
+#------------------------------------------------------------
+
+To generate new EarthModel with parameters,
+use icesim meta-projects and run MakeEarthDensityFiles.py.
+ 
+To run the script, prepare "fitparams.input" with following format
+xsec histid R1 R2 R3
+
+xsec : cross section global scale (it's not used for making EarthModel, but used for condor script)
+histid : histogram ID(dataset ID) (it's not used for making EarthModel, but used for condor script)
+R1: density scale parameter for core part
+R2: core_edge position scale parameter
+R3: density scale parameter for mantle
+
+then type following line.
+
+$  python MakeEarthDensityFiles.py
+
+This script generates earthmodel files under earthmodel-service/resources/earthparams/densities/
+and condor submission scripts under neutrino-generator/resources/util/condor_submit
+with names of run_inearth.sh and run_maketable.sh.
+
+You will need to change some paths in the script to match your file system.
+
+
+

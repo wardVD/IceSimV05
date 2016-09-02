@@ -1,0 +1,256 @@
+..  $Id: RELEASE_NOTES 135633 2015-07-27 21:56:46Z david.schultz $
+
+Release Notes
+=============
+
+April 3, 2015 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V01-02-01
+
+* Fixes for new I3MCTree
+
+  -- David Schultz
+
+* Move .fits files to I3_TESTDATA and make tests refer to that
+* Small code fixes to suppress warnings
+* Close potential memory leak
+
+  -- Don la Dieu
+
+* Small code fixes to suppress warnings
+* Select module coordinates by I3OMGeo object instead of requiring client
+  code to unpack coordinates itself
+
+  -- Jakob van Santen
+
+
+December 12, 2014 Meike de With (meike.de.with@desy.de)
+------------------------------------------------------------------------
+
+Release V01-02-00
+
+* Make PhotoSpline radial extents an input variable, to speed up
+  calculations for low-energy events (DOMs far away are not expected to
+  get any light, so just return a 0 NPE expectation for these DOMs, which
+  saves a lot of look-up/calculation time)
+
+  -- Andrii Terliuk / Moriah Tobin / Jakob van Santen
+
+
+November 24, 2014 Alex Olivas (olivas@icecube.umd.edu)
+------------------------------------------------------------------------
+
+Release V01-01-02
+
+* Recognizes I3_TESTDATA now.
+* Make PhotoSpline Radial Extents an input variable
+
+September 23, 2014 Meike de With (meike.de.with@desy.de)
+------------------------------------------------------------------------
+
+Release V01-01-01
+
+* Include standard integers
+* Fix block quotes in rst documentation
+
+  -- Don la Dieu
+
+
+January 15, 2014 Meike de With (meike.de.with@desy.de)
+------------------------------------------------------------------------
+
+Release V01-01-00
+
+* Add the ability to add hits to an already existing map
+
+  -- Alex Olivas
+
+* Make I3DummyPhotonicsService do integrals
+* Use the same nGroup in the Jacobian matrix calculation as in the 
+  coordinate transformation
+* Add a test to ensure that SelectSource() and GetProbabilityQuantiles()
+  return bit-for-bit identical results whether or not gradients were 
+  calculated
+
+  -- Jakob van Santen
+
+
+V00-05-00, 2013-02-21, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Raise default DOM efficiency in I3PhotonicsHitMaker to 0.99
+
+  -- Nathan Whitehorn
+
+* Allow use of SelectSource() with photorec tables -- this allows
+  reconstructions (like Millipede) that use the SelectSource() interface
+  to use photorec tables without modification
+
+  -- Chris Weaver
+
+* Remove dependency on photonics and include photonics table reader support
+  internally
+
+* Improve logging
+
+  -- Kevin Meagher
+
+V00-04-05, 2012-09-11, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Fix after removal of global GetService()
+
+  -- Nathan Whitehorn
+
+V00-04-04, 2012-08-04, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Fix bug to allow millipede calculating gradients correctly
+* Future proof against depricated GetService
+
+  -- Nathan Whitehorn
+
+
+V00-04-03, 2012-06-27, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Use new get_photon_delays() API in Photonics 1.7 to do much faster
+  table-based EHE simulation
+* Use spline table header geometry instead of input particle types to
+  determine table type
+* Rationalize construction of photonics services by replacing static
+  Create() methods with constructors (in both C++ and Python)
+
+  -- Nathan Whitehorn
+
+* Allow I3PhotonicsHitMaker to accept None/NULL photonics services 
+  for cascades/tracks. Particle types without a photonics service
+  will be ignored.
+* Allow I3PhotonicsHitMaker to be configured with a I3RandomService
+  from python. The default is still to get it from the context.
+* Silence clang warnings
+* Do not propagate dark and non-in-ice particles in PhotonicsHitMaker
+
+  -- Claudio Kopper
+* Commented out error message when tables directory is missing.
+
+  -- Juan Carlos Diaz Velez
+
+V00-04-02,    2012-02-09, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Add a minimal after-the-fact "binned mode" to prevent this from writing
+  quite as many MC hits when doing EHE simulation.
+* Add a backdoor to old-hit-maker-style binned mode for truly ludicrous
+  numbers of photons.
+* Pybindings for the dummy service.
+* Use the default fallbacks for gradient-aware SelectSource() and company.
+
+  -- Nathan Whitehorn
+
+* Fix output for SelectSource() when getAmp=false and the spline call is outside
+  the spline boundary
+
+  -- Jacob Feintzeig
+
+* Allow cascade photorec tables to be queried via SelectSource(). Since
+  SelectSource() uses the PhotonicsService energy scaling, the mean
+  amplitude returned by SelectSource() on level-2 cascade tables will be
+  13% higher than when queried with GetPhotoRecInfo(). This is intentional
+  and correct.
+* Clean up GetSource()/GetProbabilityDensity() Photorec facade.
+
+  -- Jakob van Santen
+
+* Restore python 2.4 compatibility
+
+  -- Don La Dieu
+
+V00-04-01,    2012-01-14, Nathan Whitehorn (nwhitehorn@icecube.wisc.edu)
+--------------------------------------------------------------------------------
+
+* Rearrange class hierarchy so that all services (Photonics tables, splines,
+  the dummy service) inherit from a common abstract base class.
+* Make I3PhotonicsServiceCommons a private interface
+* Add constructors for PhotonicsSource, including one that sets one up from
+  an I3Particle
+* Deprecate a variety of old APIs (e.g. FillPhotonicsSource()) made obsolete
+  by the new PhotonicsSource constructors
+* Move monopole light scaling from hit-maker to photonics-service
+* Add a new module, I3PhotonicsHitMaker, written as a replacement for
+  hit-maker (this is a C++ port of the former Mafioso module)
+* Use phys-services I3RandomService->GSL bridge instead of a hand-rolled one
+  in I3PhotoSplineService
+* Default Photonics service name changed from "PhotonicsService" to
+  "I3PhotonicsService" and now uses I3_DEFAULT_NAME()
+* Fix spline tables with non-default indices of refraction (i.e. all of them),
+  courtesy of Jacob Feintzeig
+* Add support for infinite muon spline tables (Jacob Feintzeig)
+
+V00-03-04,    2011-08-09, Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------------------
+
+* Fix a bug where asking for the gradient on a repeated SelectSource?() call
+  would return gibberish.
+
+  -- Nathan Whitehorn
+
+* Call through to the PhotonicsCommons? version of fillPhotonicsService(). This
+  makes sure all the fields are filled properly. Without this, the various
+  sines and cosines of the source direction would not be filled, making the
+  photospline gradient code return gibberish.
+
+  -- Nathan Whitehorn
+
+V00-03-03,    2011-05-25, Nathan Whitehorn (nwhitehorn@icecube.wisc.edu)
+--------------------------------------------------------------------------------
+
+* Improve pybindings to bind a vector of PhotonicsSource objects
+* Reduce burn-in period in the photospline service MH sampler
+* Fix bugs related to photospline probability quantiles crossing table edges
+
+V00-03-00,    2010-12-02, Jakob van Santen (vansanten@wisc.edu)
+--------------------------------------------------------------------------------
+
+* Bugfix: Fix inverted coordinate system in PhotoSplineService and add a
+  `parity` property to PhotonicsService that indicates whether the underlying
+  tables were generated with positive source zenith angles (in which case table
+  azimuth points towards negative IceCube coordinate z) or negative zenith angles
+  (in which case it points towards positive z).
+
+* Feature: Support for querying gradients of total amplitude and probability
+  quantiles, returned in detector coordinates. The internal Photonics coordinate
+  system may be either cylindrical or spherical. This is only implemented in
+  PhotoSplineService, since it knows about analytic derivatives.
+
+* Feature: Support for second derivatives, also in detector coordinates.
+
+* Feature: parallel evaluation of table value and gradient in PhotoSplineService
+  (7 evaluations for the price of 2 with a decent vectorizing compiler).
+
+* Feature: Numpy-ified pybindings for simplified testing.
+
+* Reorganization: factored pybindings out into multiple files for better
+  maintainability.
+
+V00-02-00,    2010-08-27, Jakob van Santen (vansanten@wisc.edu)
+--------------------------------------------------------------------------------
+
+* Physics tweak: Cherenkov photons per meter 0.2% larger due to
+  wavelength-dependent index of refraction.
+
+* Physics tweak: Use M. Kowalski's parameterization of the effective track length
+  for EM cascades (20% larger)
+
+* Feature: Two new functions, GetTimeDelays() and GetMeanAmplitudes(), that fill
+  arrays of timing information. This addresses a criticism from the original
+  PhotonicsService code review.
+
+* Feature: I3PhotoSplineService, a new subclass of I3PhotonicsService that
+  provides smooth interpolation from spline coefficient tables. This is only
+  compiled if project :ref:`photospline` can be found.
+
+* Feature: Support for spherical table geometries.
+
+* Feature: Complete Python bindings.

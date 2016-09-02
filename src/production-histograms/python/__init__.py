@@ -1,0 +1,1 @@
+from .icetray_modules.production_histograms_module import ProductionHistogramModule

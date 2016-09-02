@@ -1,0 +1,30 @@
+/**
+   @mainpage photonics-service
+
+   @author Klas Hultqvist
+
+   @section Description
+
+   This is the automatic documentation of the @c photonics-service project.  
+   Photonics-service provides the interface to access the photonics i/o
+   functions from IceTray. 
+   
+   For specific information on classes or files, click the appropriate
+   tab at the top of the page.
+   
+   For wiki documentation, see
+   http://wiki.icecube.wisc.edu/index.php/Photonics-service
+
+   Photonics is described in the paper: 
+   Light tracking through ice and water --
+   Scattering and absorption in heterogeneous media with PHOTONICS
+   J. Lundberg a, P. Miocinovic, K. Woschnagg, T. Burgess ,
+   J. Adams, S. Hundertmark, P. Desiati, P. Niessen,
+   Nucl. Instr. and Meth. A, Volume 581, Issue 3, 1 November 2007, Pages 619-631
+   http://dx.doi.org/10.1016/j.nima.2007.07.143
+   free mirror: astro-ph/0702108 
+
+   For more information on photonics, see
+   http://photonics.sourceforge.net/index.php
+
+*/

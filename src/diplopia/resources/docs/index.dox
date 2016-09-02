@@ -1,0 +1,26 @@
+/**
+  @mainpage The 'diplopia' Project
+
+   For additional documentation see http://wiki.icecube.wisc.edu/index.php/Diplopia
+
+   @author Juan Carlos D&iacute;az V&eacute;lez <juancarlos@icecube.wisc.edu>
+
+   @section Overview
+
+   This project contains tools for generatig Monte Carlo IceCube events consisting of 
+   multiple primaries (and secondaries) that generate coincident detector hits. These
+   types of events are often misreconstructed as upgoing muons and are
+   difficult to distinguish from such.
+
+   At this time, the project consists of the following two modules:
+
+   @li MPHitFilter is used to filter any events which do not generate hits in
+   the detector. 
+   @li I3Diplopia (deprecated) takes events from frame pairs and merges them
+	into a single one.
+   @li I3PolyplopiaExp takes events from multiple frames and merges them
+	into a single one various with multiplicities by sampling time intervals from an 
+	exponential distribution based on the rate of minimum-threshold events as determined by MPHitFilter.
+   @li PoissonMerger uses an CoincidentEventService to inject multiple events sampled from a Poisson distribution
+
+*/

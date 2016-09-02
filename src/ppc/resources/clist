@@ -1,0 +1,8 @@
+cudatest	0 1 2 3 4 5
+cuda001		0 1 2 3 4 5
+cuda002		0 0 1 2 3 4
+cuda003		0 1 2 3 4 5
+
+#badmps
+cuda001		3 22
+cuda002		3 10

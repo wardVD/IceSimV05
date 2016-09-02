@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>earthmodel-service</title>
+</head>
+<body>
+<h1>earthmodel-service</h1>
+now its for all uses....<br>
+see <a
+ href="https://wiki.icecube.wisc.edu/index.php/Earthmodel-service">https://wiki.icecube.wisc.edu/index.php/Earthmodel-service</a>
+for updates.<br>
+<br>
+<h2>overview</h2>
+EarthModelService provides density of the Earth at a given point in
+Earth-center coordinate. <br>
+Following users are strongly encouraged to use this module to make your
+simulation consistent.<br>
+<ol>
+  <li>Users who need information of density of the Earth (includes
+bedrook and ice, air)<br>
+  </li>
+  <li>Users who need to coordinate conversion between IceCube
+coordinate and Earth Center&nbsp; coordinate<br>
+  </li>
+  <li>Users who need to calculate muon range<br>
+  </li>
+  <li>Users who are using root just because they want to use TVector3<span
+ style="font-weight: bold;"></span></li>
+</ol>
+They are treated by following classes respectively.<br>
+<ol>
+  <li>EarthModelService <br>
+  </li>
+  <li>EarthModelService</li>
+  <li>EarthModelCalculator</li>
+  <li>RVector3</li>
+</ol>
+<h4>What you need to prepare to get your own Earth Model</h4>
+Currently all density profile below Moho-boundary is hardcoded inside
+EarthModelService.<br>
+Upper structures such as bedrook, ice, air and the definition of the
+EarthRadius are provided with crust model files, which must follow
+following format. See details in resources/earthparams/PREM_mmc.dat .<br>
+<ul>
+  <li>Format should follow next three colums<br>
+upper_radius[m]&nbsp; density[g/cm^3]&nbsp;&nbsp; label[string]</li>
+  <li>Data must be in ascending order in upper_radius<br>
+  </li>
+  <li>no space before first column</li>
+  <li>delimiter must be whitespaces</li>
+  <li>data must include at least 5 lines with labels of
+"moho_boundary",
+"rockice_boundary","iceair_boundary", "earth_radius", and "atmo_radius"</li>
+  <li>density must be the density up to the defined radius, except for
+"moho_boundary"</li>
+  <li>density of "moho_boundary" should be same as&nbsp; the density of
+next layer</li>
+  <li><span style="color: rgb(255, 0, 0);">"earth_radius" is NOT the
+geophysical boundary.</span> This is the definition that all simulation
+program regards "the radius of the Earth".<br>
+  </li>
+  <li>lines start from '#' or whitespace are treated as comments</li>
+</ul>
+<h4>Note about Earth Radius for NuGen users<br>
+</h4>
+If you want to use NuGen with a large injection volume that may
+cross over the boundary of the Earth surface (with default setting it's
+same as the radius of the ice surface),&nbsp; you have to increase
+earth_radius parameter so that contain all your injection volume within
+the radius.<br>
+In this case, the earth_radius parameter is quite similar concept of
+"World" volume of Geant4.<br>
+Do not forget to make all data in ascending order in upper_radius.<br>
+<h2>Classes descriptions</h2>
+<h3>RVector3 (Root-style Vector3)<br>
+</h3>
+This is just copy of the TVector3, but is removed any root-dependency
+(does not delive TObject, inactivated some functions that use TVector2
+etc.).<br>
+If your module depend on root just because you want to use TVector3,
+you may switch it to RVector3 and your module won't require root
+anymore.<br>
+<br>
+<p>It also offer constructors that takes I3Position or I3Direction as
+an argument. If you want an I3Position from a RVector3, you may use
+GetI3Pos() function. See examples.
+</p>
+<pre>// conversion from I3Position etc. to RVector3<br><br>I3Position pos;<br>I3Direction dir;<br><br>RVector3 p(pos);<br>RVector3 d(dir);<br><br>// conversion from R3Vector3 to I3Position etc.<br><br>I3Postion pos2 = p.GetI3Pos();<br>I3Direction dir2 = d.GetI3Dir();<br></pre>
+<br>
+<h3>I3EarthModelServiceFactory</h3>
+<h4>Parameters : <br>
+</h4>
+<dl>
+  <dt>ServiceName</dt>
+  <dd>Name of the service (default EarthModelService)</dd>
+  <dt>PathToDataFileDir</dt>
+  <dd> Full path to directry which
+contains crust datafile. If blank,
+$I3Build/earthmodel-service/resources/earthparams will be used.</dd>
+  <dt>EarthModel</dt>
+  <dd>Name of Earth model. PREM (default),
+PREM_FLATCORE, HOMOGENEOUS</dd>
+  <dt>CrustModel</dt>
+  <dd> Name of crust model. PREM_mmc (default),
+PREM_legacy, etc.</dd>
+  <dt>EarthDensity</dt>
+  <dd> Density of "HOMOGENEOUS" Earth.</dd>
+  <dt>CoreDensity</dt>
+  <dd> Density of core of
+"PREM_FLATCORE" Earth.</dd>
+  <dt>IceCapType</dt>
+  <dd>Type of Ice geometry. "SheetIce"
+(default, assumes the Earth is covered with the thick IceSheet),
+"NoIce"(All ice is taken away!), "SimpleIceCap" (Spherical ice cap
+exists around the
+Antarctica)</dd>
+  <dt>IceCapSimpleAngle</dt>
+  <dd> Solid angle of SimpleIceCap. default : 30 degree.<br>
+  </dd>
+  <dt>DetectorDepth</dt>
+  <dd> Depth of detector center [m],
+measured from the surface of the Ice.</dd>
+</dl>
+<h3>EarthModelService</h3>
+<h4>Coordinate conversion&nbsp; <br>
+</h4>
+EarthModelService offers coordinate conversion to get EarthCenter
+coordinate position from IceCube coordinate position, etc. Arguments
+and return value could be I3Position, I3Direction, and RVector3. See
+details in header comments.<br>
+<h4>GetEarthDensityInCGS, GetMedium</h4>
+GetEarthDensityInCGS(point) function returns density at the given point.<br>
+<span style="color: rgb(255, 0, 0);">REMEMBER, the return value is in
+CGS unit [g/cm3] !<br>
+</span><br>
+GetMedium(point) function returns medium type which is defined in
+EarthModelService as enum:<br>
+<ul>
+  <li>INNERCORE</li>
+  <li>OUTERCORE</li>
+  <li>MANTLE</li>
+  <li>ROCK</li>
+  <li>ICE</li>
+  <li>AIR</li>
+  <li>VACUUM</li>
+</ul>
+<h3>EarthModelCalculator</h3>
+<h4>GetMuonRange(energy, isTau, option)</h4>
+This function returns muon range in m.w.e. at given energy.<br>
+if isTau is true, gives tau range instead.<br>
+<br>
+The option parameter controls which equation you want to use.<br>
+<ul>
+  <li>0 &lt; option &lt; 10 : use legacy equation</li>
+  <li>10 &lt; option &lt; 20 : use Dima's new parameter updated in 2011</li>
+  <li>20 &lt; option &lt; 30 : use Gary's fitting parameter used in
+NUSIM</li>
+</ul>
+fmod(option, 10) gives a scaling parameter of return value.<br>
+If you specify option = 12.5, that uses Dima's new function and
+multiply by a fuctor of 2.5.<br>
+<h4>GetMuonRangeInMeter()</h4>
+This function returns muon range in [m] with a given track geometory,
+energy and earth model.<br>
+You must choose arguments carefully to get expected behavior.<br>
+<h5>Arguments : </h5>
+<dl>
+  <dt>double energy</dt>
+  <dd>energy of particle<br>
+  </dd>
+  <dt>const&nbsp; RVector3 &amp;endposCE,&nbsp; const&nbsp; RVector3
+&amp;dirCE</dt>
+  <dd>endposCE is a position that the track dies out. Suppose a track
+has an energy at startposCE (which we don't know unless this function
+is called) and lost most of it's kinetic energy at endposCE (energy at
+endposCE &lt; energy threshold), the function gives the length[m]
+between endposCE and startposCE, with taking into account of given
+EarthModel and track direction (dirCE).<br>
+Both endposCE and dirCE must be in EarthCenter coordinate.</dd>
+  <dt>EarthModelServiceConstPtr earthservice_ptr,</dt>
+  <dd>pointer to the EarthModelService</dd>
+  <dt>bool&nbsp;&nbsp; isTau</dt>
+  <dd>is tau flavor or not. <br>
+default : false<br>
+  </dd>
+  <dt>bool&nbsp;&nbsp; stopAtEarthSurface</dt>
+  <dd>This is a flag if we limit (or trim) the return length with the
+EarthSurface. <br>
+For example, high-energy downgoing muon have extremely long range since
+their path includes Air region. <br>
+People who need how far the muon can be generated on top of the Earth
+need to switch off this option.<br>
+NeutrinoGenerator doesn't need this calculation, because anyway it
+starts simulation from the surface of the Earth. In the latter case we
+switch on the stopAtEarthSurface parameter and returned track length is
+trimmed by the surface of the Earth.<br>
+default : false<br>
+  </dd>
+  <dt>double stepsize</dt>
+  <dd>Since this function caluclate accumulation of column-depth, *you
+need to specify step size.&nbsp; This function use this step size
+unless ration of density between current step and the last step does
+not change grater than the amount of density_tolerance. <br>
+default : 10m </dd>
+  <dt>double finestepsize</dt>
+  <dd>this step size is used when density of a point is changed * a lot
+from the last step. * This is the finest step used in this calculation,
+in other * words, density profile is averaged out in this step size *
+even at the edge of earth's core, where the density changes * 50% from
+Mantle. * default : 1m</dd>
+  <dt>double density_tolerance</dt>
+  <dd>used to switch step size. if you set 0.05, the function switch
+step size to fine one when density varie over 5% from the last step. <br>
+default : 0.05 <br>
+  </dd>
+  <dt>double option</dt>
+  <dd>Used by GetMuonRange() function. <br>
+Leave it as defaut unless you want to explicitely change the parameter.</dd>
+</dl>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

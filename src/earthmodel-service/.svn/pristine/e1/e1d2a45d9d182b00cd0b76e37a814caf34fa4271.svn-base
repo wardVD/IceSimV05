@@ -1,0 +1,38 @@
+Release Notes
+=============
+
+July 22, 2014 Kotoyo Hoshina (hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+* clipAtEarthSurfice option is removed from several public functions.
+* fEarthRadius parameter is removed and earthmodel-service no longer
+  takes into account simulation volume (world volume)
+
+July 14, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+* Material properties are now read from data files. 
+* RVector3 is no longer used. 
+* The simple iceceap implementation was fixed; while the upper surface 
+  of the glacier had the correct shape, layers within the ice were 
+  Earth-centered spheres rather than being concentric with the ice surface. 
+* The code for integrating the Earth density to convert bewteen 
+  column depth and distance with more efficient implementations. For 
+  the conversion of distance to column depth (where the endpoints 
+  are known) Romberg integration is now used, and for conversion of 
+  column depth to distance (where only one endpoint is known) 
+  Runge-Kutta integration of the problem (rewritten as a differential 
+  equation) is used. 
+* The public interface now supports querying which material is found
+  at a given point, and also checking the distance from a given point 
+  along a given direction to the next boundary between materials. 
+
+September 12, 2012 Kotoyo Hoshina  (hoshina@icecube.wisc.edu)
+--------------------------------------------------------------------
+
+Started project
+
+This project manages density profile of the Earth and ice.
+All propagation program except for mmc should refer this module 
+to get density of the Earth at a given position x.
+

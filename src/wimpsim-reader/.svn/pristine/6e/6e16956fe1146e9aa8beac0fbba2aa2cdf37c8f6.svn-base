@@ -1,0 +1,64 @@
+WIMPSIM Production
+
+=== How what you need and how to install ===
+install WimpSim in the version 3.03 or higher. Refer to [http://copsosx03.physto.se/wimpsim/] and follow the descriptions.
+
+if you want to have automated submission to the NPX-cluster you need to install ClusterSubmitManager by Martin Wolf [http://code.icecube.wisc.edu/svn/sandbox/mwolf/i3projects/ClusterJobManager/trunk] [https://wiki.icecube.wisc.edu/index.php/ClusterJobManager].
+Install preferably to the $I3_SRC directory, alternatively append the installation directory to the system-variable PYTHONPATH
+
+=== small introduction ===
+WimpSim is run in two stages: 'wimpann' and 'wimpevent'.
+These scripts try to automatize these calls to these scripts.
+
+This projects is build from:
+- driver scripts: in charge of calling 'wimpann' and 'wimpevent' with the correct parameters parsed, also file-operations.
+- submit script: for automated submission of a whole batch of files to a cluster (like NPX3).
+- a master_submit script: where you just specify the most important Parameters and the shape and size of the datasets.
+
+this is the call hierarchy:
+master_submit: requested masses, channels, files
+  |-submit(mass1, channel1, nfiles)
+    |-wimpann(mass1, channel1, nfiles) producing n files each for sun and earth
+    |-wimpevent_sun(mass1, channel1, file_1)
+    |-wimpevent_sun(mass1, channel1, file_2)
+    ...
+    |-wimpevent_sun(mass1, channel1, file_n)
+    |-wimpevent_earth(mass1, channel1, file_1)
+    |-wimpevent_earth(mass1, channel1, file_2)
+    ...
+    |-wimpevent_earth(mass1, channel1, file_n)
+  |-submit(mass2, channel2, mfiles)
+    |-wimpann(mass2, channel2, mfiles) producing m files each for sun and earth
+    |-wimpevent_sun(mass2, channel2, file_1)
+    |-wimpevent_sun(mass2, channel2, file_2)
+    ...
+    |-wimpevent_sun(mass2, channel2, file_m)
+    |-wimpevent_earth(mass2, channel2, file_1)
+    |-wimpevent_earth(mass2, channel2, file_2)
+    ...
+    |-wimpevent_earth(mass2, channel2, file_m)
+  ...
+
+So if you trust the scripts, please operate only on the master_submit level
+
+=== How to set up ===
+All scripts mentioned above are in the same folder you found this README file.
+
+Most comes preconfigured for you, local adaptions must only be made in the driver*-files to the 'filelocation' member-variables. These should be the same for all driver-files. If there are misconfigured or inaccessible paths the script will warn about that.
+
+If basic configuration parameters must be changed, this can be done at the '*_params'-class at the top of the driver-files, take care with the file operations at the bottom of the scripts and teh correctness of paths.
+
+=== how to run ===
+edit master_submit.py so that the dataset parameters are to your liking (see instructions at top of script).
+Submit it to the cluster by typing on the headnote:
+$ python master_submit.py
+you should be told about the successful submission.
+Check the status of your jobs by typing
+condor_q -dag $USER
+
+=== TODO BEWARE ===
+there are currently problems if you generate only 1 file because wimpann, than does not split at the '.' and insert '-1.'
+
+Have Fun
+
+

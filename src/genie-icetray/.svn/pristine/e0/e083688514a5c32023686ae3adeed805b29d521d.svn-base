@@ -1,0 +1,213 @@
+/**
+ * copyright (C) 2011
+ * Claudio Kopper <claudio.kopper@nikhef.nl>
+ * $Id$
+ *
+ * @file I3GENIEGenerator.h
+ * @version $Revision$
+ * @date $Date$
+ * @author Claudio Kopper
+ *
+ *
+ *  This file is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ */
+
+#ifndef I3GENIEGenerator_H
+#define I3GENIEGenerator_H
+
+#include "icetray/I3Module.h"
+#include "icetray/I3ConditionalModule.h"
+
+#include "phys-services/I3RandomService.h"
+
+#include <vector>
+#include <map>
+#include <string>
+
+#include "genie-icetray/I3GENIEResultDictToMCTree.h"
+
+// forward declarations
+namespace genie {
+    class GFluxI;
+    class GeomAnalyzerI;
+    class GMCJDriver;
+    //class MyGMCJDriver;
+    class I3GENIESystWeights;
+};
+
+class TRandomWrapperForI3RandomService;
+
+/**
+ *
+ */
+class I3GENIEGenerator : public I3ConditionalModule
+{
+public:
+    /**
+     * Builds an instance of this class
+     */
+    I3GENIEGenerator(const I3Context& ctx);
+
+    /**
+     * Destroys an instance of this class
+     */
+    ~I3GENIEGenerator();
+
+    /**
+     * This module takes a configuration parameter and so it must be configured.
+     */
+    virtual void Configure();
+
+#ifdef IS_Q_FRAME_ENABLED
+    /**
+     * The module needs to process DAQ frames
+     */
+    virtual void DAQ(I3FramePtr frame);
+#else
+    /**
+     * The module needs to process Physics frames
+     */
+    virtual void Physics(I3FramePtr frame);
+#endif
+
+    /**
+     * Warn the user if the module is aborted prematurely
+     */
+    virtual void Finish();
+
+
+private:
+    // parameters
+    /// Parameter: Path to the GENIE_PATH
+    std::string geniePath_;
+
+    /// Parameter: Path to the LHAPDF data files. The directory should contain a \"PDFsets\" subdir.
+    std::string LHAPDFPath_;
+
+    /// Parameter: Spline XML filename for GENIE
+    std::string splineFilename_;
+
+    /// Parameter: Name of the output I3GENIEResultDict frame object
+    std::string resultDictName_;
+
+    /// Parameter: Name of the output I3MCTree frame object
+    std::string mcTreeName_;
+
+    /// Parameter: Name of the output I3MCWeightDict frame object
+    std::string mcWeightDictName_;
+
+    /// Parameter: neutrino energy range (start)
+    double nuEnergyMin_;
+
+    /// Parameter: neutrino energy range (end)
+    double nuEnergyMax_;
+
+    /// Parameter: spectrum power law index (as in "E^-index")
+    double powerLawIndex_;
+
+    /// Parameter: Ice/water density
+    double materialDensity_;
+
+    /// Parameter: zenith min
+    double zenithMin_;
+
+    /// Parameter: zenith max
+    double zenithMax_;
+
+    /// Parameter: azimuth min
+    double azimuthMin_;
+
+    /// Parameter: azimuth max
+    double azimuthMax_;
+
+    /// Parameter: radius of the generation volume cylinder
+    double genVolRadius_;
+
+    /// Parameter: length of the generation volume cylinder
+    double genVolLength_;
+
+    /// Parameter: depth of the generation volume (@ z==0)
+    double genVolDepth_;
+
+    /// Parameter: Number of generated neutrinos. Use this for weighting.
+    /// The actual number of events produced by this module will
+    /// be <= this number (not all neutrinos will interact).
+    uint64_t nEvents_;
+
+    /// Parameter: Forces a single interaction probability scale.
+    /// The actual number of generated frames will be much
+    /// less than NEvents, but your events will basically be usable
+    /// un-weighted.
+    bool forceSingleProbScale_;
+
+    /// Parameter: String describing the neutrino flavor to generate.
+    /// Choose from "NuE", "NuMu" or "NuTau".
+    std::string neutrinoFlavor_;
+
+    /// Parameter: The I3RandomService we are going to use. If None, the
+    /// module tries to get it from the context.
+    boost::python::object randomService_;
+
+    /// Parameter: list of ion PDG codes specifying the target material composition
+    std::vector<int> targetMixIngredients_;
+
+    /// Parameter: list of quantities of the different atoms of your material composition
+    std::vector<double> targetMixQuantities_;
+
+    /// internal: constructed from targetMixIngredients_ and targetMixWeightFractions_
+    /// on configuration
+    std::map<int, double> targetMixMap_;
+
+    /// internal: the I3RandomService we are going to use
+    I3RandomServicePtr random_;
+
+    /// internal: Enable/Disable calculation of genie systematic unc. weights
+    bool enableSystWeights_;
+    /// Parameter: List of Genie systematic weights to calculate, by name
+    std::vector<std::string> systNames_;
+    /// Parameter: Systematic step values to calculate, in sigma (eg. 0, -1, 1)
+    std::vector<double> systSteps_;
+    /// Parameter: fraction of nu in total sample (0.5 means nu/nubar = 1, 2./3. means nu/nubar = 2 etc.)
+    double nuFraction_;
+    /// Parameter: Choose to output I3GENIEResultDict or not
+    bool outputGST_;
+private:
+    // local stuff (mostly GENIE)
+    boost::shared_ptr<genie::GFluxI> flux_driver;
+    boost::shared_ptr<genie::GeomAnalyzerI> geom_driver;
+    //shared_ptr<genie::MyGMCJDriver> mcj_driver;
+    boost::shared_ptr<genie::GMCJDriver> mcj_driver;
+
+    boost::shared_ptr<genie::GFluxI> MakeFluxDriver();
+    boost::shared_ptr<genie::GeomAnalyzerI> MakeGeomDriver();
+
+    uint64_t eventNumber_;
+
+    TRandomWrapperForI3RandomService *myTRandom;
+
+    // Handle for systematic weights calculator
+    boost::shared_ptr<genie::I3GENIESystWeights> systWeights_;
+
+private:
+    // default, assignment, and copy constructor declared private
+    I3GENIEGenerator();
+    I3GENIEGenerator(const I3GENIEGenerator&);
+    I3GENIEGenerator& operator=(const I3GENIEGenerator&);
+
+
+    SET_LOGGER("I3GENIEGenerator");
+};
+
+#endif //I3GENIEGenerator_H

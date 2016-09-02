@@ -1,0 +1,38 @@
+.. $Id: RELEASE_NOTES 130209 2015-03-16 02:20:06Z olivas $
+.. $Author: olivas $
+.. $Date: 2015-03-15 20:20:06 -0600 (Sun, 15 Mar 2015) $
+
+Release Notes
+=============
+
+April 29, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+Release V16-04-00
+* Add a one-stop shim for booking untriggered simulation
+ 
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* documentation updates
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* no updates
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V15-08-00 
+
+* Fixed include guards.
+* Updated docs.
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+Release V15-03-00 
+
+* Chase header churn in HDF5 1.8.14
+
+

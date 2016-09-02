@@ -1,0 +1,41 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+November 24, 2014 D. Chirkin
+--------------------------------------------------------------------
+
+Several compilation (warnings) and run time (seg. faults) fixes. New env.
+variables OGPU/OCPU/OACC allow running on only GPU/CPU/Accelerator cards.
+Includes the final version of SPICE3.
+
+June 30, 2014 D. Chirkin
+--------------------------------------------------------------------
+
+Updated particle tree parsing to work with corsika when pi/K's are saved.
+Changed the build preference: prefer OpenCL over CUDA.
+Included new ice model: SPICE 3.
+
+March 06, 2013 Marcel Zoll  (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+BadDomList is now read from the DetectorStatus for every dom that has HV==0
+
+Tue Jun 26 13:34:57 CDT 2012 Dima Chirkin
+--------------------------------------------------------------------
+
+Updated bare muon photon yield (new fit from Christopher).
+Added SPICE Lea ice model and support.
+Also added aha-fixed, wham.
+The run.py now works with latest simulation.
+Added width parameter for flasher simulation.
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.
+
+

@@ -1,0 +1,20 @@
+.. $Id: RELEASE_NOTES 121473 2014-07-11 12:37:08Z olivas $
+.. $Author: olivas $
+.. $Date: 2014-07-11 06:37:08 -0600 (Fri, 11 Jul 2014) $
+
+Release Notes
+=============
+
+November 24, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V00-00-02
+
+* Set particles location type to InActiveVolume if they are in the 
+  active volume.
+
+
+July 11, 2014 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Added release notes for this project.

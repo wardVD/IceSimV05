@@ -1,0 +1,111 @@
+.. $Id: RELEASE_NOTES 145182 2016-04-29 13:11:09Z olivas $
+.. $Author: olivas $
+.. $Date: 2016-04-29 08:11:09 -0500 (Fri, 29 Apr 2016) $
+
+Release Notes
+=============
+
+trunk
+-----
+
+April 29, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+---------------------------------------------------
+Release V16-04-00
+* Add a test that runs all the converters
+
+March 21, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* (r143491/IceCube) correct conversion of derived types
+* accept keys in any iterable container
+* use ``std::is(nan|inf)``
+* documentation updates
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* update tests
+* remove dead code
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+------------------------------------------------------
+
+Release V15-08-00 
+
+* I3MCTree converter is back. It's still useless, but apparently it found its
+  way into PINGU processing.
+* Allow converters to accept subclasses of their handled types. This makes it
+  possible to book I3LinearizedMCTree, a thing that was blocked for no good
+  reason.
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+-----------------------------------------------------
+
+Release V15-03-00 
+
+* "weight" is now NPE and type uint64_t.
+
+* No more converter for I3MCTree.  We'll start providing individual
+  converters like "the primary"
+
+November 20, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------
+
+Release V14-11-00 - Bugfix release.
+
+* Align all tables before closing
+
+* Changed I3TableTranscriber to skip files containing no events 
+  and throwing a warning instead of a fatal error.
+
+
+August 11, 2011, Alex Olivas  (olivas@icecube.umd.edu)
+------------------------------------------------------
+
+Release V11-08-00
+
+This is a minor bugfix release.
+
+Feature:
+
+* A converter for I3VectorTankKey
+  -- Fabian Kislat
+
+Bugfix:
+
+* Fix a bug (introduced in the previous release) that prevented
+  I3TableWriter from writing to multiple I3TableServices at once.
+  -- Jakob van Santen
+
+August 2, 2011, Erik Blaufuss  (blaufuss@icecube.umd.edu)
+---------------------------------------------------------
+
+Release V11-07-00
+
+This is a major release, adding support for Q frames and
+I3RecoPulse masks.
+
+Features added:
+
+* A converter for I3RecoPulseSeriesMapMask.
+  -- Jakob van Santen
+
+* Support for booking multiple P frames that inherit from the same
+  Q frame.
+  -- Jakob van Santen
+
+* Enable booking of geometry and waveform length in
+  I3WaveformSeriesMapConverter.
+  -- Fabian Kislat
+
+Documentation:
+
+* Add a list of common converters and their projects.
+  -- Fabian Kislat
+
+Bugfix:
+
+* Make I3WaveformSeriesMapConverter work for FADC waveforms.
+  -- Jakob van Santen

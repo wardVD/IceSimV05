@@ -1,0 +1,313 @@
+/**
+   @mainpage a neutrino-generator I3NeutrinoGenerator Documentation
+   @author Aya Ishihara <aya@icecube.wisc.edu>
+
+   @section Overview Overview
+
+   The neutrino-generator is a neutrino event generator program which work with the IceTray framework with DC2.
+   With this module, one can inject primary neutrino on surface of the Earth by specifying
+   a few parameters in the icetray steering macro.
+
+   The physics implemented in this program is based on the ANIS-All Neutrino Interaction Generator-	
+   (http://www.ifh.de/~mkowalsk/anis.html). The crosssection and physics involved 
+   has not been changed (yet, as we are planning to use updated crosssections in the future) however the 
+   structure of code has been changed significantly. 
+   The largest change is on its internal structure as IceTray dataclasses structure is extensibly used 
+   insteed ofC LHEP/HepMC library which original program extensively used. As there is a huge difference
+   between these dataclasses and LHEP/HepMC structures, generator classes are also re-structurized.
+
+   @par[What neutrino-generator does]
+
+   The I3NeutrinoGenerator project generates neutrino events and the information of the injected events 
+   and associated interaction information are streaming to the IceTray Physics Frame by filling 
+   dataclasses to be passed to the next charged lepton propagator module.
+
+   neutrino-generator is able to throw 3 types of neutrino, neu_mu, neu_e and neu_tau.
+   
+   Once the neutrino was propagated through the Earth and reached to the detector depth, 	
+   the neutrino will interact via one of the interactions and neutrino or charged 
+   lepton and/or hadrons will be created according to the interaction probabilities.
+   Those probabilities are stored as the weight to be used to plot physical quantities later.
+   The propagation/interaction of charge lepton near the detector ice must be taken care by MMC propagator.
+
+
+   @section Parameters Parameters 
+
+   @par[A note on configuration] 
+   
+   @image html fig/I3Anis-Upgoing-Geometry.gif "neutrino-generator Upgoing Geometry" width=15cm
+   @image html fig/I3Anis-Downgoing-Geometry.gif "neutrino-generator Downgoing Geometry, if intersection or exit position from detection volume is outside of Earth radius, the entrance/exit position from the Earth is considered to be the detection entrance/exit position" width=15cm
+
+   @note All the parameters are in the standard IceTray units with I3Units.
+
+   @param EventYear Event's year      (default 2010)
+   @param EventDaqTime  Event's DAQ time  (default 0)
+
+   
+   @par [if the SteeringType is 0 (recommended)]
+
+   @param NeutrinoFlavor Primary neutrino type (default NuMu)
+   Input: NuE, NuMu or NuTau or the number defined in the I3Particle class as 
+   I3Particle:ParticleType 
+   NuE = 201, NuMu = 202 or NuTau = 203)
+
+   @param GammaIndex Gamma index of the flux according to the power law,i.e. 
+   f = E^-GammaIndex (default 2)
+   if GammaIndex equal to zero or less, an energy between 
+   EnergyMin and EnergyMax will be randomly chosen.	
+
+   @param EnergyMin Minimum energy of the injected particles (default 10*GeV)
+   @param EnergyMax Maximum energy of the injected particles (default 10*GeV)
+
+   @param ZenithMin Minimum zenith angle of the injected particles (default 0*deg)
+   @param ZenithMax Maximum zenith angle of the injected particles (default 0*deg)
+
+   @param AzimuthMin Minimum azimuth angle of the injected particles (default 180*deg)
+   @param AzimuthMax Maximum azimuth angle of the injected particles (default 180*deg)
+   
+   @param InjectionRadius injection circle radius (default 500*m)
+
+   @param DistanceEntrance distance from the injection circle center to the detector center (default 500*m)
+   @param DistanceExit     distance from the detector center to the end of detection volume (100*m)
+   Note: usually DistanceExit is smaller than DistanceEntrance for non-cascade events
+
+   @param DetectorCenterZ  z-position of the detector center from the ice surface (default 1945*m)
+
+   @par [if the SteeringType is 1]
+
+
+   @section Example
+   @par[NuMu event]
+   if you want mu_neutrino events with power-law flux E^-2 from 10^2 GeV to 10^4 GeV
+   @code
+   tray.AddModule("neutrino-generator", "NuG");
+   tray.SetParameter("NuG", "SteeringType",          0);
+   tray.SetParameter("NuG", "NeutrinoFlavor",   "NuMu");	
+   tray.SetParameter("NuG", "GammaIndex",            2);	
+   tray.SetParameter("NuG", "EnergyMin",        100.0*I3Units::GeV);	
+   tray.SetParameter("NuG", "EnergyMax",      10000.0*I3Units::GeV);	
+   tray.SetParameter("NuG", "ZenithMin",          0.0*I3Units::deg);	
+   tray.SetParameter("NuG", "ZenithMax",        180.0*I3Units::deg);	
+   tray.SetParameter("NuG", "AzimuthMin",         0.0*I3Units::deg);	
+   tray.SetParameter("NuG", "AzimuthMax",       360.0*I3Units::deg);	
+   tray.SetParameter("NuG", "InjectionRadius",  700.0*I3Units::m);	
+   tray.SetParameter("NuG", "DistanceEntrance", 700.0*I3Units::m);	
+   tray.SetParameter("NuG", "DistanceExit",     500.0*I3Units::m);	
+   tray.SetParameter("NuG", "DetectorCenterZ", 1945.0*I3Units::m);		
+   tray.SetParameter("NuG", "EventYear",       2006);		
+   tray.SetParameter("NuG", "EventDaqTime",    1000);		
+   @endcode
+
+   @par[NuE event]
+   Change the "NuMu" in above example with "NuE".@n
+   Also you need to change InjectionRaidus, DistanceEntrance and DistanceExit 
+   to smaller values to take into account that the detection volume of cascade 
+   events are smaller than that of track events.
+
+   @par[NuTau event]
+   Change the "NuMu" in above example with "NuTau", and you will have an additional parameter.
+   @param FinalTauDecay  This is a choice if you want to tau to decay in the final volume.(default: 0)
+   Input: 0 for not to decay, 1 to decay.
+   
+   @warning Note that the propagation of charged particle in the final volume must be taken care 
+   by MMC for more realistic study.
+   This is an option such that people can take a quick look at tau double-bang 
+   types of events otherwise should not be used.
+
+   Also similar to NuE case, you may need to change InjectionRaidus, DistanceEntrance and DistanceExit 
+   to smaller approprieate values. 
+
+
+   @code
+   tray.AddModule("neutrino-generator", "NuG");
+   tray.SetParameter("NuG", "SteeringType",        0);
+   tray.SetParameter("NuG", "NeutrinoFlavor", "NuMu");	
+   tray.SetParameter("NuG", "GammaIndex",          2);	
+   tray.SetParameter("NuG", "EnergyMin",         100.0*I3Units::GeV);	
+   tray.SetParameter("NuG", "EnergyMax",       10000.0*I3Units::GeV);	
+   tray.SetParameter("NuG", "ZenithMin",           0.0*I3Units::deg);	
+   tray.SetParameter("NuG", "ZenithMax",         180.0*I3Units::deg);	
+   tray.SetParameter("NuG", "AzimuthMin",          0.0*I3Units::deg);	
+   tray.SetParameter("NuG", "AzimuthMax",        360.0*I3Units::deg);	
+   tray.SetParameter("NuG", "InjectionRadius",   700.0*I3Units::m);	
+   tray.SetParameter("NuG", "DistanceEntrance",  700.0*I3Units::m);	
+   tray.SetParameter("NuG", "DistanceExit",      500.0*I3Units::m);	
+   tray.SetParameter("NuG", "DetectorCenterZ",  1945.0*I3Units::m);		
+   tray.SetParameter("NuG", "EventYear",         2006);		
+   tray.SetParameter("NuG", "EventDaqTime",      1000);
+   tray.SetParameter("NuG", "FinalTauDecay",    false);			
+   @endcode
+
+
+   @section Class neutrino-generator Class Structure 
+
+   @par[Class Diagram] Class structure is shown in the figure below.
+
+   neutrino-generator is the interface to IceTray.@n
+   neutrino-generatorEvent is the main class for this program which contains main functionalities.@n
+   neutrino-generatorTotal is the interface to all interaction classes.@n
+
+   neutrino-generatorEvent class has Primary and initialPrimary as its member.
+   Primary in this program is the neutrino which creates the charged lepton near the detector.
+   To distinguish the neutrino on surface of the Earth from those primary neutrino, 
+   the neutrino on the Earth surface is called initialPrimary.
+   
+   @image html fig/i3anis-class-diagram2.png "neutrino-generator class diagram" width=800pt
+
+   
+   @par[I3NuGParticle] Internal results are stored in the I3NuGParticle class
+   this is a simple class with simple members and associated getters and setters.
+   4 3-vector (production(or entrance), exit, intersection, interaction, decay)
+   1 4-vector (four momentum)
+   4 double   (track length, time, interaction probability, interaction crosssection)
+   1 int      (flavor id)
+   2 bool     (decayed and interacted)
+
+   @warning All positions/distnaces which require origins are defined respect to the center of the earth
+   
+
+   @par[Propagation Function] Propagation function (member of neutrino-generatorEvent class) is the heart of this program.
+
+   neutrino-generatorEvent::Propagation() take the neutrino on the earth surface (initial primary) 
+   and propagate it tawards the detector untill the "DistanceExit" length specified by 
+   steering file, it is the length after which any charged lepton created are considered 
+   to be invisible.
+   
+   If primary did not interact, the initial primary (neutrino at surface of the Earth) is 
+   equal to the primary (neutrino at the detector depth).
+   
+   If initial primary is interacted, secondary particles are created @n
+   Then we propagate created secondaries by looking over the vector of propagated particles to see@n
+   1) if we have neutrinos (then let it propagate further) --- PropagateNeutrino function is called                @n
+   2) if we have tau (let it decay) ---  DecayParticle function is called                          @n
+   3) if any charged lepton which created inside detection volume --- Make it the final inice particle and find its parent neutrino and make it the Primary particle@n
+   4) if any charged lepton which created outside ditection volume but propagate to inside the volume @n
+   @warning 4) is not implemented yet but for effecient volume change if we have 'muon' created outside 
+   volume check to see if it would propagate to the volume and if it does make it "the event".
+
+   Note: we does not observe any e/hadron created outside dection volume @n
+   
+   
+   This loops over until every particles reach to the end of volume. 
+   PropagateParticle propagates only neutrinos.
+   DecayParticle decays only charged taus.
+   
+   While PropagateParticle is looping over all the particles and neutrino might interact with matter 
+   to create secondary neutrino/charged lepton/hadrons and those particles are added to the end of vector 
+   of propagated particles to be further searched.
+
+   @image html fig/I3AnisPropagationClass.jpg "Propagation function and related storage members" width=15cm
+
+   @par[After Propagation] 
+   In the end, both PropagateNeutrino and DecayParticle fill a buffer vector.@n
+   To illustrate the filled buffer vector after the propagation function, 
+   in the following some possible sinario for each initial primary types are shown as examples.
+
+   Example 1: Primary type is mu neutrino @n
+
+   @code
+
+   <Ex.1-1>
+   nu_mu----NC---nu_mu--GR--nu_mu------NC--nu_mu--CC---mu=>In Volume?
+   |           |              |          |
+   |--hadron   |--mu->?       |--hadron  |---hadron
+
+   ->buffer: nu_mu(NC)/Hadron(NC)/nu_mu(GR)/mu(GR)/nu_mu(NC)/Hadron(NC)/mu(CC)/Hadron(CC)
+
+   <Ex.1-2>	    
+   nu_mu----NC---nu_mu--GR--nu_mu------NC--nu_mu--NC--nu_mu=>In volume
+   |           |              |          |
+   |--hadron   |--mu->In      |--hadron  |--hadron
+   volume?
+
+   ->buffer: nu_mu(NC)/Hadron(NC)/nu_mu(GR)/mu(GR)/nu_mu(NC)/Hadron(NC)/nu_mu(NC)/Hadron(CC)
+
+   @endcode
+   
+   In the case of <Ex. 1-1>, no nuetrino reaches to detection volume.
+   The muon with ->? indicate the particles in question if it reaches to the detection volume or not.
+   if not, this event is considered to be absorbed.
+
+   In the second case <Ex. 1-2>, nu_mu will reache to the detection volume.
+
+   Both cases it is possible muon(s) created outside detection volume reach to the detection volume.
+   In the mean time, we consider such events can not be observed by detector by making the detection volume large enough.
+   
+   Both cases, if muon is created in detection volume, the muon will be the primary charged lepton 
+   and the neutrino produced the muon is treated as the primary neutrino.
+
+   If no muon is created in detection volume, we let the last nu_mu interact.
+
+   Only if the muon is created within the detection volume.
+   In the mean time mu/e/hadron is assumed not to reach the detection volume.
+   
+   Example 2: Primary type is electron neutrino @n
+   -Filled buffer-
+
+   @code
+
+   nu_e----NC---nu_e--GR--nu_e--NC--nu_e--NC--nu_e->reached
+   |           |         |         |
+   |--hadron   |--e      |--hadron |--hadron
+
+   ->buffer: nu_e(NC)/Hadron(NC)/nu_e(GR)/e(GR)/nu_e(NC)/Hadron(NC)/nu_e(NC)/Hadron(CC)
+
+   @endcode
+
+   This case a nu_e reached, no e/hadron info propagate/passed unless is created 
+   inside volume Now what we'd like to do is make the last nu_e interact with ice 
+   near the detector within the detection volume.
+   
+   Example 3: Primary type is tau neutrino @n
+   -Filled buffer-
+
+   @code
+   nu_tau(NC)/hadron(NC)/tau(CC)/hadron(CC)/nu_tau(decay)/nu_e(decay)/e(decay)
+   /nu_tau(NC)/hadron(NC)/nu_e(NC)/hadron(NC)
+   
+   nu_tau----NC--nu_tau---CC---tau----Decay--nu_tau----NC--nu_tau->reached
+   |            |            |               |--hadron
+   |--hadron    |---hadron   |----e          
+   |----nu_e---NC---nu_e->reached
+   |   
+   hadron
+   or
+
+   nu_tau----NC--nu_tau---CC---tau----Decay--nu_tau----NC--nu_tau---CC---tau->reached
+   |            |            |               |--hadron    |---hadron
+   |--hadron    |---hadron   |----e          
+   |----nu_e---NC---nu_e->reached
+   |   
+   hadron
+   @endcode
+   
+   This case a nu_e and nu_tau reached. This case we calculate probability 
+   each nu_x->x event occurs and according to the probability we sample one of 
+   the neutrinos to interact.
+   Although mu/e/hadron created outside volume are not recoreded, tau which 
+   reached to the volume will be recoreded and passed to mmc, with the 
+   information of produced position.
+   
+
+
+   @par[EarthDensity] Density of the Earth is parameterized according to the refrence [astro-ph/9512364 p.23 by Gandhi et al.]
+
+   @warning Zenith dependent ice distribution?
+   @image html fig/EarthDensityForI3Anis.gif "I3NeutrinoGenerator Earth Density Model" width=15cm
+   
+
+   @par[EarthDensity] Density of the Earth is parameterized according to the refrence [astro-ph/9512364 p.23 by Gandhi et al.]
+
+   @image html fig/CTEQ5-Crosssection-Anis-I3Anis.gif "CTEQ5 CC/NC Crosssection Model" width=400pt
+
+   Final Table Format for neutrino-generator
+   @example Example reader script can be found in resources/util
+   using this simple reader macro, user is able to see the format.
+
+   Cross-section Table Format for neutrino-generator
+   @example Example reader script can be found in resources/util
+   using this simple reader macro, user is able to see the format.
+
+   */
+
+

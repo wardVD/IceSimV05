@@ -1,0 +1,48 @@
+Release Notes
+=============
+
+April 29, 2016, Alex Olivas  (olivas@icecube.umd.edu)
+----------------------------------------------------
+Release V16-04-00
+* test cleanups
+
+March 18, 2016, Ryan Maunu  (rmaunu@icecube.umd.edu)
+----------------------------------------------------
+Release V16-03-00
+
+* Removed decode17 (not really used), available at revision
+  142657 of trunk. If used, please message #software or @rmaunu.
+* prune dead code
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* update to support IceTop scintillator detectors
+* fix documentation rendering
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+------------------------------------------------------
+Release V15-08-00
+
+* Moved bele.h from public to private/test, which is the only place
+  it should be used.  If external non-production projects were using
+  this, please let us know on #software.
+
+May 15, 2015, don la dieu  (nega@icecube.umd.edu)
+-------------------------------------------------
+Release V15-05-00
+
+* Try to do the correct length checks for type 21 and 22 payloads
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+-----------------------------------------------------
+Release V15-03-00 
+
+* fixed compiler warnings
+
+November 20, 2014, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------
+Release V14-11-00 - Bugfix release
+
+* Added support for I3_TESTDATA

@@ -1,0 +1,150 @@
+.. # $Id: RELEASE_NOTES 143469 2016-03-18 20:21:43Z nega $
+.. # $Author: nega $
+.. # $Date: 2016-03-18 15:21:43 -0500 (Fri, 18 Mar 2016) $
+
+Release Notes
+=============
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* minor documentation updates
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* add RELEASE_NOTES to the docs
+
+August 31, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+* (r136999) Removed beacon baseline code that's not needed anymore.  Relied on files that don't exist anymore.  Some were moved.
+* (r136999) baseline_reader is gone...which included the following :
+  - BeaconTableReader
+  - BeaconReader
+  - BaselineModule
+  - BeaconModule
+  - DOMCalBaselineService
+  - DOMCalBaselineModule
+* (r136999) tweak_gcd.py is gone.
+* (r136999) plowshare_pffilt.py is gone.
+* (r136999) plowshare.py was made to work again, but renamed to simple_example.py.
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+At some point we just stopped updating release notes.
+
+Release V15-03-00
+
+* Give wavedeform the ability to apply per digitizer s.p.e. corrections. 
+  Add necessary calibration constants to I3DOMCalibration. 
+  Remove unused old constants from I3DOMCalibration.
+
+August 11, 2011, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V11-08-00
+
+This is a minor release to allow I3WaveCalibrator to work around bugs
+in DOMsimulator.
+
+Features added:
+
+* Add droop-patching kernels based on the pulse shapes produced by
+  I3PMTSimulator/I3DOMsimulator, enabled when DOMsimulatorWorkarounds
+  is set.
+  -- Jakob van Santen
+
+Features changed:
+
+* I3WaveCalibrator's DOMsimulatorDroopIsBroken option is now called
+  DOMsimulatorWorkarounds.
+  -- Jakob van Santen
+
+Bugfixes:
+
+* Fix a bug that caused I3WaveformSplitter to occasionally emit more
+  than one ATWD waveform per launch in PickUnsaturatedATWD mode.
+  -- Jakob van Santen
+
+* Switch the rounding in DOMCalBaselineModule's baseline calculation
+  to match the one in DOMsimulator.
+  -- Jakob
+
+August 2, 2011, Erik Blaufuss  (blaufuss@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V11-07-00
+
+This is a major release, adding new features and removing some
+that were known to be a bad idea. Also, the project has moved from
+IceRec to offline-software, adopting a new version numbering scheme
+along the way.
+
+Features added:
+
+* There is now an option to switch off launch-to-launch droop 
+  correction when running on simulated data.
+  -- Jakob van Santen
+
+* I3WaveCalibrator now checks the beacon baselines in I3Calibration
+  and prints a warning if any are NaN.
+  -- Jakob van Santen
+
+* resources/scripts/tweak_gcd.py, a script for adding beacon baselines
+  to old GCD files.
+  -- Jakob van Santen
+
+Features removed:
+
+* Beacon baseline harvesting code has moved to its own project
+  (BeaconHarvester).
+  -- Jakob van Santen
+
+* I3WaveCalibrator's ATWDMode option is gone. All ATWD channels
+  channels present in each launch will be calibrated; I3WaveformSplitter
+  can select only the highest-gain unsaturated channel if its
+  PickUnsaturedATWD option is set.
+  -- Jakob van Santen
+
+API updates:
+
+* Switch modules from Physics() to DAQ() stop.
+  -- Jakob van Santen
+
+* Use I3Waveform::SetDigitizer() rather than I3Waveform::SetSource()
+  to avoid the ambiguity of I3Waveform::SLC.
+  -- Fabian Kislat
+
+Bugfixes:
+
+* Fix a rounding error DOMCalBaselineModule's calculation of the
+  FADC baseline.
+  -- Jakob van Santen
+
+* Change handling of IceTop SLC charge stamps to emit the _average_
+  voltage during the ATWD readout window.
+  -- Timo Karg
+
+April 15, 2011, Fabian Kislat  (fabian.kislat@desy.de)
+--------------------------------------------------------------------
+
+Release V00-01-01
+
+Feature:
+
+* Make droop correction optional
+  -- Jakob van Santen
+
+Bugfixes:
+
+* Various fixes in baseline services
+  -- Jakob van Santen, Tom Feusels
+
+
+March 31, 2011, Fabian Kislat  (fabian.kislat@desy.de)
+--------------------------------------------------------------------
+
+Release V00-01-00. Initial release.

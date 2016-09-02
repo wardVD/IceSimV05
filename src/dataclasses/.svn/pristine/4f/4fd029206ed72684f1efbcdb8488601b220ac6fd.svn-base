@@ -1,0 +1,16 @@
+/**
+   @mainpage Dataclasses Documentation
+
+   @section Description
+   This is the automatic documentation of the @c dataclasses project.  This 
+   project provides C++ classes which are used to represent IceCube data
+   for passing between IceTray modules and for writing to disk.
+   
+   For information on specific classes,
+   click the "Alphabetical List" tab at the top of the page.
+   
+   More information on how to use dataclasses, IceTray, etc can be
+   found on the Offline Software Wiki:
+   http://wiki.icecube.wisc.edu/index.php/Offline_Software_Main_Page
+
+*/

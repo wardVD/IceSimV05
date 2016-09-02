@@ -1,0 +1,19 @@
+This directory contains configuration settings for various ice models.
+
+All: some common files
+
+Ice models by Kurt:
+These are my (Dima) fits to photonics configuration tables made by Kurt. They
+are mostly correct inside the detector at 400 nm and could deviate otherwise.
+
+aha: legacy AHA as used in ppc (configured from AHA with g=0.94)
+aha-fixed:  corrected AHA (configured from AHA with g=0.8, cf. cfg.txt)
+wham: configured from WHAM! with g=0.80 model from WHAM! wiki page
+
+
+Ice models by Dima:
+
+sp1: SPICE 1 (or just "SPICE")
+spx: last of the SPICE2 models before SPICE Mie
+mie: SPICE Mie
+lea: SPICE with l_e anisotropy

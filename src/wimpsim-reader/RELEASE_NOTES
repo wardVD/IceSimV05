@@ -1,0 +1,230 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: mzoll $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+trunk
+-----
+
+* fixed some spelling errors
+* fix documentation warnings
+* move I3WimpParams out to simclasses; include converters
+* adapt to new I3MCTree dataclasses interface to most energetic particles
+* adapted test-script to the use of astro instead of coordinate-service
+  -- Marcel Zoll
+
+Oct 29, 2014  Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Made the neutrino be produced at the position of its source (Sun/Earth) and interact at time=0.
+* Adapted tests accordingly
+* Made the execution of a test that depended on coordinate-service execute conditionally
+
+Oct 10, 2014  Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Yet another bug concerning the azimuth computation for events from wimpsim: this should have been corrected long time again, but wasmysteriously reverted in some commit :( Simulation even with this bug can still be used, provided that the Sun-position, namely the azimuth, is NOT computed from the TimeStamp. Use the MC neutrino direction instead.
+* Added unit-test checking for this.
+* Fixed unit-tests, which at some point chose to require the __init__()-methode to be explicitly called :/
+* integrated recursive python tests
+
+Sept 03, 2014  Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Klaus Wiebe found a bug, concerning the energy of the hadronic cascade,
+  for which the wrong particle id was passed to the computation, 
+  resulting in wrong (too less) energy in the cascades. The lepton's restmass was always wrongly subtracted
+  instead of nothing from the total energy to the had_show.
+
+* minor spelling corrections
+
+* added script for computation of effective volumes and collections of file-weights from already processed datasets.
+
+
+July 21, 2014 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Correct counting bug for bookkeeping; no impact
+* added script to reextract event-weights from wimpsim.dat files
+
+May 05, 2014 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* correct parameter and default value init
+* Corrected Documentation for injection Radius and made code little bit more transparent
+* Code Cleanup for function that in the meanwhile has moved to I3Time I3Time::(mjd)
+
+Apr 04, 2014 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Added a plain text output to a file
+* RandomService is now taken by name (parameter "RandomServiceName"), and alternativly by reference (parameter "RandomService")
+
+Dec 29, 2013 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* tabulating I3WimpParams string representation
+* added a steamshovel artist for I3WimpParams, however you have to copy it over and register it yourself (see steamshovel documentation)
+* and corrected my email-address
+
+March 26, 2013 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* fixed a bug that let the sun revolve clockwise instead of counter-clockwise at the pole, caused by a malicious sun_el->icecube_zen conversion
+* fixed unittests and introduced artifical test cases 'data_fake_sun.dat' and 'data_fake_earth.dat'.
+
+March 04, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* wimpsim-reader does comply with wimpsim v3.05
+* Fixed some no impact bugs in the code.
+* despite previous documentation wimpsim-reader uses not the neutrino direction for the longside of the muon-box, but the muon/lepton direction. This leads to ramifications with the effective area for neutrinos, which is than defined as the face-side projection of that box on the perpendicular plane to the neutrino direction.
+  This computation has now been implemented and is found as `genbox.aproj` or `I3WimpParams.aproj_`.
+  TODO: write pybinings and documentation for that!
+* DrivingTime is no longer the timeshift-arg for trigger-sim; switched `DrivingTimeOpt_` to false; if you like to keep it, please Hack line 67 in I3WimpSimReader.cxx //TODO in time remove all lines involving this; also in documentation
+* private/tests/TestWimpSimReader.cxx script has problems with double instantiation, and was therefore substituted by resources/test/test_earth_event.py and test_sun_event.py
+
+Jan 12, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* corrected small impact bug, that the energy in wimpsim is the total energy and not the kinetic energy for (I3)particles, as taken from icetray
+* wimpsim-reader does now comply with WimpSim v3.05 (compatibility to wimpsim v3.04 is broken)
+* additional information in WimpSim-Header is read and put into the appropriate WimpSim containers in the W-frame: original seed, file_index and total files
+* corrected small bug of double-counting in booking
+* PoisitionLimits0 ... 5 are now named "PositionLimitsXmin", "PositionLimitsXmax", "PositionLimitsYmin", "PositionLimitsYmax", "PositionLimitsZmin", "PositionLimitsZmax"
+* cghanged testfiles and test to wimpsim-reader v3.03 format, TODO edit check for the read parameters
+* updated documentation
+
+Dez 12, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* CODEREVIEW by Alex Olivias; all below adressing this
+* Added Documentation about Generated Volumes
+* WimpEvents now have containers
+* WimpHeaders now have containers
+* More Overload functionality for ease of used
+* Read and Write Functions are now clearly separated
+* Codeflow should be more structured now
+* Bookkeeping by their own containers
+* "Infile" Option is now "FileNameList" taking a List or Vector of Files
+* More 'Const' usage throughout the code
+* Corrected Bug in the WimpSimTools, which was of no impact ("had" should have been "hshow")
+* More Python interaction with I3WimpSimParams
+* The is a new option setting for earth wimps:
+  
+  EarthWimp events have no timestamp as thejre is no angular time-dependence. However IceCube simulation data should be as distributed as your experimental data set (spread over a year of lifetime), so two new options are introduced into wimpsim-reader:
+  
+  1. sepcify startmjd == endmjd : will give you for every event the same timestamp (fx startday of IC86:2011); this is like corsika does it
+  2. specify startmjd < endmjd : spread the events randomly over this period of time [startmjd, endmjd]. this will give you some randomization, if anytime a time-dependent simulation (timedependend bad-domlist fx) should be introduced
+  
+  right now there should be no difference in the usage if an earth analyisis is not using any timing information; it can be however in the future be important in the sense of time-dependent simulation.
+
+Nov 21, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Added Unittests; not everything is perfect, but they are well tuned
+* cleaned minor glitches in the codesegments.
+* Added a little bit more forth and back conversion to WimpSimTools.
+* Keys in the WimpSim::WimpParams <plainMap> will now be identical to the <I3WimpParams>.properties/keys.
+* Added "lowe" bookkeeping for all events that fail the 1GeV energy cutoff.
+* Test-Data added in resources/test*.dat . //NOTE maybe move this to the dl'able testdata.
+* Cleaned up the Cmake-File
+* TODO see if we can change to the I3TimeMJDDouble() methode?! (not before any release later than V12-08-00)
+
+Sept 25, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* updated documentation
+* made more hardcoded Option `writeDrivingTimeOpt_`
+* corrected a bug that still wrote depricated low energy (<=1GeV) events to the file with wrong daughters (caused by static definition at to of ReadSunEvent)
+* cleaned up the code
+* oversampling should work now correctly in every respect
+* inserted more unit checks
+* WimpSim:: has now its own ParticletType and converters
+* WimpSim is now pushing his own kind of frame with info of the wimps: 'W'; Individual add it to the Writer or reader service by [icetray.I3Frame.Stream('W')]
+* WimpSim namespace is now encapsuled into WimpSimTools.h
+
+Sept 18, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* DANGER older version should use PositionLimits = [0,0,0,0,zmin,zmax] if they specify SensHeight and SensRadius
+* An ancient bug caused random positions to be computed in a wrong manner, that was corrected
+* "InjectionRadius" was a neglected parameter and was now adressed correctly
+* fixed warning messages, if the user should do stuff that he actually does not want
+* changed defaults for PositionLimits to [-800,800,-800,800,-800,800]
+* fixed injected Volumes which were shifted off by the position limits: The position center of the Position_limits will be now used as the Injection center
+* Added new tool for histogramming (resources/scripts/histogramming.py)
+* Corrected one two things for the earth-wimps
+* Module will now write a DrivingTime to the frame and store the original time to WIMP_params.time //TODO this should go away as soon as simulation changes
+
+Sept 16, 2012 Marcel Zoll (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Corrected a switcheroo that interchaned DeliveredWeight and TotalWeight maps
+
+May 21, 2012 Marcel Zoll  (mzoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* WIMPsim will switch to higher accuary functions, so will WimpSim-Reader:
+* WimpSimReader uses higher accuracy functions, MJD, sun_zenith and sun_azimuth is directly read from WIMPsim-files (new features in WIMPsim)
+* renamed I3MCTree to WIMP_mctree
+* WIMP_time_weight is gone
+* removing unneccesary parameters from SunMJD module
+* TODO still adapt the python traysegments
+* Adding optional simulation of Neutralcurrent events (Option "UseNC", default false)
+* The Type of Events will now be read from the file parsed
+* The project is now Module alone
+* New Datastoreage structure: see documentation
+* Leading and trailing Infoframes
+* TODO I3Time() Mod_JulianDay_Double-Constructor not allowed yet
+
+April 09, 2012 Marcel Zoll  (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Implemented a continious evaluation algorithms, that computes WIMPtimes during any time period specified by the parameters 'StartMJD' and 'EndMJD', weighting is accounted for in a additional frame variable 'WIMP_time_weight' (multiplicative).
+* Events outside the specified timewindow or the zenith cut will be discarded, and the next event on file will be automatically read in its place.
+* MJD2CalendarDateFJD() has been implemented as trunk of mjd.
+* Torn down brickwalls.
+* Old codesegments removed.
+* smaller corrections in documentation.
+* No more Easter Eggs to find.
+
+April 07, 2012 Marcel Zoll  (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* Removed *The Calculation of WIMPSim_times is now from 1Jan throughout 31Dez instead of 21Dez throughout 20Dez* The implementation cant be consistantly done
+* Removed a bunch of private varibales and made them static to the Reader-functions.
+* Removed the 'WIMP_time' for EarthWIMPS as there is no timing for them.
+* The MJD and timing will now be calculated with the same function-calls, and this only once. Timing will now be computet from solstice last year to solstice this year within a second precission.
+* Added configuration warnings and fatals.
+* Added Brickwalls against bad Parameter manipulations; made many varibales constant and static; [it should render bad changing attemps uneffective, or produce compilation warnings]
+* TODO remove old coding segments with next iteration.
+* TODO coordinate-service/SLACoordinateTransform.h hands down MJD2CalendarDateFJD(), which is broaken
+* TODO initializations of parameters with NAN is flawed and will rather default them to 1/true instead of something good, year had to be defaulted to 42
+* Find Easter Eggs.
+
+April 01, 2012 Marcel Zoll  (marcel.zoll@fysik.su.se)
+--------------------------------------------------------------------
+
+* WIMPsim-reader was reintegrated into one single class , which is WimpSimReader.
+* WimpSimReaderModule is gone, all of it; just call WimpSimReader instead.
+* The output varibale 'WIMPTime' was changed to 'WIMP_time' for consistency.
+* The code was restructured and subroutines changed.
+* The code now features commenting with doxygen.
+* Parameter 'FixedDate' has been removed because of dysfunctionally. (formerly provided by the Muxxer).
+* Parameter 'Year' will be read from the GCD file, if not specified otherwise.
+* Parameters 'LowZenCut' and 'UpperZenCut' are now correctly implemented in native I3Units.radian (instead of I3Units.degree).
+* A icetray segment 'I3WimpSimReader' has been added.
+* The code will now stick to I3Constants and I3Units where applicable.
+* (As in current implementation the code takes up the RanomService only once in the initialization, and seeds the read files continuously, it might be necessary to implement that each opened file should get a new Random Service assorted to it) //TODO
+* (As in current implementation the vgen is changed by 1-20% compared to the old module, it is unknown why, as the implementation is exactly the same, except higher precision constants). //TODO last changes might have cahnged that
+* [Also there is a bug/feature(?) in the previous code, that generates WimpTimes only from 20Dez of the previous year until 21Dez of the simulated/specified year. This is caused by a periodical simulation of the sun throughout the year from its highest point to the same date next year. However to map this to the Juilian Calendar WimpSimReader substracts right now simply 11 days. As this is very misleading, I would like to change this over to append these 11 days at the end to the prematurely ended year -> (01Jan - 31Dez). This will make the simulation a little bit more consistent and transparent (if you ever would like to chop of at specific dates); please tell me your opinion about this.]
+* The Calculation of WIMPSim_times to MJD is now correctly implemented into the code.
+* The Calculation of WIMPSim_times is now from 1Jan throughout 31Dez instead of 21Dez throughout 20Dez.
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.

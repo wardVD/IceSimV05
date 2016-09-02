@@ -1,0 +1,9 @@
+
+To download spline files, execute following commands.
+
+# ice + rock (SiO2) 91MB 
+wget http://www.icecube.wisc.edu/~hoshina/genie/xsec-spline-default-allnu-icerock-n1000-e300.xml
+
+# ice + rock (clark number)  384MB
+wget http://www.icecube.wisc.edu/~hoshina/genie/xsec-spline-default-allnu-clarke-n1000-e300.xml
+

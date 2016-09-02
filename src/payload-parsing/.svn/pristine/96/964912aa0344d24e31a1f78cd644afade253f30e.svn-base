@@ -1,0 +1,40 @@
+#
+# $Id$
+#
+i3_project(payload-parsing
+  DOCS_DIR resources/docs
+  PYTHON_DIR python)
+
+i3_add_library(payload-parsing 
+  private/payload-parsing/*.cxx
+  USE_PROJECTS icetray dataclasses phys-services daq-decode interfaces
+  USE_TOOLS boost zlib
+  )
+
+i3_add_pybindings(payload_parsing
+  private/pybindings/module.cxx
+  USE_TOOLS boost python
+  USE_PROJECTS icetray dataclasses payload-parsing
+  )
+
+i3_executable(standalone 
+  private/standalone/*.cxx
+  USE_PROJECTS payload-parsing
+  )
+
+i3_executable(decode3 
+  private/decode3/*.cxx
+  USE_PROJECTS dataclasses phys-services payload-parsing
+  )
+
+## BLAS is included via gsl, and the FreeBSD port of GotoBLAS2
+## doesn't bring in libgfortran for us
+if ((CMAKE_SYSTEM_NAME STREQUAL "FreeBSD") AND BLAS_FOUND)
+  target_link_libraries(payload-parsing-standalone "-L/usr/local/lib/gcc47" "gfortran")
+  target_link_libraries(payload-parsing-decode3    "-L/usr/local/lib/gcc47" "gfortran")
+endif ((CMAKE_SYSTEM_NAME STREQUAL "FreeBSD") AND BLAS_FOUND)
+
+i3_test_executable(test private/test/*.cxx
+  USE_PROJECTS payload-parsing)
+
+i3_test_scripts(resources/test/*.py)

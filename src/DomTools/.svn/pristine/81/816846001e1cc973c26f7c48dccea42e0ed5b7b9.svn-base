@@ -1,0 +1,254 @@
+.. $Id$
+.. $Author$
+.. $Date$
+
+Release Notes
+=============
+
+On the trunk
+------------
+* The following classes/modules have been removed:
+  - I3CombineResponses
+  - I3SLCcleanup
+  - I3MaxHitsCutModule
+  - I3ReadoutWindow
+  They weren't used in filtering at any level I could see.  I'm not going to write tests and docs
+  for modules no one uses anymore.  No code is the best code.  It's the only code guaranteed to be 
+  bug free, runs instantaneously, and requires no maintenance.
+
+* I3OMSelection : Only support what we use in production, which is I3DOMLaunch and I3RecoPulse. (r138948)
+* I3IsolatedHitsCutModule was brought back.
+* I3IsolatedHitsCutModule was removed from DomTools.
+
+April 3, 2015 Meike de With (meike.de.with@desy.de)
+-------------------------------------------------------------------
+
+Release V03-02-01
+
+* Use I3_TESTDATA
+
+  -- Alex Olivas
+
+* Explicitly call std::isnan()
+
+  -- Don la Dieu
+
+
+December 9, 2014 Meike de With (meike.de.with@desy.de)
+-------------------------------------------------------------------
+
+Release V03-02-00
+
+* Move I3FirstPulsifier from MuonVariables to DomTools
+
+  -- Meike de With
+
+
+April 8, 2014 Meike de With (meike.de.with@desy.de)
+-------------------------------------------------------------------
+
+Release V03-01-04
+
+* Various code cleanups
+
+  -- Chris Weaver
+
+* Make #ifndef and #define consistent
+
+  -- Claudio Kopper
+
+
+August 21, 2013 Meike de With (meike.de.with@desy.de)
+-------------------------------------------------------------------
+
+Release V03-01-03
+
+* Remove log4cplus dependence
+* Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+* Clean up deprecation warnings related to new dataclasses release
+
+  -- Meike de With
+
+
+September 11, 2012, Emanuel Jacobi
+-------------------------------------------------------------------
+
+Release V03-01-02
+
+Bugfix:
+
+* Log-fatal when user does not give a GCD file when omitted strings
+
+  -- Tom Feusels
+
+
+June 25, 2012, Emanuel Jacobi
+-------------------------------------------------------------------
+
+Release V03-01-01
+
+Feature:
+
+* Allow I3CombineResponses to be run on other streams besides Physics
+
+  -- Claudio Kopper
+
+
+March 30, 2012, Emanuel Jacobi
+-------------------------------------------------------------------
+
+Release V03-01-00
+
+Feature:
+
+* Switch to functional I3RecoPulseSeriesMapMask constructor for significantly more speed
+
+  -- Jakob van Santen
+
+
+January 11, 2012, Emanuel Jacobi
+-------------------------------------------------------------------
+
+Release V03-00-03
+
+Feature:
+
+* Switch to new API for frame native
+* Removed automagic frame type switching
+* Change I3IsolatedHitsCutModule to emity masks
+
+  -- Nathan Whitehorn
+
+
+October 17, 2011, Emanuel Jacobi
+-------------------------------------------------------------------
+
+Release V03-00-02
+
+Feature:
+
+* I3OMSelection is now running on the frame where its input series resides.
+
+  -- Olaf Schulz
+
+
+August 16, 2011, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V03-00-01
+
+Feature:
+
+* Enable I3OMSelection for I3MCPMTResponse
+
+  -- Jason Koskinen
+
+
+August 09, 2011, Emanuel Jacobi
+--------------------------------------------------------------------
+
+Release V03-00-00
+
+Feature:
+
+* Q-ified. Hit cleaning modules operate on both Q and P frames
+
+  -- Jakob van Santen, Nathan Whitehorn
+
+* I3LCCleaning and I3TimeWindowCleaning provide pulse masks
+
+  -- Nathan Whitehorn
+
+Bugfix:
+
+* Adapted to various changes in offline-software
+
+
+October 29, 2010, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V02-02-00
+
+Feature:
+
+* Added the configuration parameter "UseCharge" to I3TimeWindowCleaning. If set
+  to true, the module will maximize the charge in the time window in contrast to
+  the number of pulses (dubbed TWCQ) when used for I3RecoPulses. The default is
+  false, so the default behaviour of the module is unchanged.
+
+  -- Marius Wallraff
+
+
+August 16, 2010, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V02-01-06
+
+Deprecated:
+
+* I3DAQReTrigger
+* I3StringTrigger
+* I3VolumeTrigger
+
+These modules are superseded by functions in trigger-sim
+
+
+June 21, 2010, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V02-01-05
+
+Bugfix:
+
+* Added various checks to I3SLCcleanup to make it more robust in regard to
+  non-standard waveforms and to make it work for experimental data (where the
+  module has no effect because the SLC charge stamps already exist and the
+  FADC waveforms do not).
+
+  -- Marius Wallraff
+
+Feature:
+
+* Added the configuration parameter "InIceOutputSLC" to I3LCCleaning. By
+  default, this is "" (empty string) and the behaviour of the module does not
+  change. If the parameter is changed, its value is used as name for a second
+  output DOMLaunch series map that exclusively contains all SLC launches;
+  the original output map remains unchanged either way.
+
+  -- Marius Wallraff
+
+
+June 04, 2010, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V02-01-04
+
+Fixed test -- Fabian Kislat
+
+
+August 13, 2009, Fabian Kislat
+--------------------------------------------------------------------
+
+Release V02-01-03
+
+Bugfix:
+
+* Fixed bug that caused the first and last hit of the output DOMLaunchSeriesMap
+  to be not written out if the readoutwindow is set to 0
+
+  -- Peter Redl
+
+Feature:
+
+* Enable I3ReadOutWindow for assymetric windows (as in current Ic59 run)
+
+  -- Andreas Gross
+
+
+October 30, 2008, Martin Merck
+--------------------------------------------------------------------
+
+Release V02-01-02

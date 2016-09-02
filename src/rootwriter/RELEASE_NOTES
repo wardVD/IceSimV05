@@ -1,0 +1,47 @@
+Release Notes
+=============
+
+Please, if you make changes in this project, leave some notes, your name  and the date.
+ 
+Trunk
+^^^^^
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Release V16-03-00
+
+* minor doc updates
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Release V15-12-00
+
+* Add some notes (how to use I3ROOTWriter) to resources/docs/index.rst
+  -- October 3, 2015. Giuliano Maggi.
+
+* Add files for C++ test coverage in private/test/, I3ROOTBranchWrapperEnum.cxx and I3ROOTBranchWrapper.cxx
+  -- September 17, 2015. Giuliano Maggi.
+
+Old Releases
+^^^^^^^^^^^^
+
+* Added a script that ensures the example script runs.  Removed the dependence on linefit, since that project isn't available in all meta-projects.
+
+  -- Alex Olivas
+ 
+* Adding RELEASE_NOTES. 
+
+  -- Giuliano Maggi
+
+* r135543: Add release notes to docs
+
+  -- David Schultz
+
+* r133237: Clean up test output 
+
+  -- Don La Dieu
+
+* r130162: Updating the .mailinglist.
+
+  -- Alex Olivas

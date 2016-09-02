@@ -1,0 +1,532 @@
+
+/**
+ @page DomTools-modules-and-params Modules and their Parameters
+<div><div class="center">
+<h1>Summary of I3Modules and I3ServiceFactories and their parameters</h1>
+<hr>
+<h2>DomTools</h2>
+<a href="http://code.icecube.wisc.edu/svn/projects/DomTools/trunk">http://code.icecube.wisc.edu/svn/projects/DomTools/trunk at revision 21318</a><br><br><table>
+<tr>
+<td class="indexkey" width="30%">Name</td>
+<td class="indexkey" width="50%">Description</td>
+<td class="indexkey" width="20%">Default</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3Coincify&lt;I3DOMLaunch&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>coincidenceneighbors</b></td>
+<td class="el" width="50%">How far to look for neighbors </td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>coincidencewindow</b></td>
+<td class="el" width="50%">Time window for local coincidence </td>
+<td class="el" width="20%">800</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputname</b></td>
+<td class="el" width="50%">Name of the input response series map</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputname</b></td>
+<td class="el" width="50%">Name of the output response series map</td>
+<td class="el" width="20%">Coincified</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>IsolatedResponseName</b></td>
+<td class="el" width="50%">Name of the output response series map 
+containing all the responses that failed the given coincidence condition</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3Coincify&lt;I3MCHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>coincidenceneighbors</b></td>
+<td class="el" width="50%">How far to look for neighbors </td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>coincidencewindow</b></td>
+<td class="el" width="50%">Time window for local coincidence </td>
+<td class="el" width="20%">800</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputname</b></td>
+<td class="el" width="50%">Name of the input response series map</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputname</b></td>
+<td class="el" width="50%">Name of the output response series map</td>
+<td class="el" width="20%">Coincified</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>IsolatedResponseName</b></td>
+<td class="el" width="50%">Name of the output response series map 
+containing all the responses that failed the given coincidence condition</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3Coincify&lt;I3RecoHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>coincidenceneighbors</b></td>
+<td class="el" width="50%">How far to look for neighbors </td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>coincidencewindow</b></td>
+<td class="el" width="50%">Time window for local coincidence </td>
+<td class="el" width="20%">800</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputname</b></td>
+<td class="el" width="50%">Name of the input response series map</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputname</b></td>
+<td class="el" width="50%">Name of the output response series map</td>
+<td class="el" width="20%">Coincified</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>IsolatedResponseName</b></td>
+<td class="el" width="50%">Name of the output response series map 
+containing all the responses that failed the given coincidence condition</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3Coincify&lt;I3RecoPulse&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>coincidenceneighbors</b></td>
+<td class="el" width="50%">How far to look for neighbors </td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>coincidencewindow</b></td>
+<td class="el" width="50%">Time window for local coincidence </td>
+<td class="el" width="20%">800</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputname</b></td>
+<td class="el" width="50%">Name of the input response series map</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputname</b></td>
+<td class="el" width="50%">Name of the output response series map</td>
+<td class="el" width="20%">Coincified</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>IsolatedResponseName</b></td>
+<td class="el" width="50%">Name of the output response series map 
+containing all the responses that failed the given coincidence condition</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3DOMLaunchCleaning</td></tr>
+<tr>
+<td class="el" width="30%"><b>cleanedkeys</b></td>
+<td class="el" width="50%">OMKeys to clean out of the launch map</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>firstlaunchcleaning</b></td>
+<td class="el" width="50%">True if you want to clean out all but the first DOM launch</td>
+<td class="el" width="20%">0</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>icetopinput</b></td>
+<td class="el" width="50%">input icetop DOMLaunches</td>
+<td class="el" width="20%">IceTopRawData</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>icetopoutput</b></td>
+<td class="el" width="50%">output icetop DOMLaunches</td>
+<td class="el" width="20%">CleanIceTopRawData</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>iniceinput</b></td>
+<td class="el" width="50%">input inice DOMLaunches</td>
+<td class="el" width="20%">InIceRawData</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>iniceoutput</b></td>
+<td class="el" width="50%">output inice DOMLaunches</td>
+<td class="el" width="20%">CleanInIceRawData</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3IsolatedHitsCutModule&lt;I3DOMLaunch&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input reco pulse series </td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtmultiplicity</b></td>
+<td class="el" width="50%">reject all pulses that have a smaller count (spacial/temporal) than RTMultiplicity</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtradius</b></td>
+<td class="el" width="50%">count pulses within this radius towards multiplicity  -                   NAN=no cut on spacial isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rttime</b></td>
+<td class="el" width="50%">count pulses within this time range towards multiplicity  -                   NAN=no cut on temporal isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3IsolatedHitsCutModule&lt;I3MCHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtmultiplicity</b></td>
+<td class="el" width="50%">reject all pulses that have a smaller count (spacial/temporal) than RTMultiplicity</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtradius</b></td>
+<td class="el" width="50%">count pulses within this radius towards multiplicity  -                   NAN=no cut on spacial isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rttime</b></td>
+<td class="el" width="50%">count pulses within this time range towards multiplicity  -                   NAN=no cut on temporal isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3IsolatedHitsCutModule&lt;I3RecoHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtmultiplicity</b></td>
+<td class="el" width="50%">reject all pulses that have a smaller count (spacial/temporal) than RTMultiplicity</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtradius</b></td>
+<td class="el" width="50%">count pulses within this radius towards multiplicity  -                   NAN=no cut on spacial isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rttime</b></td>
+<td class="el" width="50%">count pulses within this time range towards multiplicity  -                   NAN=no cut on temporal isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3IsolatedHitsCutModule&lt;I3RecoPulse&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output reco pulse series</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtmultiplicity</b></td>
+<td class="el" width="50%">reject all pulses that have a smaller count (spacial/temporal) than RTMultiplicity</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rtradius</b></td>
+<td class="el" width="50%">count pulses within this radius towards multiplicity  -                   NAN=no cut on spacial isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>rttime</b></td>
+<td class="el" width="50%">count pulses within this time range towards multiplicity  -                   NAN=no cut on temporal isolation</td>
+<td class="el" width="20%">nan</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3MaxHitsCutModule&lt;I3DOMLaunchSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>maxhits</b></td>
+<td class="el" width="50%">Maximum hits per OM</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3MaxHitsCutModule&lt;I3MCHitSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>maxhits</b></td>
+<td class="el" width="50%">Maximum hits per OM</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3MaxHitsCutModule&lt;I3RecoHitSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>maxhits</b></td>
+<td class="el" width="50%">Maximum hits per OM</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3MaxHitsCutModule&lt;I3RecoPulseSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>maxhits</b></td>
+<td class="el" width="50%">Maximum hits per OM</td>
+<td class="el" width="20%">1</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3OMSelection&lt;I3AMANDAAnalogReadout&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>badomfilename</b></td>
+<td class="el" width="50%">Name of a file containing bad OMKeys</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputomselection</b></td>
+<td class="el" width="50%">Name of a previously-existing OMSelection that you'd like to append to</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedkeys</b></td>
+<td class="el" width="50%">OMKeys for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedstrings</b></td>
+<td class="el" width="50%">Strings for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputomselection</b></td>
+<td class="el" width="50%">Name of the new OMSelection that will be created</td>
+<td class="el" width="20%">BadOMSelection</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3OMSelection&lt;I3DOMLaunchSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>badomfilename</b></td>
+<td class="el" width="50%">Name of a file containing bad OMKeys</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputomselection</b></td>
+<td class="el" width="50%">Name of a previously-existing OMSelection that you'd like to append to</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedkeys</b></td>
+<td class="el" width="50%">OMKeys for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedstrings</b></td>
+<td class="el" width="50%">Strings for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputomselection</b></td>
+<td class="el" width="50%">Name of the new OMSelection that will be created</td>
+<td class="el" width="20%">BadOMSelection</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3OMSelection&lt;I3RecoHitSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>badomfilename</b></td>
+<td class="el" width="50%">Name of a file containing bad OMKeys</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputomselection</b></td>
+<td class="el" width="50%">Name of a previously-existing OMSelection that you'd like to append to</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedkeys</b></td>
+<td class="el" width="50%">OMKeys for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedstrings</b></td>
+<td class="el" width="50%">Strings for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputomselection</b></td>
+<td class="el" width="50%">Name of the new OMSelection that will be created</td>
+<td class="el" width="20%">BadOMSelection</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3OMSelection&lt;I3RecoPulseSeries&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>badomfilename</b></td>
+<td class="el" width="50%">Name of a file containing bad OMKeys</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputomselection</b></td>
+<td class="el" width="50%">Name of a previously-existing OMSelection that you'd like to append to</td>
+<td class="el" width="20%"></td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">Name of the input response </td>
+<td class="el" width="20%">input</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedkeys</b></td>
+<td class="el" width="50%">OMKeys for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>omittedstrings</b></td>
+<td class="el" width="50%">Strings for OMs that we want to clean out</td>
+<td class="el" width="20%">[vector 0 ]</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputomselection</b></td>
+<td class="el" width="50%">Name of the new OMSelection that will be created</td>
+<td class="el" width="20%">BadOMSelection</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">Name of the output response </td>
+<td class="el" width="20%">output</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3TimeWindowCleaning&lt;I3DOMLaunch&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hits</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hitsClean</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>timewindow</b></td>
+<td class="el" width="50%">The window that is used in cleaning out DOMs.</td>
+<td class="el" width="20%">4000</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3TimeWindowCleaning&lt;I3MCHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hits</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hitsClean</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>timewindow</b></td>
+<td class="el" width="50%">The window that is used in cleaning out DOMs.</td>
+<td class="el" width="20%">4000</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3TimeWindowCleaning&lt;I3RecoHit&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hits</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hitsClean</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>timewindow</b></td>
+<td class="el" width="50%">The window that is used in cleaning out DOMs.</td>
+<td class="el" width="20%">4000</td>
+</tr>
+<tr><td height="40px" class="indexkey" align="center" colspan="3">I3TimeWindowCleaning&lt;I3RecoPulse&gt;</td></tr>
+<tr>
+<td class="el" width="30%"><b>inputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hits</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>outputresponse</b></td>
+<td class="el" width="50%">The detector response object to read in</td>
+<td class="el" width="20%">hitsClean</td>
+</tr>
+<tr>
+<td class="el" width="30%"><b>timewindow</b></td>
+<td class="el" width="50%">The window that is used in cleaning out DOMs.</td>
+<td class="el" width="20%">4000</td>
+</tr>
+</table>
+<p></p>
+</div></div>
+*/

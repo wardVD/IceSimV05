@@ -1,0 +1,144 @@
+.. $Id: RELEASE_NOTES  79391 2011-10-10 olivas $
+.. $Author: olivas $
+.. $Date: 2011-10-10 $
+
+Release Notes
+=============
+
+trunk
+-----
+* Added the RunID option to I3GlobalTriggerSim and the TriggerSim segment.  It is critical for many downstream analyses that the (RunID, EventID) make a unique pair. (r144178)
+* Added the option to randomize I3Times over a specified interval.
+* **NB** : I3TimeShifter no longer shifts I3Double objects by default.  There's no way in principle to determine whether or not they're time-like.  In general they won't be, so let's assume they're not.  The user has to explicitly state which I3Doubles to shift. 
+* Added 'print_trigger_configuration.py' script that will dump the trigger configuration for a given GCD file.
+* I3MCPMTResponseMaps are no longer shifted.  We don't use them in current simulations and there likely aren't any old sets that contain them that we'd want to retrigger.  They were too large and typically not saved. (r138946)
+* Reactivated old SMT tests. (r137488)
+* Removed the C++ version of I3TimeShifter.  It's not what's being used in recent production, so it's better for continuity to stick with the python version.
+
+* Remove I3InIceTriggerDefaults and I3IceTopTriggerDefaults. They weren't being used.
+
+April 3, 2015 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V07-07-00
+
+* Remove deprecated functions
+
+  -- David Schultz
+
+* TimeShifter now shifts particles as well
+* TimeShifter now shifts with respect to I3MCPE as well as I3MCHits 
+  for untriggered events
+* Make TimeShifter work for frames with empty trigger hierarchies
+* Update test to test for shifting particles, I3MCPE and I3MCPulse
+* Stop spewing warnings that warn of completely harmless conditions
+* Recognize I3_TESTDATA
+
+  -- Alex Olivas
+
+* Pass FilterMode through the TriggerSim tray segment
+
+  -- Javier Gonzalez
+
+* Use trailing semicolons with I3_POINTER_TYPEDEFS consistently
+
+  -- Jakob van Santen
+
+* Fix implicit conversions to bool
+* Remove boost::assign usage which does not work in C++11
+
+  -- Christopher Weaver
+
+* Small code changes to fix warnings
+
+  -- Don la Dieu
+
+
+November 24, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V07-06-05
+
+* Now includes CoincidenceAfterProcessing
+* Recognizes I3_TESTDATA
+
+September 23, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V07-06-05
+
+* Moving trigger_hierarchy_recipes from dataclasses to trigger-sim
+* Add a function to generate a TriggerKey from the string output
+* Make config IDs for the various triggers easily accessible
+
+  -- Alex Olivas
+
+
+July 10, 2014 Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Release V07-06-04
+
+* Cleaned up cmake for pybindings.
+
+January 13, 2014 Meike de With (meike.de.with@desy.de)
+--------------------------------------------------------------------
+
+Release V07-06-03
+
+* Clean up deprecation warnings
+
+  -- Meike de With
+
+* Make project compatible with Python 3
+
+  -- Nathan Whitehorn
+
+* Improve error message (when module can't be configured) for 
+  SimpleMajorityTrigger
+
+  -- Alex Olivas
+
+
+December 20th Alex Olivas (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V07-05-00
+
+* Added pure python I3TimeShifter which recursively walks frame objects
+  looking for time-like objects to shift.  These are object with the attributes
+  "time","start_time","end_time","flash_time",and "value" (for I3Doubles).
+  This also ignores I3Time for backwards compatibility, but is probably worth
+  revisiting.
+
+June 27, 2012 Emanuel Jacobi  (emanuel.jacobi@desy.de)
+--------------------------------------------------------------------
+
+V07-03-00
+
+* Trigger-sim now supports custom DOMsets
+* Fixed tests
+* Check for existence of the DOM launches before trying to use them
+  in I3Pruner
+
+  -- Claudio Kopper
+
+* The pruner now skips over launch maps that are not found in the frame.
+
+  -- Alex Olivas
+
+* Make the pruner into a conditional module
+* Make the scriptlet documentation work
+
+  -- Laura Gladstone
+
+* The SLOP trigger now supports the 2012 algorithm, with
+  fallback to the 2011 version
+
+  -- Emanuel Jacobi
+
+
+October 10, 2011 Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+Going to get serious about release notes for individual projects.

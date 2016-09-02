@@ -1,0 +1,51 @@
+
+Release Notes
+=============
+
+March 18, 2016, don la dieu  (nega@icecube.umd.edu)
+---------------------------------------------------
+Release V16-03-00
+
+* minor updates, including to documentation
+
+December 14, 2015, don la dieu  (nega@icecube.umd.edu)
+------------------------------------------------------
+Release V15-12-00
+
+* no updates 
+
+September 16, 2015 E Blaufuss (blaufuss@icecube.umd.edu)
+-------------------------------------------------------------------
+
+* Improved test coverage for useful modules
+* Improved docs
+* Removed Compare:: utils from ParticleCheck.  It compared I3Particles, but wasn't used
+	any longer in the code.  It was already using the I3Particle == function.
+
+April 17, 2015, don la dieu  (nega@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V15-08-00 
+
+* Fixed include guards
+* Use ROOT_FOUND instead of USE_ROOT
+
+April 17, 2015, don la dieu  (nega@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V15-04-00 
+
+* minor isnan() fixes
+
+March 15, 2015, Alex Olivas  (olivas@icecube.umd.edu)
+--------------------------------------------------------------------
+
+V15-03-00 
+
+* taking frame objects instead of getting/putting these to prevent 
+  deserialization... now the 'lib' of a given frame object is not 
+  needed anymore
+
+
+
+
