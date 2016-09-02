@@ -22,7 +22,7 @@ def PPCTraySegment(tray,name,
         IceModel="SpiceMie",
         InputMCTree="I3MCTree",
         mcpeseries = "I3MCPESeriesMap",
-        UseGPU=True,
+        UseGPUs=True,
         GPU=-1):
 
         """
@@ -30,7 +30,7 @@ def PPCTraySegment(tray,name,
         """
 
         # Do one or the other
-        UseCPU = not UseGPU
+        UseCPU = not UseGPUs
 
         ppcIceModel = None
         if IceModelLocation is None:
@@ -75,18 +75,18 @@ def PPCTraySegment(tray,name,
         ppc_cfg_out.close()
         
         os.putenv("PPCTABLESDIR",x_ppc_tables_dir)
-        if UseGPU:
+        if UseGPUs:
             os.putenv("OGPU","1")
         if UseCPU:
             os.putenv("OCPU","1")
-        if GPU >= 0 and UseGPU:
+        if GPU >= 0 and UseGPUs:
             os.putenv("CUDA_VISIBLE_DEVICES",str(GPU))
             os.putenv("COMPUTE",":0."+str(GPU))
             os.putenv("GPU_DEVICE_ORDINAL",str(GPU))
 
         # Load libraries 
         from icecube import icetray, interfaces ,dataclasses ,simclasses,sim_services
-        from icecube import diplopia
+        from icecube import polyplopia
         if gpulib == 'cuda':
            load("libcudart")
         elif gpulib == 'opencl':
@@ -97,12 +97,14 @@ def PPCTraySegment(tray,name,
         #load("ppc_eff")
 
         tray.AddModule("i3ppc", "ppc", 
-                  If = lambda f: f[InputMCTree].size(),
+                  If = lambda f: f[InputMCTree].size() or keep_empty_events,
                   gpu=GPU, 
                   cyl=volumecyl,
                   keep=keep_empty_events,
                   MCTree=InputMCTree)
 
+        if mcpeseries != "MCPESeriesMap":
+           tray.AddModule("Rename","rename", keys=["MCPESeriesMap","BackgroundI3MCPESeriesMap"])
 
 ###### IP Modules ###########
 
@@ -125,14 +127,10 @@ class PPC(ipmodule.ParsingModule):
         self.AddParameter("GPU", 
                           "Graphics Processing Unit number (shoud default to environment if None)",
                           -1)
-        self.AddParameter("UseGPU", "Use Graphics Processing Unit",False)
-        self.AddParameter('weightsumname','Name of WeighSum in Frame','WeightSum')
-        self.AddParameter('weightpartsum','Name of WeighPartialSum in Frame','WeightPartSum')
-        self.AddParameter('NumberOfPrimaries',
-                        'Polyplopia force multiple tracks (integer value of coincidences)',0)
+        self.AddParameter("UseGPUs", "Use Graphics Processing Unit",False)
         self.AddParameter('ParticleType',
                         'type of particle that we are simulating','corsika')
-        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter (yes,no,auto)","auto")
+        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter",True)
         self.AddParameter("oversize","over-R: DOM radius oversize scaling factor",5)
         self.AddParameter("efficiency","overall DOM efficiency correction",0.99)
         self.AddParameter("gpulib","set gpu library to load (defaults to cuda)","opencl")
@@ -142,6 +140,7 @@ class PPC(ipmodule.ParsingModule):
         self.AddParameter("IceModel","ice model subdirectory", "SpiceMie") 
         self.AddParameter("MCTreeName","Name of MCTree frame object", "I3MCTree") 
         self.AddParameter("KeepEmptyEvents","Don't discard events with no MCPEs", False) 
+        self.AddParameter('HistogramFilename', 'Histogram filename.', None)
         self.configured = False
 
    def Execute(self,stats):
@@ -177,7 +176,7 @@ class PPC(ipmodule.ParsingModule):
          
         tray.AddSegment(PPCTraySegment,"ppc_photons",
 			gpu = self.gpu,
-			usegpu = self.usegpu,
+			usegpus = self.usegpus,
 			efficiency = self.efficiency,
 			oversize = self.oversize,
 			IceModelLocation = self.icemodellocation,
@@ -190,15 +189,21 @@ class PPC(ipmodule.ParsingModule):
 
         if self.photonseriesname != "MCPESeriesMap":
            tray.AddModule("Rename","rename", keys=["MCPESeriesMap",self.photonseriesname])
-        if (self.runmphitfilter.lower() == 'auto' and self.particletype == 'corsika') or self.runmphitfilter.lower() == 'yes':
-           tray.AddModule("MPHitFilter","hitfilter")(
-              ("HitOMThreshold",1),
-              ("WeightMap","CorsikaWeightMap"),
-              ("WeightSumName",self.weightsumname),
-              ("WeightPartSumName",self.weightpartsum),
-              ("I3MCPESeriesMapName",self.photonseriesname),
-              ("NumberOfPrimaries",max(1,self.numberofprimaries)), # in case we have zero
-           )
+
+        if self.runmphitfilter:
+           tray.AddModule("MPHitFilter","hitfilter",
+              HitOMThreshold=1,
+              RemoveBackgroundOnly=False,
+              I3MCPESeriesMapName=self.photonseriesname)
+
+        if self.histogramfilename:         
+            from icecube.production_histograms import ProductionHistogramModule
+            from icecube.production_histograms.histogram_modules.simulation.mcpe_module import I3MCPEModule
+        
+            tray.AddModule(ProductionHistogramModule, 
+                           Histograms = [I3MCPEModule],
+                           OutputFilename = self.histogramfilename)
+
 
         tray.AddModule("I3Writer","writer", filename=self.outputfile,streams=[icetray.I3Frame.DAQ])
         tray.AddModule("TrashCan","trashcan")

@@ -13,7 +13,7 @@ def SetMultiplicity(frame,mctreelist=[],weightmap="CorsikaWeightMap"):
     multiplicity = 0
     for t in mctreelist:
         multiplicity += len(frame[t].primaries)
-        print t, len(frame[t].primaries)
+        #print t, len(frame[t].primaries)
     wm["Multiplicity"] = multiplicity
     if weightmap  in frame:
        frame.Delete(weightmap)
@@ -30,12 +30,12 @@ def PolyplopiaSegment(tray, name,
                     separate_coincident_mctree_name = "", # leave empty to combine
                     bgfile = None,
                     timewindow = 40.*I3Units.microsecond,
-                    rate = 5.0*I3Units.kilohertz,
+                    rate = float('nan'),
                     If=lambda f: True
    ):
 
       """
-         There are three scenarios for diplopia:
+         There are three scenarios for polyplopia:
             1. bgfile: We are reading background MC from a separate file and
             injecting events to signal (or weighted background) based on 
             a Poisson distribution within the given time window.
@@ -45,11 +45,11 @@ def PolyplopiaSegment(tray, name,
             a Poisson distribution within the given time window.
       """
 
-      from icecube import diplopia, MuonGun
+      from icecube import polyplopia, MuonGun
 
       #tray.AddModule("ParticleMapper","mapprimary") 
       if bgfile: # merge bg into signal
-          background = diplopia.CoincidentI3ReaderService()
+          background = polyplopia.CoincidentI3ReaderService()
           background.open(bgfile)
 
       else:
@@ -92,7 +92,7 @@ def PolyplopiaSegment(tray, name,
           generator = MuonGun.StaticSurfaceInjector(
                outsurface, model.flux, spectrum, model.radius)
 
-          background = diplopia.MuonGunBackgroundService()
+          background = polyplopia.MuonGunBackgroundService()
           background.set_generator(generator)
           background.set_rng(RandomService)
           background.set_rate(rate)
@@ -102,6 +102,7 @@ def PolyplopiaSegment(tray, name,
           CoincidentEventService = background,
           PrimaryType = mctype,
           MCTreeName = mctree_name,
+          Rate = rate,
           SeparateMCTree = separate_coincident_mctree_name,
           TimeWindow = timewindow)
 
@@ -118,8 +119,9 @@ def PolyplopiaPhotons(tray, name,
                     IceModel = "SpiceLea",
                     IceModelLocation = os.path.expandvars("$I3_BUILD/clsim/resources/ice"),
                     timewindow = 40.*I3Units.microsecond,
-                    rate = 5.0*I3Units.kilohertz,
+                    rate = float('nan'),
                     GPU = None,
+                    UseGPUs = True,
                     DOMOversizeFactor = 5,
                     UseHoleIceParameterization = True,
                     MaxParallelEvents = 100,
@@ -127,6 +129,7 @@ def PolyplopiaPhotons(tray, name,
                     Efficiency = 0.99,
                     PhotonSeriesName = "I3MCPESeriesMap",
                     PROPOSALParams=dict(),
+                    UsePPC=False,
                     If=lambda f: True
    ):
 
@@ -172,14 +175,34 @@ def PolyplopiaPhotons(tray, name,
            os.putenv("COMPUTE",":0."+str(GPU))
            os.putenv("GPU_DEVICE_ORDINAL",str(GPU))
 
-        tray.AddSegment(segments.PropagatePhotons, "normalpes",
+        tray.AddModule("Rename","rename_pes", Keys=[PhotonSeriesName,'SignalI3MCPEs'])
+
+        if UsePPC:
+           from ..modules.ppc import PPCTraySegment
+           tray.AddSegment(PPCTraySegment,"ppc_photons",
+			  gpu = -1,
+			  usegpus = UseGPUs,
+			  efficiency = _efficiency,
+			  oversize = DOMOversizeFactor,
+			  IceModelLocation = IceModelLocation.replace('clsim','ppc'),
+			  IceModel = IceModel,
+			  volumecyl = True,
+			  gpulib = 'opencl',
+			  InputMCTree="BackgroundI3MCTree",
+			  keep_empty_events = True,
+			  mcpeseries = "BackgroundI3MCPESeriesMap")
+
+
+        else: # use clsim
+          tray.AddSegment(segments.PropagatePhotons, "normalpes",
             InputMCTree="BackgroundI3MCTree",
             OutputPESeriesMapName="BackgroundI3MCPESeriesMap",
             RandomService = RandomService,
             HybridMode = False,
             IgnoreMuons = False,
             IgnoreCascades = False,
-            UseGPUs = True,
+            UseCascadeExtension = False,
+            UseGPUs = UseGPUs,
             UseAllCPUCores = False,
             IceModel         = IceModel,
             IceModelLocation = IceModelLocation,
@@ -190,30 +213,31 @@ def PolyplopiaPhotons(tray, name,
             MaxParallelEvents = MaxParallelEvents,
             TotalEnergyToProcess = TotalEnergyToProcess)
 
-        from icecube import diplopia
+        from icecube import polyplopia
         if mctype.lower() =='corsika':
            WeightMap="CorsikaWeightMap"
         else:
-           WeightMap="I3WeightDict"
+           WeightMap="I3MCWeightDict"
 
         tray.AddModule("MPHitFilter","hitfilter",
               HitOMThreshold=1,
               RemoveBackgroundOnly=False,
-              WeightMap=WeightMap,
-              WeightSumName="BGWeightSum",
-              WeightPartSumName="BGWeightPartSum",
               I3MCPESeriesMapName="BackgroundI3MCPESeriesMap",
               MCTreeName="BackgroundI3MCTree",
               PruneTree=True,
-              Filter=False,
-              NumberOfPrimaries=1)
+              Filter=False)
 
+        tray.Add(SetMultiplicity,
+             mctreelist=[mctree_name,"BackgroundI3MCTree"],
+             weightmap="PolyplopiaInfo",
+             Streams=[icetray.I3Frame.DAQ])
+
+        # Add to CorsikaWeightMap because people are used to finding it there
         tray.Add(SetMultiplicity,
              mctreelist=[mctree_name,"BackgroundI3MCTree"],
              weightmap=WeightMap,
              Streams=[icetray.I3Frame.DAQ])
 
-        tray.AddModule("Rename","rename_pes", Keys=[PhotonSeriesName,'SignalI3MCPEs'])
         tray.AddModule("Rename","rename_mmc1", Keys=['MMCTrackList','BackgroundMMCTrackList'])
         tray.AddModule("Rename","rename_mmc2", Keys=['SignalMMCTrackList','MMCTrackList'])
 

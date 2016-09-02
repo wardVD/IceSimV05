@@ -37,7 +37,7 @@ def PropagateMuons(tray, name,
         Radius of the target volume in m
     :param float CylinderLength:
         Full height of the target volume in m
-    :param bool SaveStore:
+    :param bool SaveState:
         If set to `True`, store the state of the supplied RNG.
     :param str InputMCTree:
         Name of input :cpp:class:`I3MCTree` frame object

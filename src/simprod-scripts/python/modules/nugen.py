@@ -22,9 +22,9 @@ class NuGen(ipmodule.ParsingModule):
         self.AddParameter('summaryfile','XMLSummary filename','summary.xml')
         self.AddParameter('mjd','MJD for the GCD file',0)
 
-        self.AddParameter("RNGSeed","RNG seed",0)
-        self.AddParameter("RNGStream","RNG stream number",0)
-        self.AddParameter("RNGNumberOfStreams","Number of RNG streams",1)
+        self.AddParameter("seed","RNG seed",0)
+        self.AddParameter("procnum","RNG stream number",0)
+        self.AddParameter("nproc","Number of RNG streams",1)
 
         self.AddParameter('nevents','Number of events',0)
         self.AddParameter('SimMode','simulation mode','FULL')
@@ -75,14 +75,14 @@ class NuGen(ipmodule.ParsingModule):
         tray = I3Tray()
 
         randomService = phys_services.I3SPRNGRandomService(
-             seed = self.rngseed, 
-             nstreams = self.rngnumberofstreams, 
-             streamnum = self.rngstream)
+             seed = self.seed, 
+             nstreams = self.nproc, 
+             streamnum = self.procnum)
 
         randomServiceForPropagators = phys_services.I3SPRNGRandomService(
-             seed = self.rngseed,
-             nstreams = self.rngnumberofstreams*2,
-             streamnum = self.rngnumberofstreams + self.rngstream)
+             seed = self.seed,
+             nstreams = self.nproc*2,
+             streamnum = self.nproc + self.procnum)
 
         tray.context['I3RandomService'] = randomService
         tray.context['I3PropagatorRandomService'] = randomServiceForPropagators

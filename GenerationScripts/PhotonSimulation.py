@@ -2,8 +2,6 @@
 from I3Tray import load
 import os
 
-from icecube import vuvuzela
-
 #############################################################################################################
 def LoadPhotonLibraries():
 #Checking if symlinks are up to date
@@ -32,13 +30,6 @@ def PhotonTray(params,tray):
              gpu = -1,
              #MCTree = "I3MCTree",
              )
-
-    tray.Add("Vuvuzela", 'vuvuzela',
-                  InputHitSeriesMapName="MCPESeriesMap",
-                  OutputHitSeriesMapName="I3MCPESeriesMapNoise",
-                  IceTop = False,
-                  InIce = True,
-                  )  
 
     ### print status message
     print "Light simulation finished"

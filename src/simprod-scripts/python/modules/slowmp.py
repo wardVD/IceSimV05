@@ -4,7 +4,7 @@ from os.path import expandvars
 
 from I3Tray import *
 from icecube import icetray, dataclasses, dataio, trigger_sim
-from iceprod.modules import ipmodule
+from .. import ipmodule
 
 class SlowMonopoles(ipmodule.IPBaseClass):
    """

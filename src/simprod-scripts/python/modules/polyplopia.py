@@ -27,14 +27,18 @@ class PolyplopiaModule(ipmodule.ParsingModule):
         self.AddParameter('backgroundfile', 'Background filename', '')
         self.AddParameter('mctype', 'Type of primary simulation', 'corsika')
         self.AddParameter('outputfile', 'Output filename', 'output.i3.gz')
-        self.AddParameter('Seed', 'RNG Seed', 123)
-        self.AddParameter('ProcNum', 'RNG stream number', 0)
-        self.AddParameter('NProc', 'RNG number of streams', 1)
+        self.AddParameter('seed', 'RNG Seed', 123)
+        self.AddParameter('procnum', 'RNG stream number', 0)
+        self.AddParameter('nproc', 'RNG number of streams', 1)
         self.AddParameter('PROPOSALParams','any other parameters for proposal',dict())
         self.AddParameter('Propagate','propagete particles and photons',True)
         self.AddParameter("GPU", 
                           "Graphics Processing Unit number (shoud default to environment if None)",
                           None)
+        self.AddParameter("UseGPUs", 
+                          "Use Graphics Processing Unit for photon propagation.", True)
+        self.AddParameter("UsePPC", 
+                          "Use PPC for photon propagation instead of CLSim.", False)
         self.AddParameter("oversize","over-R: DOM radius oversize scaling factor",5)
         self.AddParameter("holeiceparametrization", "Turn on(True)/off(False) hole ice parametrization in clsim", True)
         self.AddParameter("maxparallelevents", "Number of frames to be processed in parallel", 100)
@@ -58,7 +62,7 @@ class PolyplopiaModule(ipmodule.ParsingModule):
 
         # Load libraries
         from icecube import (earthmodel_service, PROPOSAL, cmc, phys_services)
-        from icecube import (diplopia, dataclasses, dataio)
+        from icecube import (polyplopia, dataclasses, dataio)
 
         # support json ParamsMap, so we can get our dict from the iceprod config file
         try:
@@ -87,9 +91,10 @@ class PolyplopiaModule(ipmodule.ParsingModule):
                mctree_name = "I3MCTree",
                bgfile = self.backgroundfile,
                timewindow = 40.*I3Units.microsecond,
-               rate = 5.0*I3Units.kilohertz,
                GPU = self.gpu,
-               IceModel         = self.icemodel,
+               UseGPUs = self.usegpus,
+               UsePPC = self.useppc,
+               IceModel = self.icemodel,
                IceModelLocation = self.icemodellocation,
                DOMOversizeFactor = self.oversize,
                UseHoleIceParameterization = self.holeiceparametrization,

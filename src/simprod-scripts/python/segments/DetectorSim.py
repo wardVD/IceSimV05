@@ -18,8 +18,9 @@ def DetectorSim(tray, name,
     RandomService = None,
     RunID = None,
     GCDFile = None,
-    KeepMCHits = True,
-    KeepMCPulses = True,
+    KeepMCHits = False,
+    KeepPropagatedMCTree = False,
+    KeepMCPulses = False,
     SkipNoiseGenerator = False,
     LowMem = False,
     InputPESeriesMapName = "I3MCPESeriesMap",
@@ -38,9 +39,19 @@ def DetectorSim(tray, name,
     if not RunID:
         icetray.logging.log_fatal("You *must* set a RunID in production.")
 
-    MCPESeriesMapNames = [InputPESeriesMapName]
-    MCPulseSeriesMapNames = ["I3MCPulseSeriesMap"]
-    MCHitSeriesMapNames = []
+    MCPESeriesMapNames = [
+        InputPESeriesMapName,
+        "BackgroundI3MCPESeriesMap",
+        "SignalI3MCPEs" 
+        ]
+    MCPulseSeriesMapNames = [
+        "I3MCPulseSeriesMap",
+        "I3MCPulseSeriesMapParticleIDMap" 
+        ]
+    MCTreeNames = [
+        "I3MCTree",
+        "BackgroundI3MCTree"
+        ]
     MCPMTResponseMapNames = []
 
     if not SkipNoiseGenerator:
@@ -87,7 +98,8 @@ def DetectorSim(tray, name,
                    PESeriesMap='I3MCPESeriesMap',
                    Waveforms="")
     
-    # clean up
+
+
     tray.AddModule("Delete", name+"_cleanup",
         Keys = ["MCTimeIncEventID",
                 "MCPMTResponseMap",
@@ -99,7 +111,11 @@ def DetectorSim(tray, name,
 
     if not KeepMCHits:
         tray.AddModule("Delete", name+"_cleanup_I3MCHits_2",
-            Keys = MCPESeriesMapNames + MCHitSeriesMapNames)
+            Keys = MCPESeriesMapNames)
+
+    if not KeepPropagatedMCTree: # Always keep original tree
+        tray.AddModule("Delete", name+"_cleanup_I3MCTree_3",
+            Keys = MCTreeNames)
     
 
 @icetray.traysegment
@@ -124,6 +140,9 @@ def DetectorSegment(tray,name,If=lambda f:True,
                      GeneratedEfficiency=0.0,
                      SampleEfficiency=0.0,
                      RunID=None,
+                     KeepMCHits = False,
+                     KeepPropagatedMCTree = False,
+                     KeepMCPulses = False,
                      ):
     """
     Run IC86 detector simulation
@@ -165,8 +184,9 @@ def DetectorSegment(tray,name,If=lambda f:True,
         RandomService = 'I3RandomService',
         GCDFile = gcdfile,
         InputPESeriesMapName = MCPESeriesMapName,
-        KeepMCHits = True,
-        KeepMCPulses = True,
+        KeepMCHits = KeepMCHits,
+        KeepMCPulses = KeepMCPulses,
+        KeepPropagatedMCTree = KeepPropagatedMCTree,
         LowMem = lowmem,
         BeaconLaunches=BeaconLaunches,
         SkipNoiseGenerator = False,

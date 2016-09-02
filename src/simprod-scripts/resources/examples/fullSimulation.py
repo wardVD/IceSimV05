@@ -52,7 +52,7 @@ parser.add_option("-d", "--detector",default="IC86",
                   dest="DETECTOR", help="either IC86 or IC79")
 
 
-parser.add_option("--generator",default="nugen",choices=('nugen', 'muongun', 'corsika-nu'),
+parser.add_option("--generator",default="nugen",choices=('nugen', 'muongun', 'corsika-nu','corsika-icetop'),
                   dest="GENERATOR", help="either nugen or muongun")
 
 # nugen
@@ -87,12 +87,18 @@ parser.add_option("--ignore-muon-light",  action="store_true", default=False,
                   dest="IGNOREMUONLIGHT", help="ignore light from (bare) muons in hybrid mode. (i.e. do not run clsim)")
 parser.add_option("--use-gpu",  action="store_true", default=False,
                   dest="USEGPU", help="simulate using GPUs instead of CPU cores")
+parser.add_option("--without-photon-prop",  action="store_false", default=True,
+                  dest="CLSIM", help="do not propagate photons")
 
 # detector sim
 parser.add_option("--keep-mchits", action="store_true", default=False,
                   dest="KEEPMCHITS", help="Keep I3MCHits before writing the output file")
 parser.add_option("--with-icetop", action="store_true", default=False,
                   dest="DO_ICETOP", help="Simulate IceTop response in addition to InIce")
+
+# icetop
+parser.add_option("--top-response", action="store", default='param',
+                  dest="TOPRESPONSE", help="IceTop tank response to use. One of 'param' or 'g4' (g4 is incompatible with CLSim)")
 
 # used in simulation and reconstrcution
 parser.add_option("--unshadowed-fraction", type="float", default=0.9,
@@ -149,6 +155,15 @@ elif options.GENERATOR == "corsika-nu":
     scratchDir = "%s/%s_corsika-nu_%u_%08u_%010u" % (scratchDirBase, options.DETECTOR, options.DATASETNUMBER, options.RUNNUMBER, options.SEED)
     if len(infiles) == 0:
         parser.error("You must supply at least 1 CORSIKA file")
+elif options.GENERATOR == "corsika-icetop":
+    scratchDir = "%s/%s_corsika-icetop_%u_%08u_%010u" % (scratchDirBase, options.DETECTOR, options.DATASETNUMBER, options.RUNNUMBER, options.SEED)
+    if len(infiles) == 0:
+        parser.error("You must supply at least 1 CORSIKA file")
+    # some checks just because everything IceTop is not the default.
+    if not options.DO_ICETOP:
+        parser.error("If you use the --corsika-icetop, you should also use --with-icetop.")
+    if options.TOPRESPONSE == 'g4' and options.CLSIM:
+        parser.error("If you use --top-response='g4', you also need to use --no-photon-prop.")
 else:
     raise RuntimeError("unknown generator %s" % options.GENERATOR)
 
@@ -269,19 +284,30 @@ elif options.GENERATOR.lower() == "muongun":
         gamma_index = 1.1,
         )
 elif options.GENERATOR.startswith("corsika"):
-    tray.AddSegment(segments.GenerateAirShowers, "GenerateAtmosphericNeutrinos",
-       NEvents = options.NUMEVENTS,
-       Files = infiles,
-       GCDFile = options.GCDFILE,
-       CylinderRadius = 500, CylinderHeight = 1000,
-       SimulateIceTop = options.DO_ICETOP,
-       )
-    if options.GENERATOR == "corsika-nu":
-       tray.AddSegment(segments.SelectNeutrino, "SelectNeutrino",
-           AutoExtendMuonVolume = options.AUTOEXTEND,
-           EnergyBiasPower = 1,
-           CylinderRadius = 500, CylinderHeight = 1000,
-           )
+    if options.GENERATOR == 'corsika-icetop':
+        tray.AddSegment(segments.GenerateIceTopShowers, "GenerateIceTopShowers",
+                        NSamples = options.NUMEVENTS,
+                        Files = infiles,
+                        GCDFile = options.GCDFILE,
+                        x=0, y=0, r=800*I3Units.m, 
+                        TankResponse=options.TOPRESPONSE,
+                        RunID=options.RUNNUMBER,
+                        RaiseObservationLevel=3*I3Units.m
+                    )
+    else:
+        tray.AddSegment(segments.GenerateAirShowers, "GenerateAtmosphericNeutrinos",
+                        NEvents = options.NUMEVENTS,
+                        Files = infiles,
+                        GCDFile = options.GCDFILE,
+                        CylinderRadius = 500, CylinderHeight = 1000,
+                        SimulateIceTop = options.DO_ICETOP,
+                    )
+        if options.GENERATOR == "corsika-nu":
+            tray.AddSegment(segments.SelectNeutrino, "SelectNeutrino",
+                            AutoExtendMuonVolume = options.AUTOEXTEND,
+                            EnergyBiasPower = 1,
+                            CylinderRadius = 500, CylinderHeight = 1000,
+                        )
     tray.Add('Rename', Keys=['I3MCTree', 'I3MCTree_preMuonProp'])
 else:
     raise RuntimeError("Unkown generator %s" % options.GENERATOR)
@@ -289,18 +315,19 @@ else:
 tray.AddSegment(segments.PropagateMuons, "PropagateMuons",
     RandomService = randomServiceForPropagators)
     
-tray.AddSegment(segments.PropagatePhotons, "PropagatePhotons",
-    RandomService = randomService,
-    MaxParallelEvents = options.MAXPARALLELEVENTS,
-    KeepIndividualMaps = False,
-    IceModel = options.ICEMODEL,
-    UnshadowedFraction = options.UNSHADOWEDFRACTION,
-    HybridMode = options.HYBRIDSIMULATION,
-    IgnoreMuons = options.IGNOREMUONLIGHT,
-    # OutputPhotonSeriesName = "I3PhotonSeriesMap",
-    # UseAllCPUCores = True,
-    UseGPUs = options.USEGPU,
-    CascadeService = cascade_tables)
+if options.CLSIM:
+    tray.AddSegment(segments.PropagatePhotons, "PropagatePhotons",
+                    RandomService = randomService,
+                    MaxParallelEvents = options.MAXPARALLELEVENTS,
+                    KeepIndividualMaps = False,
+                    IceModel = options.ICEMODEL,
+                    UnshadowedFraction = options.UNSHADOWEDFRACTION,
+                    HybridMode = options.HYBRIDSIMULATION,
+                    IgnoreMuons = options.IGNOREMUONLIGHT,
+                    # OutputPhotonSeriesName = "I3PhotonSeriesMap",
+                    #UseAllCPUCores = True,
+                    UseGPUs = options.USEGPU,
+                    CascadeService = cascade_tables)
 
 if options.DO_ICETOP:
     tray.Add("Rename", Keys=['I3MCPESeriesMap', 'InIceMCPEs'])
@@ -311,6 +338,7 @@ if options.DO_ICETOP:
 
 tray.AddSegment(segments.DetectorSim, "DetectorSim",
     RandomService = 'I3RandomService',
+    RunID = options.RUNNUMBER,
     GCDFile = gcdFile,
     InputPESeriesMapName = "I3MCPESeriesMap",
     KeepMCHits = True,

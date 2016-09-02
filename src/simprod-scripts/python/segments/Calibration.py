@@ -4,7 +4,6 @@ from icecube import icetray
 
 @icetray.traysegment
 def Calibration(tray, name,
-    IsDOMSimulatorData = False,
     BadDOMsHLC = None,
     BadDOMsSLC = None):
 
@@ -82,32 +81,17 @@ def Calibration(tray, name,
         CleanedKeysList = 'BadDomsListSLC'
         )
 
-    if not IsDOMSimulatorData:
-        print('Wavecalibrator for data selected')
-        tray.AddModule('I3WaveCalibrator', name+'_wavecal',
-            Launches='OfflineCleanInIceRawData',
-            Waveforms='CalibratedWaveforms',
-            Errata='CalibrationErrata',
-            WaveformRange='CalibratedWaveformRange',
-            )
-        tray.AddModule('I3Wavedeform', name+'_wavedeform',
-            Waveforms='CalibratedWaveforms',
-            WaveformTimeRange='CalibratedWaveformRange',
-            Output='OfflinePulses',
-            )
-    else:
-        print('Wavecalibrator for DOMsimulator selected')
-        tray.AddSegment(WaveCalibrator.DOMSimulatorCalibrator, name+'_wavecal',
-            Launches='OfflineCleanInIceRawData',
-            Waveforms='CalibratedWaveforms',
-            Errata='CalibrationErrata',
-            WaveformRange='CalibratedWaveformRange',
-            )
-        tray.AddModule('I3Wavedeform', name+'_wavedeform',
-            Waveforms='CalibratedWaveforms',
-            WaveformTimeRange='CalibratedWaveformRange',
-            Output='OfflinePulses',
-            UseDOMsimulatorTemplates=True)
+    tray.AddModule('I3WaveCalibrator', name+'_wavecal',
+        Launches='OfflineCleanInIceRawData',
+        Waveforms='CalibratedWaveforms',
+        Errata='CalibrationErrata',
+        WaveformRange='CalibratedWaveformRange',
+        )
+    tray.AddModule('I3Wavedeform', name+'_wavedeform',
+        Waveforms='CalibratedWaveforms',
+        WaveformTimeRange='CalibratedWaveformRange',
+        Output='OfflinePulses',
+        )
 
     tray.AddModule('I3PMTSaturationFlagger', name+'_flag_zorchers',
         Waveforms="CalibratedWaveforms",

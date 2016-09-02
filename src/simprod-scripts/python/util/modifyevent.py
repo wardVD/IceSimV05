@@ -11,7 +11,7 @@ import sys,getopt
 from os.path import expandvars
 
 from icecube import icetray,dataclasses
-from iceprod.modules import ipmodule
+from .. import ipmodule
 
 class ModifyEventTime(icetray.I3Module):
    """

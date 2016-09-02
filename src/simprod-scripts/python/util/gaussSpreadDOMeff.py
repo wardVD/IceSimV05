@@ -3,7 +3,7 @@ import sys, os
 from os.path import expandvars
 from math import isnan
 import random
-from iceprod.modules import ipmodule
+from .. import ipmodule
 
 class JitterGCD(ipmodule.IPBaseClass):
    def __init__(self):

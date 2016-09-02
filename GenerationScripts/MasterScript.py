@@ -3,6 +3,8 @@
 #############################################################################
 from GenerationExotic import GenerationTray,PropagationTray
 from PhotonSimulation import PhotonTray
+from Detector import DetectorNoiseTray,TriggerTray
+
 from optparse import OptionParser
 
 from icecube import dataio,dataclasses,icetray
@@ -69,6 +71,10 @@ def main(params,tray):
     tray = PropagationTray(params,tray)
     ### Simulate light propagation
     tray = PhotonTray(params,tray)
+    ### Simulate noise
+    tray = DetectorNoiseTray(params,tray)
+    ### Simulate triggers
+    tray = TriggerTray(params,tray)
     
     ### Write out/execute and finish
     tray.Add('I3Writer','writer',

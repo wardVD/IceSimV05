@@ -10,6 +10,7 @@ import sys,getopt,string
 from os.path import expandvars
 from .. import ipmodule
 from ..util import CombineHits, DrivingTime, choose_max_efficiency
+from ..util.fileutils import download,untar,isurl
 
 def LoadCascadeTables(Use_cvmfs=False, amplitude_fits = None, timing_fits = None):
 
@@ -63,14 +64,10 @@ class ClSim(ipmodule.ParsingModule):
         self.AddParameter("GPU", 
                           "Graphics Processing Unit number (shoud default to environment if None)",
                           None)
-        self.AddParameter("UseGPU", "Use Graphics Processing Unit",False)
-        self.AddParameter('weightsumname','Name of WeighSum in Frame','WeightSum')
-        self.AddParameter('weightpartsum','Name of WeighPartialSum in Frame','WeightPartSum')
-        self.AddParameter('NumberOfPrimaries',
-                        'Polyplopia force multiple tracks (integer value of coincidences)',0)
+        self.AddParameter("UseGPUs", "Use Graphics Processing Unit",False)
         self.AddParameter('ParticleType',
                         'type of particle that we are simulating','corsika')
-        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter (yes,no,auto,none)","yes")
+        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter",True)
         self.AddParameter("oversize","over-R: DOM radius oversize scaling factor",5)
         self.AddParameter("holeiceparametrization", "Turn on(True)/off(False) hole ice parametrization in clsim", True)
         self.AddParameter("maxparallelevents", "Number of frames to be processed in parallel", 100)
@@ -101,7 +98,7 @@ class ClSim(ipmodule.ParsingModule):
         if not os.path.exists(self.summaryfile):
            summary_in  = ''
 
-        if self.gpu is not None and self.usegpu:
+        if self.gpu is not None and self.usegpus:
            os.putenv("CUDA_VISIBLE_DEVICES",str(self.gpu))
            os.putenv("COMPUTE",":0."+str(self.gpu))
            os.putenv("GPU_DEVICE_ORDINAL",str(self.gpu))
@@ -140,7 +137,8 @@ class ClSim(ipmodule.ParsingModule):
             HybridMode = False,
             IgnoreMuons = False,
             IgnoreCascades = False,
-            UseGPUs = self.usegpu,
+            UseCascadeExtension = False,
+            UseGPUs = self.usegpus,
             UseAllCPUCores = False,
             IceModel         = self.icemodel,
             IceModelLocation = self.icemodellocation,
@@ -154,25 +152,12 @@ class ClSim(ipmodule.ParsingModule):
             MaxParallelEvents = self.maxparallelevents,
             TotalEnergyToProcess = self.totalenergytoprocess)
 
-        if (self.runmphitfilter.lower() == 'auto' and self.particletype == 'corsika') \
-           or self.runmphitfilter.lower() == 'yes':
-           from icecube import diplopia
-           tray.AddModule("MPHitFilter","hitfilter")(
-              ("HitOMThreshold",1),
-              ("RemoveBackgroundOnly",False),
-              ("WeightMap","CorsikaWeightMap"),
-              ("WeightSumName",self.weightsumname),
-              ("WeightPartSumName",self.weightpartsum),
-              ("I3MCPESeriesMapName",self.photonseriesname),
-              ("NumberOfPrimaries",max(1,self.numberofprimaries)), # in case we have zero
-           )
-        elif (self.runmphitfilter.lower() == 'auto'):
-            from ..util import BasicHitFilter
-            tray.AddModule(BasicHitFilter,"hitfilter",
-                Streams=[icetray.I3Frame.DAQ],
-                HitSeriesMapNames=self.photonseriesname)
-
-
+        if self.runmphitfilter:
+            from icecube import polyplopia
+            tray.AddModule("MPHitFilter","hitfilter",
+                 HitOMThreshold=1,
+                 RemoveBackgroundOnly=False,
+                 I3MCPESeriesMapName=self.photonseriesname)
 
         if self.histogramfilename:         
             from icecube.production_histograms import ProductionHistogramModule
@@ -226,14 +211,10 @@ class HybridPhotons(ipmodule.ParsingModule):
         self.AddParameter("GPU", 
                           "Graphics Processing Unit number (shoud default to environment if None)",
                           None)
-        self.AddParameter("UseGPU", "Use Graphics Processing Unit",False)
-        self.AddParameter('weightsumname','Name of WeighSum in Frame','WeightSum')
-        self.AddParameter('weightpartsum','Name of WeighPartialSum in Frame','WeightPartSum')
-        self.AddParameter('NumberOfPrimaries',
-                        'Polyplopia force multiple tracks (integer value of coincidences)',0)
+        self.AddParameter("UseGPUs", "Use Graphics Processing Unit",False)
         self.AddParameter('ParticleType',
                         'type of particle that we are simulating','corsika')
-        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter (yes,no,auto,none)","auto")
+        self.AddParameter('RunMPHitFilter',"Run polyplopia's mphitfilter",True)
         self.AddParameter("oversize","over-R: DOM radius oversize scaling factor",5)
         self.AddParameter("efficiency","overall DOM efficiency correction",0.99)
         self.AddParameter("volumecyl","set volume to regular cylinder (set to False for 300m spacing from the DOMs)",True)
@@ -254,7 +235,7 @@ class HybridPhotons(ipmodule.ParsingModule):
         if not ipmodule.ParsingModule.Execute(self,stats): return 0
         from ..util.fileutils import download,untar,isurl
         from icecube import icetray, dataclasses, dataio, phys_services, interfaces, sim_services
-        from .clsim import HybridClSimSpline
+        #from .clsim import HybridClSimSpline
         from I3Tray import I3Tray, I3Units
 
         # Instantiate a tray 
@@ -285,10 +266,10 @@ class HybridPhotons(ipmodule.ParsingModule):
         # Configure IceTray modules 
         tray.AddModule("I3Reader", "reader",filenamelist=[gcdfile]+inputfiles)
         
-        if self.gpu is not None and self.usegpu:
-           os.putenv("CUDA_VISIBLE_DEVICES",str(self.gpu))
-           os.putenv("COMPUTE",":0."+str(self.gpu))
-           os.putenv("GPU_DEVICE_ORDINAL",str(self.gpu))
+        #if self.gpu is not None and self.usegpus:
+        #   os.putenv("CUDA_VISIBLE_DEVICES",str(self.gpu))
+        #   os.putenv("COMPUTE",":0."+str(self.gpu))
+        #   os.putenv("GPU_DEVICE_ORDINAL",str(self.gpu))
 
         # simulate cascades (with photonics-hit-maker)
         cascade_service = LoadCascadeTables(
@@ -300,29 +281,23 @@ class HybridPhotons(ipmodule.ParsingModule):
         tray.AddSegment(segments.PropagatePhotons, "hybridpes",
             RandomService = "I3RandomService",
             HybridMode = True,
-            UseGPUs = self.usegpu,
+            UseGPUs = False,
             UseAllCPUCores = False,
             IceModel = self.icemodel,
             IceModelLocation = self.icemodellocation,
             CascadeService = cascade_service,
+            UseCascadeExtension = False,
             UnshadowedFraction = self.efficiency,
             DOMOversizeFactor = self.oversize,
             OutputPESeriesMapName = self.photonseriesname)
 
 
-
-        if (self.runmphitfilter.lower() == 'auto' and self.particletype == 'corsika') or self.runmphitfilter.lower() == 'yes':
-           tray.AddModule("MPHitFilter","hitfilter")(
-              ("HitOMThreshold",1),
-              ("WeightMap","CorsikaWeightMap"),
-              ("WeightSumName",self.weightsumname),
-              ("WeightPartSumName",self.weightpartsum),
-              ("HitSeriesMapName",self.photonseriesname),
-              ("NumberOfPrimaries",max(1,self.numberofprimaries)), # in case we have zero
-           )
-        elif (self.runmphitfilter.lower() != 'none'):
-            from ..util import BasicHitFilter
-            tray.AddModule(BasicHitFilter,"hitfilter",Streams=[icetray.I3Frame.DAQ],HitSeriesMapNames=self.photonseriesname)
+        if self.runmphitfilter:
+           from icecube import polyplopia
+           tray.AddModule("MPHitFilter","hitfilter",
+                 HitOMThreshold=1,
+                 RemoveBackgroundOnly=False,
+                 I3MCPESeriesMapName=self.photonseriesname)
 
         # Convert for backwards compatibility
         if self.GetParameter("ConvertToMCHits"):

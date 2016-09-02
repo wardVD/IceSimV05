@@ -10,6 +10,8 @@ from .. import ipmodule
 import logging
 import subprocess
 
+from .corsika_binary import CorsikaBinary
+
 class CorsikaBinaryStager(CorsikaBinary):
     """
     This module manages a configuration and a corsika binary

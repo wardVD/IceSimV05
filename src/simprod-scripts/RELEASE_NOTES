@@ -7,6 +7,10 @@ Release Notes
 
 trunk
 -----
+* Added option to set CORSIKA run number.
+* Renamed diplopia instances to polyplopia
+* Added SelectNeutrino option in Corsika for CORSIKA-neutrinos
+* Added sanity checker for PPC
 * Turned Corsika into a ParsingModule.  The bool parameters are now proper 
   toggle switches and don't take a specific value anymore. (r144343 and r144345)
 * Removed double deletion of frame object in the ppc segment, which would have thrown. (r138265)

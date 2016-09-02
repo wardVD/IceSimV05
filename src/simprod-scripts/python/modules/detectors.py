@@ -67,9 +67,9 @@ class ICBase(ipmodule.ParsingModule):
     def addparameter_input(self):
         self.AddParameter('gcdfile', 'GeoCalibDetStatus filename', '')
         self.AddParameter('inputfile', 'Input filename', '')
-        self.AddParameter('Seed', 'RNG Seed', 123)
-        self.AddParameter('ProcNum', 'RNG stream number', 0)
-        self.AddParameter('NProc', 'RNG number of streams', 1)
+        self.AddParameter('seed', 'RNG Seed', 123)
+        self.AddParameter('procnum', 'RNG stream number', 0)
+        self.AddParameter('nproc', 'RNG number of streams', 1)
         self.AddParameter('MCPESeriesName', 'Name of MCPESeriesMap in frame', 'I3MCPESeriesMap')
         self.AddParameter('HistogramFilename', 'Histogram filename.', None)
 
@@ -139,7 +139,7 @@ class IC86(ICBase):
         self.AddParameter('SummaryFile','XMLSummary filename', None)
         self.AddParameter('MCType','Generator particle type','corsika_weighted')
         self.AddParameter('UseLinearTree','Use I3LinearizedMCTree for serialization', False)
-        self.AddParameter('MCPrescale','Prescale for keeping additional Monte Carlo info in the frame', 10)
+        self.AddParameter('MCPrescale','Prescale for keeping additional Monte Carlo info in the frame', 100)
         self.AddParameter('IceTop','Do IceTop Simulation?', False)
         self.AddParameter('Genie','Assume separate Genie MCPEs and BG MCPEs', False)
         self.AddParameter('FilterTrigger','filter untriggered events', True)
@@ -150,7 +150,7 @@ class IC86(ICBase):
         self.AddParameter('TimeShiftSkipKeys','Skip keys in the triggersim TimeShifter', [])
         self.AddParameter('SampleEfficiency','Resample I3MCPESeriesMap for different efficiency', 0.0)
         self.AddParameter('GeneratedEfficiency','Generated efficiency for resampling', 0.0)
-        self.AddParameter('RunID','Run ID', None)
+        self.AddParameter('RunID','Run ID', 0, explicit_type='int')
 
     def segment_main(self, tray, stats):
 
@@ -179,6 +179,9 @@ class IC86(ICBase):
             SampleEfficiency=self.sampleefficiency,
             GeneratedEfficiency=self.generatedefficiency,
             RunID=self.runid,
+            KeepMCHits = not self.procnum % self.mcprescale,
+            KeepPropagatedMCTree = not self.procnum % self.mcprescale,
+            KeepMCPulses = not self.procnum % self.mcprescale
         )
 
 
@@ -262,8 +265,8 @@ class IceTop(ipmodule.ParsingModule):
     self.AddParameter('outputfile','Output filename','')
     self.AddParameter('summaryfile','XMLSummary filename',"i3summary.xml")
     self.AddParameter('Seed','RNG Seed', 123)
-    self.AddParameter('ProcNum','RNG stream number', 0)
-    self.AddParameter('NProc','RNG number of streams', 1)
+    self.AddParameter('procnum','RNG stream number', 0)
+    self.AddParameter('nproc','RNG number of streams', 1)
     self.AddParameter('DOMLauncher', 'Simulate with DOMLauncher', True)
     self.AddParameter('sim_trigger', 'Simulate trigger', False)
     self.AddParameter('calibrate', 'Calibrate and extract pulses (requires tpx module, which is in IceRec usually)', False)

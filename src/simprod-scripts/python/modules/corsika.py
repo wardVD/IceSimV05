@@ -38,6 +38,7 @@ def CorsikaReaderTraySegment(tray,name,
       cors, oversampling, 
       stats={}, 
       propagate_muons=False, 
+      select_neutrino=False, 
       filenamelist=[],
       SimulateIceTop=True):
 
@@ -68,6 +69,13 @@ def CorsikaReaderTraySegment(tray,name,
          TankResponse="param",
          KeepMCHits=False,
          RandomService="I3RandomService")
+
+      if select_neutrino:
+         tray.AddSegment(segments.SelectNeutrino, "SelectNeutrino",
+              EnergyBiasPower = 1, 
+              CylinderRadius = 500, 
+              CylinderHeight = 1000,
+              )
 	
       if cors.ranpri == 3: # 5-component case
 
@@ -170,7 +178,7 @@ def configure_corsika(params):
     cors.radius  = params.radius
     cors.length  = params.length
     cors.atmod   = atmod
-    cors.runnum  = 0
+    cors.runnum  = params.runnum
     cors.cache   = 1
     cors.nevents = params.nshowers
     cors.dslope  = params.dslope
@@ -178,7 +186,11 @@ def configure_corsika(params):
     cors.ranpri  = params.ranpri
     cors.donkg   = 0
     cors.doegs   = 0
-    cors.outfile = "DAT000000"
+
+    cors.outfile = "DAT%06u" % cors.runnum
+    if params.compress:
+       cors.outfile += '.gz'
+
     cors.outdir  = "./" 
     cors.topdir  = expandvars("$PWD/")
     cors.tmpdir  = os.path.join(cors.topdir,"dcors%d"%cors.runnum)
@@ -234,6 +246,7 @@ class CorsikaGenerator(ipmodule.ParsingModule):
         self.AddParameter('outputfile','Output filename','corsika.i3')
         self.AddParameter('inputfile',"Input filename (only if you are not generating file)",'')
         self.AddParameter('RunCorsika','Run CORSIKA or only generate INPUTS file',True)
+        self.AddParameter('RunNum','Run Number',0)
         self.AddParameter('summaryfile','XMLSummary filename','summary.xml')
         self.AddParameter('atmospheres','Atmospheric models',[11,12,13,14]) # mar, jul, oct, dec
         self.AddParameter('eslope','CR spectral index (only if ranpri=0)',-2.7)
@@ -270,6 +283,7 @@ class CorsikaGenerator(ipmodule.ParsingModule):
         self.AddParameter("RepoURL","URL of repository containing corsika tarballs","http://prod-exe.icecube.wisc.edu")
         self.AddParameter('CVMFS', 'Path to CVMFS repository', '/cvmfs/icecube.opensciencegrid.org/') 
         self.AddParameter('SimulateIceTop','Simulate IceTop detector',False)
+        self.AddParameter('SelectNeutrino','Randomly select CORSIKA neutrino and force interaction',False)
         self.AddParameter('UsePipe', 'Use pipe for corsika output', False)
         self.AddParameter('MakeFIFO', 'Tell CORSIKA create FIFO', False)
 
@@ -359,6 +373,7 @@ class CorsikaGenerator(ipmodule.ParsingModule):
         tray.AddSegment(CorsikaReaderTraySegment,
                   gcdfile="", randomService=randomService,
                   SimulateIceTop=self.simulateicetop,
+                  select_neutrino=self.selectneutrino, 
                   oversampling=self.oversampling, cors=cors, stats=self.stats)
 
 
@@ -403,6 +418,7 @@ class Corsika5ComponentGenerator(ipmodule.ParsingModule):
         self.AddParameter('outputfile','Output filename','corsika.i3')
         self.AddParameter('inputfile',"Input filename (only if you are not generating file)",'')
         self.AddParameter('RunCorsika','Run CORSIKA or only generate INPUTS file',True)
+        self.AddParameter('RunNum','Run Number',0)
         self.AddParameter('summaryfile','XMLSummary filename','summary.xml')
         self.AddParameter('atmospheres','Atmospheric models',[11,12,13,14]) # mar, jul, oct, dec
         self.AddParameter('eslope','CR spectral index (only if ranpri=0)',-2.7)
@@ -445,6 +461,7 @@ class Corsika5ComponentGenerator(ipmodule.ParsingModule):
         self.AddParameter('compress','compress corsika output', False)
         self.AddParameter('skipoptions','Options to skip',[])
         self.AddParameter('HistogramFilename', 'Histogram filename.', None)
+        self.AddParameter('SelectNeutrino','Randomly select CORSIKA neutrino and force interaction',False)
  
    def Execute(self,stats):
         self.stats=stats
@@ -526,6 +543,7 @@ class Corsika5ComponentGenerator(ipmodule.ParsingModule):
                generator.SetParameter('gcdfile',self.gcdfile)
                generator.SetParameter('outputfile',i3outfile)
                generator.SetParameter('RunCorsika',True)
+               generator.SetParameter('RunNum',self.runnum)
                generator.SetParameter('summaryfile',OUTDIR+'summary_%u.xml' % counter)
                generator.SetParameter('atmospheres',[cors.atmod])
                generator.SetParameter('ranpri',0)
@@ -552,6 +570,7 @@ class Corsika5ComponentGenerator(ipmodule.ParsingModule):
                generator.SetParameter("CVMFS",self.cvmfs)
                generator.SetParameter('OverSampling',self.oversampling)
                generator.SetParameter('SimulateIceTop',self.simulateicetop)
+               generator.SetParameter('SelectNeutrino',self.selectneutrino)
                generator.SetParameter('UsePipe', self.usepipe)
                generator.SetParameter('MakeFIFO', self.makefifo)
                generator.SetParameter('compress', self.compress)

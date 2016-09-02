@@ -2,7 +2,7 @@
 import sys
 import os
 import math
-from iceprod.modules import ipmodule
+from .. import ipmodule
 
 
 class Splitter(ipmodule.IPBaseClass):

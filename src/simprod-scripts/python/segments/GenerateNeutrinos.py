@@ -197,7 +197,7 @@ def SelectNeutrino(tray, name,
     CylinderHeight=1200*I3Units.m,
     CrossSections='csms',
     ):
-    """
+    r"""
     Select a neutrino to interact, and add neutrino propagators to the context.
 
     :param AutoExtendMuonVolume: allow :math:`\nu_{\mu}` to interact far before they reach the detector

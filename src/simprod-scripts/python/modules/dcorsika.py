@@ -359,7 +359,7 @@ class Corsika(ipmodule.ParsingModule):
         try:
             from iceprod.core.functions import tail
         except ImportError,e:
-            print("will not be able to tail a file")
+            print("No iceprod.core found. Will not be able to tail a file")
             def tail(*args,**kwargs):
                 return ''
 
@@ -392,6 +392,9 @@ class Corsika(ipmodule.ParsingModule):
 
         # Corsika output file 
         par['corout']  = "DAT%(runnum)06d" % par      # Plain CORSIKA output
+        if par['compress']:
+           par['corout']  += ".gz"
+
         par['logfile'] = par['logfile'] % par
 
         corout  = "%(outdir)s/%(corout)s" % par
@@ -416,6 +419,11 @@ class Corsika(ipmodule.ParsingModule):
                stats['nevcorsika'] = nevcorsika
            else:
                self.logger.error('The string "GENERATED EVENTS" was not found in log file %(logfile)s' % par )
+               try:
+                  logfile = open(par['logfile'],'r')
+                  self.logger.error(par['logfile']+':\n'+logfile.read())
+                  logfile.close()
+               except: pass
                status,fluka_failed=getstatusoutput('tail -n 1 %(logfile)s |grep "FLUKA TREATS LOW ENERGY HADRONIC INTERACTIONS"'%par)
                if fluka_failed:
                    self.logger.error('FLUKA initialization failed.')

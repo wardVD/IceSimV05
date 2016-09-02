@@ -38,9 +38,9 @@ def tasksetInUse():
 def resetTasksetThreads(main_pid):
     # reset thread taskset affinity
     time.sleep(60)
-    num_cpus = reduce(lambda b,a: b+int('processor' in a),open('/proc/cpuinfo').readlines(),0)
-    tt = '1'*num_cpus
     try:
+        num_cpus = reduce(lambda b,a: b+int('processor' in a),open('/proc/cpuinfo').readlines(),0)
+        tt = '1'*num_cpus
         p = subprocess.Popen(['/bin/ps','-Lo','tid','--no-headers','%d'%main_pid],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         for tid in p.communicate()[0].split():
             tid = tid.strip()
@@ -70,7 +70,8 @@ def LoadCascadeTables(IceModel = "SpiceMie", TablePath = "/data/sim/sim-new/spli
     cascade_service = photonics_service.I3PhotoSplineService(
         amplitudetable=amplitudetable,
         timingtable=timingtable,
-        timingSigma=0.)
+        timingSigma=0.,
+        maxRadius=800.*icetray.I3Units.meter)
 
     return cascade_service
 
@@ -90,6 +91,7 @@ def PropagatePhotons(tray, name,
     IceModel = "SpiceMie",
     CascadeService = None,
     IceModelLocation = None,
+    UseCascadeExtension = True,
     UseGeant4=False, 
     CrossoverEnergyEM=None, 
     CrossoverEnergyHadron=None, 
@@ -121,7 +123,11 @@ def PropagatePhotons(tray, name,
     clsimIceModel = None
     if IceModelLocation is None:
        IceModelLocation = expandvars("$I3_SRC/clsim/resources/ice")
-    if IceModel == "Spice1":
+    if isinstance(IceModel, clsim.I3CLSimMediumProperties):
+        if HybridMode:
+            raise RuntimeError("Cannot use custom ice models in hybrid mode")
+        clsimIceModel = IceModel
+    elif IceModel == "Spice1":
         clsimIceModel = expandvars(IceModelLocation+"/spice_1")
     elif IceModel == "SpiceMie":
         clsimIceModel = expandvars(IceModelLocation+"/spice_mie")
@@ -212,6 +218,7 @@ def PropagatePhotons(tray, name,
                 UseCPUs=not UseGPUs,
                 IceModelLocation=clsimIceModel,
                 DOMOversizeFactor=DOMOversizeFactor,
+                UseCascadeExtension=UseCascadeExtension,
                 DisableTilt=True)
 
             # re-assign the output hits from the sliced tree to the original tree
@@ -288,7 +295,8 @@ def PropagatePhotons(tray, name,
             UseCPUs=not UseGPUs,
             DOMOversizeFactor=DOMOversizeFactor,
             UseHoleIceParameterization=UseHoleIceParameterization,
-            IceModelLocation=clsimIceModel)
+            IceModelLocation=clsimIceModel,
+            UseCascadeExtension=UseCascadeExtension)
 
         sliceRemoverAdditionalParams = dict()
         if OutputPhotonSeriesName is not None:
