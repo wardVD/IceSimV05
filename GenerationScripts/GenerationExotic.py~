@@ -35,6 +35,7 @@ def GenerationTray(params,tray):
 
     tray.Add(DrivingTime, "dt", Streams = [icetray.I3Frame.Physics] )
     #tray.Add(lambda f: f.Put('DrivingTime',tijd) if "DrivingTime" not in f else del frame["DrivingTime"], "dt", Streams = [icetray.I3Frame.DAQ] )
+    tray.Add("Dump")
 
     ######################################################
     #                  Particle Generation               #

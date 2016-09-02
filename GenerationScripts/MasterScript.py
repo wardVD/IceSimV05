@@ -68,12 +68,12 @@ def main(params,tray):
     ### Propagate the exotics
     tray = PropagationTray(params,tray)
     ### Simulate light propagation
-    #tray = PhotonTray(params,tray)
+    tray = PhotonTray(params,tray)
     
     ### Write out/execute and finish
     tray.Add('I3Writer','writer',
              Filename = params.outputfile,
-             streams = [icetray.I3Frame.Geometry,icetray.I3Frame.DAQ,icetray.I3Frame.DAQ])
+             streams = [icetray.I3Frame.Geometry,icetray.I3Frame.DAQ,icetray.I3Frame.Physics])
     tray.Execute(params.n_events)
     tray.Finish()
 

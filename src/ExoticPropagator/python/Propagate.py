@@ -19,7 +19,7 @@ class Propagate(icetray.I3Module):
         self.Medium      = self.GetParameter('Medium')
         #assert self.Length > 0, "Can't have negative length"
 
-    def DAQ(self, frame):
+    def Physics(self, frame):
         #Initialize propagator using PROPOSAL package
         particle = frame.Get('Primary')
         particlemass = frame.Get('PrimaryMass').value

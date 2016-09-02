@@ -66,7 +66,7 @@ class Generate(icetray.I3Module):
         assert (self.ZenithMin/I3Units.deg < self.ZenithMax/I3Units.deg), "ZenithMin should be smaller than ZenithMax"
         assert (self.AzimuthMin/I3Units.deg < self.AzimuthMax/I3Units.deg), "AzimuthMin should be smaller than AzimuthMax"
 
-    def DAQ(self, frame):
+    def Physics(self, frame):
         randomserv = phys_services.I3GSLRandomService(int(uniform(0,1000)))
 
         StauDir = utils.RandomizeDirection(randomserv,zenithMin = self.ZenithMin, zenithMax = self.ZenithMax, azimuthMin =self.AzimuthMin , azimuthMax = self.AzimuthMax) if self.Rand_dir \

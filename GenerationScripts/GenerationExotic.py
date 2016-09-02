@@ -20,7 +20,7 @@ def GenerationTray(params,tray):
 
     #make P frame: if we're dealing with PQ frames, set up the header!!!!! 
     #NO I3READER BECAUSE OF PREFIX = GCDFILE !!!!!!!
-    tray.Add("I3InfiniteSource","streams", Stream=icetray.I3Frame.DAQ, Prefix=params.gcd)
+    tray.Add("I3InfiniteSource","streams", Stream=icetray.I3Frame.Physics, Prefix=params.gcd)
     tray.Add("I3MCEventHeaderGenerator","gen_header",
                   Year=2012,
                   DAQTime=158100000000000000,
@@ -33,7 +33,7 @@ def GenerationTray(params,tray):
             del frame["DrivingTime"]
         frame.Put("DrivingTime", tijd)
 
-    tray.Add(DrivingTime, "dt", Streams = [icetray.I3Frame.DAQ] )
+    tray.Add(DrivingTime, "dt", Streams = [icetray.I3Frame.Physics] )
     #tray.Add(lambda f: f.Put('DrivingTime',tijd) if "DrivingTime" not in f else del frame["DrivingTime"], "dt", Streams = [icetray.I3Frame.DAQ] )
 
     ######################################################
