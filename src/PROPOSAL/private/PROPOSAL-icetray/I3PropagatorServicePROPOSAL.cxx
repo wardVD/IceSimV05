@@ -104,13 +104,17 @@ std::string I3PropagatorServicePROPOSAL::GetDefaultMediaDef()
 std::string I3PropagatorServicePROPOSAL::GetDefaultTableDir()
 {
   //Initializing a std::string with a NULL ptr is undefined behavior.
-  //Why it doens't just return an empty string, I have no idea.
+  //Why it doesn't just return an empty string, I have no idea.
   std::string append_string = "/PROPOSAL/resources/tables";
   std::string table_dir(getenv("I3_TESTDATA") ? getenv("I3_TESTDATA") : "");
+
   if (table_dir.empty())
   {
     log_warn("$%s is not set, falling back to build folder!", table_dir.c_str());
     table_dir = std::string(getenv("I3_BUILD") ? getenv("I3_BUILD") : "");
+    // when looking in I3_BUILD we can't look in resources.  Since this is a link
+    // to source that might be read-only as well, e.g. parasitic meta-projects with cvmfs.
+    append_string = "/PROPOSAL/tables";
   }
   
   if ( !boost::filesystem::exists(table_dir+append_string))
