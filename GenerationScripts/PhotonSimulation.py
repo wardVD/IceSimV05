@@ -15,11 +15,11 @@ def LoadPhotonLibraries():
     load("ppc")
     load("libDOMLauncher")
 
-icemodel = "$I3_BUILD/ppc/resources/ice/lea"
-os.putenv("PPCTABLESDIR",os.path.expandvars(icemodel))
+    icemodel = "$I3_BUILD/ppc/resources/ice/lea"
+    os.putenv("PPCTABLESDIR",os.path.expandvars(icemodel))
 
 #############################################################################
-def PhotonTray(params,tray):
+def PhotonTray(tray):
     ### Libraries
     LoadPhotonLibraries()
 
@@ -28,7 +28,7 @@ def PhotonTray(params,tray):
     ######################################################
     tray.Add('i3ppc','ppc',
              gpu = -1,
-             #MCTree = "I3MCTree",
+             MCTree = "I3MCTree",
              )
 
     ### print status message

@@ -19,3 +19,4 @@ from icecube.PROPOSAL import I3PropagatorServicePROPOSAL
 # if it can't find them in the specified location.
 I3PropagatorServicePROPOSAL(tabledir = args.TABLE_DIR, type=I3Particle.MuMinus)
 I3PropagatorServicePROPOSAL(tabledir = args.TABLE_DIR, type=I3Particle.TauMinus)
+I3PropagatorServicePROPOSAL(tabledir = args.TABLE_DIR, type=I3Particle.STauMinus, particleMass = 150)

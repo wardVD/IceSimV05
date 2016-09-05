@@ -4,6 +4,7 @@
 from GenerationExotic import GenerationTray,PropagationTray
 from PhotonSimulation import PhotonTray
 from Detector import DetectorNoiseTray,TriggerTray
+from Extractor import ExtractorTray
 
 from optparse import OptionParser
 
@@ -70,11 +71,20 @@ def main(params,tray):
     ### Propagate the exotics
     tray = PropagationTray(params,tray)
     ### Simulate light propagation
-    tray = PhotonTray(params,tray)
+    tray = PhotonTray(tray)
     ### Simulate noise
-    tray = DetectorNoiseTray(params,tray)
+    tray = DetectorNoiseTray(tray)
     ### Simulate triggers
     tray = TriggerTray(params,tray)
+    ### Extract information
+    tray = ExtractTray(params,tray)
+
+    ### What information do you want to keep?
+    if not options.KEEPALL:
+        tray.Add("Keep",keys=['NPE','Energy', 'TrackLength','Zenith','Azimuth',
+                          "ZTravel","TrackSeparationLength",'I3MCTree','ConventionalWeight'])
+
+    tray.Add("I3OrphanQDropper", "QDropper")
     
     ### Write out/execute and finish
     tray.Add('I3Writer','writer',

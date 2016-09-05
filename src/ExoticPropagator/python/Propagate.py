@@ -19,16 +19,21 @@ class Propagate(icetray.I3Module):
         self.Medium      = self.GetParameter('Medium')
         #assert self.Length > 0, "Can't have negative length"
 
+    #Initialize propagator using PROPOSAL package
     def Physics(self, frame):
-        #Initialize propagator using PROPOSAL package
+        #assert correct objects are in frame
+        for boolean in ['Primary','PrimaryMass']:
+            assert frame.Has(boolean), "Frame doesn't have %s, something is wrong" %boolean
         particle = frame.Get('Primary')
         particlemass = frame.Get('PrimaryMass').value
+        #propagator using PROPOSAL
         propagator = PROPOSAL.I3PropagatorServicePROPOSAL(tabledir = os.path.expandvars("$I3_BUILD/PROPOSAL/resources/tables/"), type = particle.type,particleMass=particlemass)
         
         particle.location_type = self.Medium
             
         daughters = propagator.Propagate(particle)
 
+        #make the tree with primary
         tree = dataclasses.I3MCTree()
 
         tree.add_primary(particle)
